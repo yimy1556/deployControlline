@@ -7,11 +7,6 @@ const selectLoading = createSelector(
   (raw) => raw.loading,
 );
 
-const selectExportLoading = createSelector(
-  [selectRaw],
-  (raw) => raw.exportLoading,
-);
-
 const selectRows = createSelector(
   [selectRaw],
   (raw) => raw.rows,
@@ -45,7 +40,7 @@ const selectOrderBy = createSelector([selectRaw], (raw) => {
 
   let direction = sorter.order === 'desc' ? 'DESC' : 'ASC';
 
-  return `${sorter.field}_${direction}`;
+  return `${sorter.field},${direction}`;
 });
 
 const selectFilter = createSelector([selectRaw], (raw) => {
@@ -121,7 +116,6 @@ const userListSelectors = {
   selectSelectedKeys,
   selectSelectedRows,
   selectHasRows,
-  selectExportLoading,
   selectRawFilter,
   selectIsAllSelected,
   selectSorter,

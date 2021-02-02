@@ -140,6 +140,7 @@ const es = {
     doUpdateSuccess: 'Usuario guardado con éxito',
     status: {
       active: 'Activo',
+      inactive: 'Inactivo',
       invited: 'Invitado',
       'empty-permissions': 'Esperando permisos',
     },

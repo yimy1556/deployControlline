@@ -184,9 +184,9 @@ function UserTable() {
                   <TableCell>{row.email}</TableCell>
                   <TableCell>{row.fullName}</TableCell>
                   <TableCell>
-                    {row.roles.map((roleId) => (
-                      <div key={roleId}>
-                        <span>{Roles.labelOf(roleId)}</span>
+                    {row.roles.map((role) => (
+                      <div key={role.id}>
+                        <span>{Roles.labelOf(role.name)}</span>
                       </div>
                     ))}
                   </TableCell>
