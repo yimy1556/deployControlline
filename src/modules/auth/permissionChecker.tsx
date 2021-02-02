@@ -9,7 +9,7 @@ export default class PermissionChecker {
     if (!this.currentUser) {
       return [];
     }
-    return this.currentUser.roles;
+    return this.currentUser.roles.map((roles) =>  roles.name);
   }
 
   match(permission) {

@@ -48,3 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+#	VSCODE
+.vscode
+
+#	Optional	eslint	cache
+.eslintcache

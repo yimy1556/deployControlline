@@ -19,10 +19,6 @@ const userListActions = {
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
   SORTER_CHANGED: `${prefix}_SORTER_CHANGED`,
 
-  EXPORT_STARTED: `${prefix}_EXPORT_STARTED`,
-  EXPORT_SUCCESS: `${prefix}_EXPORT_SUCCESS`,
-  EXPORT_ERROR: `${prefix}_EXPORT_ERROR`,
-
   DESTROY_ALL_SELECTED_STARTED: `${prefix}_DESTROY_ALL_SELECTED_STARTED`,
   DESTROY_ALL_SELECTED_SUCCESS: `${prefix}_DESTROY_ALL_SELECTED_SUCCESS`,
   DESTROY_ALL_SELECTED_ERROR: `${prefix}_DESTROY_ALL_SELECTED_ERROR`,
@@ -104,7 +100,7 @@ const userListActions = {
         selectors.selectLimit(getState()),
         selectors.selectOffset(getState()),
       );
-
+debugger;
       dispatch({
         type: userListActions.FETCH_SUCCESS,
         payload: {

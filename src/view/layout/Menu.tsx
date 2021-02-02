@@ -162,18 +162,6 @@ function Menu(props) {
               </ListItem>
             </CustomRouterLink>
           ))}
-
-        {menus
-          .map((menu) => (
-            <ListItem key={menu.path} className={classes.listItemDisabled}>
-              <ListItemIcon
-                className={classes.listItemIcon}
-              >
-                {menu.icon}
-              </ListItemIcon>
-              <ListItemText>{menu.label}</ListItemText>
-            </ListItem>
-          ))}
       </List>
     </Drawer>
   );
