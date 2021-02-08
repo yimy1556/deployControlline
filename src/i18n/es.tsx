@@ -27,10 +27,10 @@ const es = {
     disable: 'Inhabilitar',
   },
   app: {
-    title: 'Aplicación',
+    title: 'Newsan',
   },
   entities: {
-    
+
   },
   auth: {
     tenants: 'Espacios de trabajo',
@@ -95,22 +95,22 @@ const es = {
       description: 'Acceso personalizado a recursos',
     },
   },
-  checkpoint:{
-    title:'Configuración De Puesto de Control',
-    fields:{
-      nameCheckpoint:'Nombre de puesto de control',
-      controlType:'Tipo de  control',
-      typeOfVerification:'Tipo de verificación',
+  checkpoint: {
+    title: 'Configuración De Puesto de Control',
+    fields: {
+      nameCheckpoint: 'Nombre de puesto de control',
+      controlType: 'Tipo de  control',
+      typeOfVerification: 'Tipo de verificación',
       failure: 'Fallas',
     },
   },
-  process:{
-    title:'Configuración De Proceso',
+  process: {
+    title: 'Configuración De Proceso',
     newControlLine: 'Nueva Linea de control',
-    addCheckpoint:'Agregar Puesto',
-    saveProcess:'Guardar Configuración De Proceso',
-    fields:{
-      plant:'Planta',
+    addCheckpoint: 'Agregar Puesto',
+    saveProcess: 'Guardar Configuración De Proceso',
+    fields: {
+      plant: 'Planta',
       sku: 'SKU',
       description: 'Descripcion',
       numberOfCheckpoint: 'N° puestos',
@@ -214,7 +214,7 @@ const es = {
     },
   },
   dashboard: {
-    menu: 'Tablero',
+    menu: 'Inicio',
     message:
       'Esta página utiliza datos falsos solo con fines de demostración. Puede editarlo en frontend/view/dashboard/DashboardPage.ts.',
     charts: {

@@ -22,11 +22,22 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
-
+  {
+    path: '/ops',
+    loader: () => import('src/view/ops/OpsPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: '/settings',
+    loader: () => import('src/view/settings/MenuSettings'),
+    permissionRequired: null,
+    exact: true,
+  },
   {
     path: '/user',
     loader: () => import('src/view/user/list/UserPage'),
-    permissionRequired: permissions.userRead,
+    permissionRequired: null,
     exact: true,
   },
 
