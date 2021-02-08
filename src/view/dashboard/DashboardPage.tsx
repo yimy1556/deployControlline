@@ -18,8 +18,6 @@ function DashboardPage(props) {
         }}
       >
         <Grid spacing={2} container>
-          
-          
         </Grid>
       </div>
     </>

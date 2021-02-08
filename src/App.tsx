@@ -28,7 +28,7 @@ export default function App(props) {
 function AppWithRedux(props) {
 
   const colors = {
-    primary: '#2196f3',
+    primary: '#8A2432',
     secondary: '#f50057',
   };
 

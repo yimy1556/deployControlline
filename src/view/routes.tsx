@@ -9,6 +9,19 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: '/process',
+    loader: () => import('src/view/process/list/ProcessPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+
+  {
+    path: '/checkpoint',
+    loader: () => import('src/view/checkpoint/list/CheckpointPage'),
+    permissionRequired: null,
+    exact: true,
+  },
 
   {
     path: '/user',

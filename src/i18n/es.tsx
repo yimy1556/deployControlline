@@ -24,6 +24,7 @@ const es = {
     select: 'Seleccione',
     continue: 'Continúa',
     filters: 'Filtros',
+    disable: 'Inhabilitar',
   },
   app: {
     title: 'Aplicación',
@@ -93,6 +94,28 @@ const es = {
       label: 'Rol personalizado',
       description: 'Acceso personalizado a recursos',
     },
+  },
+  checkpoint:{
+    title:'Configuración De Puesto de Control',
+    fields:{
+      nameCheckpoint:'Nombre de puesto de control',
+      controlType:'Tipo de  control',
+      typeOfVerification:'Tipo de verificación',
+      failure: 'Fallas',
+    },
+  },
+  process:{
+    title:'Configuración De Proceso',
+    newControlLine: 'Nueva Linea de control',
+    addCheckpoint:'Agregar Puesto',
+    saveProcess:'Guardar Configuración De Proceso',
+    fields:{
+      plant:'Planta',
+      sku: 'SKU',
+      description: 'Descripcion',
+      numberOfCheckpoint: 'N° puestos',
+      checkpoint: 'Puestos de control',
+    }
   },
   user: {
     invite: 'Invitación',

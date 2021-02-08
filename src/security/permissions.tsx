@@ -25,6 +25,14 @@ class Permissions {
         id: 'userAutocomplete',
         allowedRoles: [roles.admin, roles.custom],
       },
+      processCreate: {
+        id: 'processCreate',
+        allowedRoles: [roles.admin] 
+      },
+      processEdit: {
+        id: 'processEdit',
+        allowedRoles: [roles.admin] 
+      },
     };
   }
 

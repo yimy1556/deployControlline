@@ -58,7 +58,7 @@ function SelectFormItem(props) {
 
   const valueMultiple = () => {
     if (originalValue) {
-      return originalValue.map((value) =>
+      return originalValue?.map((value) =>
         options.find((option) => option.value === value),
       );
     }

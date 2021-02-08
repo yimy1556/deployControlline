@@ -17,6 +17,8 @@ export function InputFormItem(props) {
     externalErrorMessage,
     disabled,
     endAdornment,
+    rows,
+    multiline,
   } = props;
 
   const {
@@ -38,6 +40,7 @@ export function InputFormItem(props) {
       id={name}
       name={name}
       type={type}
+      multiline={multiline}
       label={label}
       required={required}
       inputRef={register}
@@ -53,6 +56,7 @@ export function InputFormItem(props) {
       variant="outlined"
       size="small"
       placeholder={placeholder || undefined}
+      rows={rows || undefined}
       autoFocus={autoFocus || undefined}
       autoComplete={autoComplete || undefined}
       InputLabelProps={{
@@ -72,6 +76,8 @@ export function InputFormItem(props) {
 InputFormItem.defaultProps = {
   type: 'text',
   required: false,
+  multiline: false,
+
 };
 
 InputFormItem.propTypes = {
@@ -88,6 +94,8 @@ InputFormItem.propTypes = {
   externalErrorMessage: PropTypes.string,
   onChange: PropTypes.func,
   endAdornment: PropTypes.any,
+  multiline: PropTypes.bool,
+  rows: PropTypes.number,
 };
 
 export default InputFormItem;
