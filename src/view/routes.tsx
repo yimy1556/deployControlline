@@ -29,6 +29,12 @@ const privateRoutes = [
     exact: true,
   },
   {
+    path: '/faults',
+    loader: () => import('src/view/fault/list/FaultPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
     path: '/settings',
     loader: () => import('src/view/settings/MenuSettings'),
     permissionRequired: null,

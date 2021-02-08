@@ -33,7 +33,7 @@ export default [
     path: '/ops',
     exact: true,
     icon: <AssignmentIcon />,
-    label: 'OPS',
+    label: 'Orden de Producción',
     permissionRequired: null,
   },
   {

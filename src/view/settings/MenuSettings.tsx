@@ -1,7 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
 import Box from '../shared/styles/Box';
-
+import { getHistory } from 'src/modules/store';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -9,7 +9,9 @@ const useStyles = makeStyles((theme) => ({
 
 function MenuSettings(props) {
     const classes = useStyles();
-
+    const doToFaults = () => {
+        getHistory().push('/faults');
+    };
     return (
         <>
             <div
@@ -33,7 +35,7 @@ function MenuSettings(props) {
                         </Box >
                     </Grid>
                     <Grid item xs={12} md={12}>
-                        <Box >
+                        <Box onClick={doToFaults}>
                             <div >
                                 <h2>Gestion fallas</h2>
                             </div>
