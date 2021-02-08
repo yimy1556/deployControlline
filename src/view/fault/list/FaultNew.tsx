@@ -1,20 +1,11 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
-import AddIcon from '@material-ui/icons/Add';
 import { i18n } from 'src/i18n';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
-import {
-  Radio,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Box,
-  Button,
-} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
@@ -27,28 +18,27 @@ const options = [
 ]
 
 const schema = yup.object().shape({
-  email: yupFormSchemas.string(i18n('user.fields.email'), {
+  firstName: yupFormSchemas.string(i18n('user.fields.email'), {
     required: true,
   }),
-  password: yupFormSchemas.string(
+  description: yupFormSchemas.string(
     i18n('user.fields.password'),
     {
       required: true,
     },
   ),
-  rememberMe: yupFormSchemas.boolean(
+  category: yupFormSchemas.boolean(
     i18n('user.fields.rememberMe'),
   ),
 });
 
 
 
-function Checkpoint() {
-  var listPost = [];
+function FaultNew() {
   const [initialValues] = useState({
-    email: '',
-    password: '',
-    rememberMe: true
+    firstNamer: '',
+    description: '',
+    category: '',
   });
 
   const form = useForm({
@@ -56,6 +46,7 @@ function Checkpoint() {
     mode: 'all',
     defaultValues: initialValues
   });
+
 
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -76,38 +67,21 @@ function Checkpoint() {
                 <Grid item container justify='center' xs={10} spacing={3}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='nombre'
+                      name='firstName'
                       label={i18n('user.fields.firstName')}
-                      autoFocus
                     />
                   </Grid>                 
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='tipoDeControl'
+                      name='category'
                       options={options}
                       label={i18n('checkpoint.fields.controlType')}
                       mode='unico'
                     />
                   </Grid>
-                  <Grid item xs={6}>
-                    <SelectFormItem 
-                      name='tipoDeVerificacion'
-                      options={options}
-                      label={i18n('checkpoint.fields.typeOfVerification')}
-                      mode='unico'
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <SelectFormItem 
-                      name='fallas'
-                      options={options}
-                      label={i18n('checkpoint.fields.failure')}
-                      mode='multiple'
-                    />
-                  </Grid>
                   <Grid item xs={10}>
                     <InputFormItem
-                      name='descripcion'
+                      name='description'
                       label={i18n('process.fields.description')}
                       multiline
                       rows={6}
@@ -148,4 +122,4 @@ function Checkpoint() {
   );
 }
 
-export default Checkpoint;
+export default FaultNew;
