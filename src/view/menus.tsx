@@ -15,12 +15,14 @@ export default [
     icon: <DashboardIcon />,
     label: i18n('dashboard.menu'),
     permissionRequired: null,
+    subMenu: null,
   },
   {
     path: '/user',
     label: i18n('user.menu'),
     permissionRequired: null,
     icon: <PersonIcon />,
+    subMenu: null,
   },
   {
     path: '/process',
@@ -28,6 +30,7 @@ export default [
     icon: <DashboardIcon />,
     label: 'Linea de control',
     permissionRequired: null,
+    subMenu: null,
   },
   {
     path: '/ops',
@@ -35,13 +38,30 @@ export default [
     icon: <AssignmentIcon />,
     label: 'Orden de Producción',
     permissionRequired: null,
+    subMenu: null,
   },
   {
-    path: '/settings',
+    path: '',
     exact: true,
     icon: <SettingsIcon />,
     label: 'Configuraciones',
     permissionRequired: null,
+    subMenu: [
+      {
+        path: '/faults',
+        exact: true,
+        icon: <AssignmentIcon />,
+        label: 'Orden de Producción',
+        permissionRequired: null,
+      }, 
+      {
+        path: '/checkpoint',
+        exact: true,
+        icon: <AssignmentIcon />,
+        label: 'Orden de Producción',
+        permissionRequired: null,
+      },
+    ]
   },
 
 

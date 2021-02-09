@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import authSelectors from 'src/modules/auth/authSelectors';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +15,11 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+import Collapse from '@material-ui/core/Collapse';
+
 
 const drawerWidth = 200;
 
@@ -37,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   listItemDisabled: {
     opacity: 0.5,
   },
+  nested: {
+    paddingLeft: theme.spacing(4),          
+  },
 }));
 
 function Menu(props) {
@@ -52,6 +60,8 @@ function Menu(props) {
   const permissionChecker = new PermissionChecker(
     currentUser,
   );
+  
+  const [open, setOpen] = useState(false);
 
   useLayoutEffect(() => {
     const toggleMenuOnResize = () => {
@@ -133,13 +143,13 @@ function Menu(props) {
       <div className={classes.toolbar}></div>
       <List>
         {menus
-          .filter((menu) => match(menu.permissionRequired))
-          .map((menu) => (
+        .filter((menu) => match(menu.permissionRequired))
+        .map((menu) => (
             <CustomRouterLink
               key={menu.path}
               to={menu.path}
             >
-              <ListItem button>
+              <ListItem button onClick={ menu.subMenu ? () => setOpen(!open):() => null}>
                 <ListItemIcon
                   className={clsx({
                     [classes.listItemIcon]: true,
@@ -158,11 +168,46 @@ function Menu(props) {
                   })}
                 >
                   {menu.label}
-                </ListItemText>
+                </ListItemText> 
+                {!menu.subMenu ||  (open ? <ExpandLess /> : <ExpandMore />)}
               </ListItem>
+
+              {!menu.subMenu || <Collapse in={open} timeout="auto" unmountOnExit>
+                <List>
+                  {console.log(menu.subMenu)}
+                  {menu.subMenu.map(subMenu => 
+                    <CustomRouterLink
+                      key={subMenu.path}
+                      to={subMenu.path}
+                    >
+                      <ListItem button className={classes.nested} >
+                        <ListItemIcon
+                          className={clsx({
+                          [classes.listItemIcon]: true,
+                          [classes.active]: selectedKeys().includes(
+                            subMenu.path,
+                            ),
+                          })}
+                        >
+                          {menu.icon}
+                        </ListItemIcon>
+                        <ListItemText
+                          className={clsx({
+                            [classes.active]: selectedKeys().includes(
+                              subMenu.path,
+                              ),
+                          })}
+                        >
+                          {subMenu.label}
+                        </ListItemText> 
+                      </ListItem>
+                    </CustomRouterLink>
+                  )} 
+                </List>
+              </Collapse>}
             </CustomRouterLink>
           ))}
-
+        
       </List>
     </Drawer>
   );
