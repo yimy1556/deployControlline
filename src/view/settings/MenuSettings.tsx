@@ -12,6 +12,9 @@ function MenuSettings(props) {
     const doToFaults = () => {
         getHistory().push('/faults');
     };
+    const doToCheckpoint = () => {
+        getHistory().push('/checkpoint');
+    };
     return (
         <>
             <div
@@ -28,7 +31,7 @@ function MenuSettings(props) {
                         </Box >
                     </Grid>
                     <Grid item xs={12} md={12}>
-                        <Box >
+                        <Box onClick={doToCheckpoint} >
                             <div >
                                 <h2>Gestion puesto de control</h2>
                             </div>

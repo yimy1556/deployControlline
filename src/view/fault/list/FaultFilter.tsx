@@ -16,8 +16,8 @@ import AddIcon from '@material-ui/icons/Add';
 
 
 const schema = yup.object().shape({
-  nombre: yupFormSchemas.string(i18n('user.fields.firstName')),
-  categoria: yupFormSchemas.string(i18n('process.fields.plant')),
+  firstName: yupFormSchemas.string(i18n('user.fields.firstName')),
+  category: yupFormSchemas.string(i18n('process.fields.plant')),
 });
 
 const options = [
@@ -29,8 +29,8 @@ const options = [
 
 function ProcessFilter() {
   const [initialValues] = useState({
-    nombre: '',
-    categoria: '',
+    name: '',
+    category: '',
   });
 
   const form = useForm({
@@ -54,15 +54,15 @@ function ProcessFilter() {
           <Grid item container justify='center' xs={10} spacing={3}>
             <Grid item xs={6}>
               <InputFormItem
-                name='nombre'
-                label={i18n('user.fields.firstName')}
+                name='name'
+                label={i18n('faults.fields.name')}
               />
             </Grid>                 
             <Grid item xs={6}>
               <SelectFormItem 
-                name='categoria'
+                name='category'
                 options={options}
-                label={i18n('process.fields.plant')}
+                label={i18n('faults.fields.category')}
                 mode='unico'
               />
             </Grid>
@@ -70,7 +70,7 @@ function ProcessFilter() {
           <Grid container item alignItems='center' justify='flex-end' spacing={3} xs={10}>
             <Grid item>
               <Tooltip
-                title={i18n('process.newControlLine')}
+                title={i18n('faults.newFaults')}
               >
                 <IconButton
                   color="primary"

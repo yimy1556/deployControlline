@@ -104,6 +104,14 @@ const es = {
       failure: 'Fallas',
     },
   },
+  faults: {
+    title: 'Gestion de fallas',
+    newfaults: 'Nueva falla',
+    fields: {
+      name: 'Nombre',
+      category: 'Categoria',
+    }
+  },
   process: {
     title: 'Configuración De Proceso',
     newControlLine: 'Nueva Linea de control',

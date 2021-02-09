@@ -62,6 +62,12 @@ function ProcessFilter() {
               />
             </Grid>                 
             <Grid item xs={6}>
+              <InputFormItem
+                name='sku'
+                label={i18n('process.fields.sku')}
+              />
+            </Grid>
+            <Grid item xs={6}>
               <SelectFormItem 
                 options={options}
                 mode='unico'
@@ -77,13 +83,7 @@ function ProcessFilter() {
                 mode='unico'
               />
             </Grid>
-            <Grid item xs={6}>
-              <InputFormItem
-                name='sku'
-                label={i18n('process.fields.sku')}
-              />
-            </Grid>
-          </Grid>
+         </Grid>
           <Grid container item alignItems='center' justify='flex-end' spacing={3} xs={10}>
             <Grid item>
               <Tooltip
