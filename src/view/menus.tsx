@@ -25,14 +25,6 @@ export default [
     subMenu: null,
   },
   {
-    path: '/process',
-    exact: true,
-    icon: <DashboardIcon />,
-    label: 'Linea de control',
-    permissionRequired: null,
-    subMenu: null,
-  },
-  {
     path: '/ops',
     exact: true,
     icon: <AssignmentIcon />,
@@ -50,16 +42,24 @@ export default [
       {
         path: '/faults',
         exact: true,
-        icon: <AssignmentIcon />,
-        label: 'Orden de Producción',
+        icon: <DashboardIcon />,
+        label: 'Fallas de puestos',
         permissionRequired: null,
       }, 
       {
         path: '/checkpoint',
         exact: true,
-        icon: <AssignmentIcon />,
-        label: 'Orden de Producción',
+        icon: <DashboardIcon />,
+        label: 'Puesto de control',
         permissionRequired: null,
+      },
+      {
+        path: '/process',
+        exact: true,
+        icon: <DashboardIcon />,
+        label: 'Linea de control',
+        permissionRequired: null,
+        subMenu: null,
       },
     ]
   },

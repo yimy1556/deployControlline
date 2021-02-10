@@ -16,7 +16,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import Port from 'src/view/process/list/pro'
@@ -147,8 +147,8 @@ function ProcessTable() {
               </TableRow>
             )}
             {true &&
-              Port.map((row) => (
-                <TableRow key={row.id}>
+              Port.map((row, index) => (
+                <TableRow key={index}>
                   <TableCell align='center'>{row.firstName}</TableCell>
                   <TableCell align='center'>{row.sku}</TableCell>
                   <TableCell align='center'>{row.plant}</TableCell>
@@ -177,9 +177,8 @@ function ProcessTable() {
                         >
                           <IconButton
                             color="primary"
-                            onClick={() => null  }
                           >
-                            <DeleteIcon />
+                            <NotInterested />
                           </IconButton>
                         </Tooltip>
                       )}
