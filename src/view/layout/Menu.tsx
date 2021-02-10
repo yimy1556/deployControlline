@@ -21,7 +21,7 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import Collapse from '@material-ui/core/Collapse';
 
 
-const drawerWidth = 200;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -110,21 +110,39 @@ function Menu(props) {
     return permissionChecker.match(permission);
   };
 
-  const CustomRouterLink = (props) => (
-    <div
-      style={{
-        flexGrow: 1,
-      }}
-    >
-      <Link
-        style={{
-          textDecoration: 'none',
-          color: 'inherit',
+  const CustomRouterLink = (props) => {
+    if(props.to){
+      return (
+        <div
+          style={{
+          flexGrow: 1,
         }}
-        {...props}
-      />
-    </div>
-  );
+      >
+        <Link
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+          {...props}
+        />
+      </div>
+    )}
+     return (
+        <div
+          style={{
+          flexGrow: 1,
+        }}
+      >
+        <Link
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+          {...props}
+        />
+      </div>
+    )
+  };
 
   if (!menuVisible) {
     return null;
@@ -147,7 +165,7 @@ function Menu(props) {
         .map((menu) => (
             <CustomRouterLink
               key={menu.path}
-              to={menu.path}
+              to={menu.subMenu? true:menu.path}
             >
               <ListItem button onClick={ menu.subMenu ? () => setOpen(!open):() => null}>
                 <ListItemIcon
