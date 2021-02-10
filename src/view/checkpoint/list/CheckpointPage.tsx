@@ -6,15 +6,24 @@ import CheckpointFilter from 'src/view/checkpoint/list/CheckpointFilter';
 import CheckpointTable from 'src/view/checkpoint/list/CheckpointTable';
 import Modal from 'src/view/shared/modals/Modal';
 import Checkpoint from 'src/view/checkpoint/view/Checkpoint';
+import Breadcrumb from 'src/view/shared/Breadcrumb';
 
 function CheckpointPage() {
   return (
-    <ContentWrapper>
-      <PageTitle>Linea De Puesto de control</PageTitle>
-      <CheckpointFilter />
-      <CheckpointTable />
-      <Modal><Checkpoint /></Modal>
-    </ContentWrapper>
+    <>
+      <Breadcrumb
+        items={[
+          [i18n('dashboard.menu'), '/'],
+          ['Línea De Puesto de control'],
+        ]}
+      />
+      <ContentWrapper>
+        <PageTitle>Línea De Puesto de control</PageTitle>
+        <CheckpointFilter />
+        <CheckpointTable />
+        <Modal><Checkpoint /></Modal>
+      </ContentWrapper>
+    </>
   );
 }
 

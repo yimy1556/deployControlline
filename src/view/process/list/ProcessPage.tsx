@@ -6,15 +6,24 @@ import ProcessFilter from 'src/view/process/list/ProcessFilter';
 import ProcessTable from 'src/view/process/list/ProcessTable';
 import Modal from 'src/view/shared/modals/Modal';
 import ProcessDischarge from 'src/view/process/view/ProcessDischarge';
+import Breadcrumb from 'src/view/shared/Breadcrumb';
 
 function ProcessPage() {
   return (
-    <ContentWrapper>
-      <PageTitle>Linea De Controles</PageTitle>
-      <ProcessFilter />
-      <ProcessTable />
-      <Modal><ProcessDischarge/></Modal>
-    </ContentWrapper>
+    <>
+      <Breadcrumb
+        items={[
+          [i18n('dashboard.menu'), '/'],
+          ['Línea De Controles'],
+        ]}
+      />
+      <ContentWrapper>
+        <PageTitle>Línea De Controles</PageTitle>
+        <ProcessFilter />
+        <ProcessTable />
+        <Modal><ProcessDischarge /></Modal>
+      </ContentWrapper>
+    </>
   );
 }
 
