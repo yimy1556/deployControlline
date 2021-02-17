@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import userSelectors from 'src/modules/user/userSelectors';
-import selectors from 'src/modules/user/list/userListSelectors';
-import actions from 'src/modules/user/list/userListActions';
+import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import { Link } from 'react-router-dom';
 import { i18n } from 'src/i18n';
 import Pagination from 'src/view/shared/table/Pagination';
@@ -19,8 +18,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
-import Port from 'src/view/checkpoint/list/pro'
-
 
 function CheckpointTable() {
   const dispatch = useDispatch();
@@ -31,53 +28,20 @@ function CheckpointTable() {
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRows);
+  console.log(rows)
   const pagination = useSelector(
     selectors.selectPagination,
   );
-  const selectedKeys = useSelector(
-    selectors.selectSelectedKeys,
-  );
   const hasRows = useSelector(selectors.selectHasRows);
-  const sorter = useSelector(selectors.selectSorter);
-  const isAllSelected = useSelector(
-    selectors.selectIsAllSelected,
-  );
-  const hasPermissionToEdit = useSelector(
-    userSelectors.selectPermissionToEdit,
-  );
-  const hasPermissionToDestroy = useSelector(
-    userSelectors.selectPermissionToDestroy,
-  );
-
+  
+  /*
   const doDestroy = (id) => {
     setRecordIdToDestroy(null);
     dispatch(actions.doDestroy(id));
   };
-
-  const doChangeSort = (field) => {
-    const order =
-      sorter.field === field && sorter.order === 'asc'
-        ? 'desc'
-        : 'asc';
-
-    dispatch(
-      actions.doChangeSort({
-        field,
-        order,
-      }),
-    );
-  };
-
+   */
   const doChangePagination = (pagination) => {
     dispatch(actions.doChangePagination(pagination));
-  };
-
-  const doToggleAllSelected = () => {
-    dispatch(actions.doToggleAllSelected());
-  };
-
-  const doToggleOneSelected = (id) => {
-    dispatch(actions.doToggleOneSelected(id));
   };
 
   return (
@@ -100,23 +64,22 @@ function CheckpointTable() {
           <TableHead>
             <TableRow>
               <TableCellCustom
-                onSort={doChangeSort}
                 hasRows={hasRows}
-                sorter={sorter}
                 name={'nombre'}
                 align='center'
                 label={i18n('user.fields.firstName')}
               />
               <TableCellCustom
-                onSort={doChangeSort}
                 hasRows={hasRows}
                 align='center'
-                sorter={sorter}
                 name={'fullName'}
                 label={i18n('checkpoint.fields.controlType')}
               />
               <TableCellCustom  align='center'>
                 {i18n('checkpoint.fields.typeOfVerification')}
+              </TableCellCustom>
+            <TableCellCustom  align='center'>
+              Estado
               </TableCellCustom>
               <TableCellCustom  align='center'>
                 {i18n('checkpoint.fields.failure')}
@@ -132,7 +95,7 @@ function CheckpointTable() {
                 </TableCell>
               </TableRow>
             )}
-            {!true && !true && (
+            {!loading && !hasRows && (
               <TableRow>
                 <TableCell colSpan={100}>
                   <div
@@ -146,42 +109,42 @@ function CheckpointTable() {
                 </TableCell>
               </TableRow>
             )}
-            {true &&
-              Port.map((row, index) => (
+            {!loading &&
+              rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align='center'>{row.firstName}</TableCell>
-                  <TableCell align='center'>{row.controlType}</TableCell>
-                  <TableCell align='center'>{row.typeOfVerification}</TableCell>
+                  <TableCell align='center'>{row.name}</TableCell>
+                  <TableCell align='center'>{row.controlType.name}</TableCell>
+                  <TableCell align='center'>{row.verificationType}</TableCell>
+                  <TableCell align='center'>{row.status}</TableCell>
                   <TableCell align='center'>Fallas de puesto</TableCell>
                   <TableCell>
                     <Box
                       display="flex"
                       justifyContent="flex-end"
                     >
-                      {true && (
-                        <Tooltip
-                          title={i18n('common.edit')}
+                      
+                      <Tooltip
+                        title={i18n('common.edit')}
+                      >
+                        <IconButton
+                          color="primary"
+                          component={Link}
+                          to={`/user/${row.id}/edit`}
                         >
-                          <IconButton
-                            color="primary"
-                            component={Link}
-                            to={`/user/${row.id}/edit`}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {true && (
-                        <Tooltip
-                          title={i18n('common.disable')}
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+  
+                      <Tooltip
+                        title={i18n('common.disable')}
+                      >
+                        <IconButton
+                          color="primary"
                         >
-                          <IconButton
-                            color="primary"
-                          >
-                            <NotInterested />
-                          </IconButton>
-                        </Tooltip>
-                      )}
+                          <NotInterested />
+                        </IconButton>
+                      </Tooltip>
+                    
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -199,7 +162,6 @@ function CheckpointTable() {
       {recordIdToDestroy && (
         <ConfirmModal
           title={i18n('common.areYouSure')}
-          onConfirm={() => doDestroy(recordIdToDestroy)}
           onClose={() => setRecordIdToDestroy(null)}
           okText={i18n('common.yes')}
           cancelText={i18n('common.no')}

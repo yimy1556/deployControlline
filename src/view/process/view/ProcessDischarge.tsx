@@ -29,11 +29,22 @@ const schema = yup.object().shape({
   })
 });
 
-
 const options = [
-  {value: 'chocolate', label: 'Chocolate'  },
-  { value: 'strawberry', label: 'Strawberry'  },
-  { value: 'vanilla', label: 'Vanilla'  }      
+  {value: 1, label: 'Chocolate'  },
+  { value: 2, label: 'Strawberry'  },
+  { value: 3, label: 'Vanilla'  },
+  {value: 4, label: 'Chocolate'  },
+  { value: 5, label: 'Strawberry'  },
+  { value: 6, label: 'Vanilla'  },
+  {value: 7, label: 'Chocolate'  },
+  { value: 8, label: 'Strawberry'  },
+  { value: 9, label: 'Vanilla'  },
+  {value: 10, label: 'Chocolate'  },
+  { value: 11, label: 'Strawberry'  },
+  { value: 12, label: 'Vanilla'  },
+  {value: 331, label: 'Chocolate'  },
+  { value: 22, label: 'Strawberry'  },
+  { value: 39, label: 'Vanilla'  } 
 ]
 
 
@@ -96,7 +107,7 @@ function ProcessDischarge() {
                       mode={i18n('process.fields.sku')}
                     />
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={12}>
                     <SelectFormItem 
                       name='puestos'
                       options={options}
@@ -104,7 +115,7 @@ function ProcessDischarge() {
                       mode='multiple'
                     />
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={12}>
                     <InputFormItem
                       name='descripcion'
                       label={i18n('process.fields.description')}
@@ -113,7 +124,11 @@ function ProcessDischarge() {
                     />
                   </Grid>
                 </Grid>
-                <Grid container item spacing={2} xs={8}>
+                <Grid
+                  style={{ marginBottom: '5px' }}
+                  container 
+                  item 
+                  spacing={2} xs={8}>
                   <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}

@@ -63,8 +63,8 @@ function FaultNew() {
         <FormProvider {...form}>
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Grid container  direction='column'  alignItems='center' xs={12} xl={12}>
-                <Grid item container justify='center' xs={10} spacing={3}>
+              <Grid container  direction='column'  alignItems='center'>
+                <Grid item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
                       name='firstName'
@@ -79,7 +79,7 @@ function FaultNew() {
                       mode='unico'
                     />
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={12}>
                     <InputFormItem
                       name='description'
                       label={i18n('process.fields.description')}
@@ -88,7 +88,12 @@ function FaultNew() {
                     />
                   </Grid>
                 </Grid>
-                <Grid container item spacing={2} xs={8}>
+                <Grid
+                  style={{ marginBottom: '5px' }}
+                  container 
+                  item 
+                  spacing={2} 
+                  xs={8}>
                   <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}

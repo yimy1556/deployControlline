@@ -12,8 +12,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { i18n } from 'src/i18n';
 import yupFilterSchemas from 'src/modules/shared/yup/yupFilterSchemas';
-import actions from 'src/modules/user/list/userListActions';
-import selectors from 'src/modules/user/list/userListSelectors';
+import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import userEnumerators from 'src/modules/user/userEnumerators';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
@@ -26,7 +26,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import filterRenders from 'src/modules/shared/filter/filterRenders';
 import FilterPreview from 'src/view/shared/filter/FilterPreview';
 import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import actionsModal from 'src/modules/modal/modalActions';
@@ -72,7 +71,6 @@ function UserFilter(props) {
     };
   });
 
-
   const openModel = () => {
     dispatch(actionsModal.modalOpen());      
   };
@@ -83,11 +81,12 @@ function UserFilter(props) {
     mode: 'all',
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
+
   }, [dispatch]);
-   */
+  
   const onSubmit = (values) => {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
@@ -155,17 +154,17 @@ function UserFilter(props) {
                 </Grid>
               </Grid>
               <FilterButtons>
-              <Tooltip
-                title={i18n('process.newControlLine')}
-              >
-                <Fab 
-                  size="small" 
-                  color="primary"
-                  onClick={() => openModel()}
+                <Tooltip
+                  title={i18n('process.newControlLine')}
                 >
-                  <AddIcon />
-                </Fab>
-              </Tooltip>
+                  <Fab 
+                    size="small" 
+                    color="primary"
+                    onClick={openModel}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </Tooltip>
                 <Button
                   variant="contained"
                   color="primary"

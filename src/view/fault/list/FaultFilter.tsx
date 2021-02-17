@@ -3,6 +3,7 @@ import {
   AccordionSummary,
   Button,
   Grid,
+  Fab,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import UndoIcon from '@material-ui/icons/Undo';
@@ -25,6 +26,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import filterRenders from 'src/modules/shared/filter/filterRenders';
 import FilterPreview from 'src/view/shared/filter/FilterPreview';
 import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
+import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
+import actionsModal from 'src/modules/modal/modalActions';
 
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -59,6 +63,10 @@ function UserFilter(props) {
       ...rawFilter,
     };
   });
+
+  const openModel = () => {
+    dispatch(actionsModal.modalOpen());      
+  };
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -126,6 +134,18 @@ function UserFilter(props) {
                 </Grid>
               </Grid>
               <FilterButtons>
+                <Tooltip
+                  title={i18n('process.newControlLine')}
+                >
+                  <Fab 
+                    size="small" 
+                    color="primary"
+                    onClick={openModel}
+                  >
+                    <AddIcon />
+                  </Fab>
+                </Tooltip>
+
                 <Button
                   variant="contained"
                   color="primary"

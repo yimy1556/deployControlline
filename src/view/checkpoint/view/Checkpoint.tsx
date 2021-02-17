@@ -1,54 +1,65 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
-import AddIcon from '@material-ui/icons/Add';
 import { i18n } from 'src/i18n';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
-import {
-  Radio,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Box,
-  Button,
-} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import actions from 'src/modules/modal/modalActions';
 
 const options = [
-  {value: 'chocolate', label: 'Chocolate'  },
-  { value: 'strawberry', label: 'Strawberry'  },
-  { value: 'vanilla', label: 'Vanilla'  }      
+  {value: 1, label: 'Chocolate'  },
+  { value: 2, label: 'Strawberry'  },
+  { value: 3, label: 'Vanilla'  },
+  {value: 4, label: 'Chocolate'  },
+  { value: 5, label: 'Strawberry'  },
+  { value: 6, label: 'Vanilla'  },
+  {value: 7, label: 'Chocolate'  },
+  { value: 8, label: 'Strawberry'  },
+  { value: 9, label: 'Vanilla'  },
+  {value: 10, label: 'Chocolate'  },
+  { value: 11, label: 'Strawberry'  },
+  { value: 12, label: 'Vanilla'  },
+  {value: 331, label: 'Chocolate'  },
+  { value: 22, label: 'Strawberry'  },
+  { value: 39, label: 'Vanilla'  } 
 ]
 
 const schema = yup.object().shape({
-  email: yupFormSchemas.string(i18n('user.fields.email'), {
+  name: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
-  password: yupFormSchemas.string(
-    i18n('user.fields.password'),
-    {
-      required: true,
-    },
-  ),
-  rememberMe: yupFormSchemas.boolean(
-    i18n('user.fields.rememberMe'),
-  ),
+  description: yupFormSchemas.string(i18n('process.fields.description'), {
+    required: true,
+  }),
+  controlTypeId: yupFormSchemas.integer(i18n('checkpoint.fields.controlType'), {
+    required: true,
+  }),
+  verificationType: yupFormSchemas.integer(i18n('checkpoint.fields.typeOfVerification'), {
+    required: true,
+  }),
+  faults: yupFormSchemas.relationToMany(i18n('chechpoint.fields.failure'),{
+    required: true,
+  }),
+  operators: yupFormSchemas.relationToMany('Opérarios', {
+    required: true,
+  })
 });
 
-
-
 function Checkpoint() {
-  var listPost = [];
   const [initialValues] = useState({
-    email: '',
-    password: '',
-    rememberMe: true
+    name: '',
+    description: '',
+    userId: 2,
+    controlTypeId: 2,
+    verificationType: '',
+    status: 'active',
+    faults: [],
+    operators: [],
   });
 
   const form = useForm({
@@ -72,18 +83,17 @@ function Checkpoint() {
         <FormProvider {...form}>
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Grid container  direction='column'  alignItems='center' xs={12} xl={12}>
-                <Grid item container justify='center' xs={10} spacing={3}>
+              <Grid container  direction='column'  alignItems='center'>
+                <Grid item container justify='center' xs={11} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='nombre'
+                      name='name'
                       label={i18n('user.fields.firstName')}
-                      autoFocus
                     />
                   </Grid>                 
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='tipoDeControl'
+                      name='controlTypeId'
                       options={options}
                       label={i18n('checkpoint.fields.controlType')}
                       mode='unico'
@@ -91,7 +101,7 @@ function Checkpoint() {
                   </Grid>
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='tipoDeVerificacion'
+                      name='verificationType'
                       options={options}
                       label={i18n('checkpoint.fields.typeOfVerification')}
                       mode='unico'
@@ -99,22 +109,43 @@ function Checkpoint() {
                   </Grid>
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='fallas'
+                      name='categories'
+                      options={options}
+                      label='Categoria'
+                      mode='unico'
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SelectFormItem 
+                      name='faults'
                       options={options}
                       label={i18n('checkpoint.fields.failure')}
                       mode='multiple'
                     />
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={12}>
+                    <SelectFormItem 
+                      name='operators'
+                      options={options}
+                      label={'Opérarios'}
+                      mode='multiple'
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
                     <InputFormItem
-                      name='descripcion'
+                      name='description'
                       label={i18n('process.fields.description')}
                       multiline
                       rows={6}
                     />
                   </Grid>
                 </Grid>
-                <Grid container item spacing={2} xs={8}>
+                <Grid 
+                  style={{marginBottom:'10px'}}
+                  container 
+                  item 
+                  spacing={2} 
+                  xs={8}>
                   <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}

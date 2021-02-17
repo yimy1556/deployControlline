@@ -17,6 +17,7 @@ function Modal(props) {
       open={open}
       onClose={onClose || undefined}
       fullWidth={true}
+      maxWidth='md'
     >
       <DialogContent>
         {children}

@@ -34,7 +34,7 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.post(
-      `/checkpoint`,
+      `/checkpoint/`,
       body,
     );
 
@@ -55,7 +55,7 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.get(
-      `/checkpoint`,
+      `/checkpoint/`,
       {
         params,
       },
