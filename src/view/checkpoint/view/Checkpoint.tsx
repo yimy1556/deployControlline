@@ -10,6 +10,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import actions from 'src/modules/modal/modalActions';
+import checkpointViewSelectors from 'src/modules/config/checkpoint/view/checkpointViewSelectors';
+import selectorsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 
 const options = [
   {value: 1, label: 'Chocolate'  },
@@ -42,24 +44,31 @@ const schema = yup.object().shape({
   verificationType: yupFormSchemas.integer(i18n('checkpoint.fields.typeOfVerification'), {
     required: true,
   }),
-  faults: yupFormSchemas.relationToMany(i18n('chechpoint.fields.failure'),{
+  faults: yupFormSchemas.stringArray(i18n('chechpoint.fields.failure'),{
     required: true,
   }),
-  operators: yupFormSchemas.relationToMany('Opérarios', {
+  operators: yupFormSchemas.stringArray('Opérarios', {
     required: true,
-  })
+  }),
+  category: yupFormSchemas.integer('Categoria', {
+    required: true,
+  }),
 });
 
 function Checkpoint() {
+  const valuesInitial = useSelector(checkpointViewSelectors.selectEdition)
+  console.log(valuesInitial,'sdssdsddsds')
+
   const [initialValues] = useState({
-    name: '',
-    description: '',
-    userId: 2,
-    controlTypeId: 2,
-    verificationType: '',
-    status: 'active',
-    faults: [],
-    operators: [],
+    name: valuesInitial?.name || '',
+    description: valuesInitial?.description || '',
+    userId: valuesInitial?.user?.id || 2,
+    controlTypeId: valuesInitial?.controlType?.id || 2,
+    category: valuesInitial?.category?.id || 0,
+    verificationType: valuesInitial?.verificationType || '',
+    status: valuesInitial?.status || 'active',
+    faults: valuesInitial?.faults || [],
+    operators: valuesInitial?.operators || [],
   });
 
   const form = useForm({
@@ -72,6 +81,10 @@ function Checkpoint() {
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
+
+  const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
+  const optionVerificationtype = useSelector(selectorsCheckpoint.selectOptionVerificationType);
+  const optionControlType = useSelector(selectorsCheckpoint.selectOptionControlType);  
   const onSubmit = (values) => console.log(values);
  
   return (
@@ -94,7 +107,7 @@ function Checkpoint() {
                   <Grid item xs={6}>
                     <SelectFormItem 
                       name='controlTypeId'
-                      options={options}
+                      options={optionControlType}
                       label={i18n('checkpoint.fields.controlType')}
                       mode='unico'
                     />
@@ -102,15 +115,15 @@ function Checkpoint() {
                   <Grid item xs={6}>
                     <SelectFormItem 
                       name='verificationType'
-                      options={options}
+                      options={optionVerificationtype}
                       label={i18n('checkpoint.fields.typeOfVerification')}
                       mode='unico'
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='categories'
-                      options={options}
+                      name='category'
+                      options={optionCategory}
                       label='Categoria'
                       mode='unico'
                     />

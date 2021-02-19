@@ -1,4 +1,4 @@
-import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import actions from 'src/modules/config/process/list/processListActions';
 
 const INITIAL_PAGE_SIZE = 10;
 
@@ -8,29 +8,13 @@ const initialPagination = {
 } 
 
 const initialData = {
-  rows: [] as Array<any>,
+  rows: ['ajhsjashj'] as Array<any>,
   count: 0,
   loading: false,
   filter: {},
   rawFilter: {},
   pagination: initialPagination,
   sorter: {},
-  optionCategory: [],
-  optionControlType: [],
-  optionVerificationtype: [
-    {
-      value: 'manual',
-      label: "Manual",
-    },
-    {
-      value: 'automatico',
-      label: "Automatico",
-    },
-    {
-      value: 'manual y automatico',
-      label: "Manual y Automatico",
-    }
-  ]
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -47,14 +31,6 @@ export default (state = initialData, { type, payload }) => {
     };
   }
  
-  if (type === actions.LOAD_OPTION){
-    return{
-      ...state,
-      optionCategory: payload.category,
-      optionControlType: payload.controlType,
-    }
-  }
-
   if (type === actions.RESETED) {
     return {
       ...initialData,

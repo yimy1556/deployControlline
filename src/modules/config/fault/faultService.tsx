@@ -1,25 +1,25 @@
 import authAxios from 'src/modules/shared/axios/authAxios';
 
-export default class CheckponitService {
+export default class FaultService {
   static async edit(data) {
     const body = {
       data,
     };
 
     const response = await authAxios.put(
-      `/checkpoint`,
+      `/falla/`,
       body,
     );
     return response.data;
   }
 
-  static async doDisabled(ids) {
+  static async disable(ids) {
     const params = {
       ids,
     };
 
     const response = await authAxios.put(
-      `/disable/checkpoint`,
+      `/disable/falla/`,
       {
         params,
       },
@@ -34,7 +34,7 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.post(
-      `/checkpoint/`,
+      `/falla/`,
       body,
     );
 
@@ -43,19 +43,19 @@ export default class CheckponitService {
 
   static async find(id) {
     const response = await authAxios.get(
-      `/checkpoint/${id}`,
+      `/falla/${id}`,
     );
     return response.data;
   }
 
-  static async fetchCheckpoint(filter, limit) {
+  static async fetchFault(filter, limit) {
     const params = {
       filter,
       limit,
     };
 
     const response = await authAxios.get(
-      `/checkpoint/`,
+      `/falla/`,
       {
         params,
       },

@@ -17,7 +17,9 @@ import Message from 'src/view/shared/message';
 
 const store = configureStore();
 
+
 export default function App(props) {
+
   return (
     <Provider store={store}>
       <AppWithRedux {...props} />

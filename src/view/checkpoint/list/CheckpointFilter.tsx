@@ -51,12 +51,18 @@ const previewRenders = {
     render: (value) =>
       value ? i18n(`roles.${value}.label`) : null,
   },
+  category: {
+    label: i18n('user.fields.role'),
+    render: (value) =>
+      value ? i18n(`roles.${value}.label`) : null,
+  },
 };
 
 const emptyValues = {
   name: null,
-  typeOfVerification: null,
+  verificationType: null,
   controlType: null,
+  category: null,
 };
 
 function UserFilter(props) {
@@ -84,9 +90,13 @@ function UserFilter(props) {
   useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
-
+    dispatch(actions.doLoadOption());
   }, [dispatch]);
-  
+ 
+  const optionCategory = useSelector(selectors.selectOptionCategory);
+  const optionVerificationtype = useSelector(selectors.selectOptionVerificationType);
+  const optionControlType = useSelector(selectors.selectOptionControlType)
+
   const onSubmit = (values) => {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
@@ -132,26 +142,23 @@ function UserFilter(props) {
                   <SelectFormItem
                     name={'typeOfVerification'}
                     label={i18n('checkpoint.fields.typeOfVerification')}
-                    options={userEnumerators.roles.map(
-                      (value) => ({
-                        value,
-                        label: i18n(`roles.${value}.label`),
-                      }),
-                    )}
+                    options={optionVerificationtype}
+                  />
+                </Grid>
+              <Grid item lg={6} xs={12}>
+                <SelectFormItem
+                    name={'controlType'}
+                    label={i18n('checkpoint.fields.controlType')}
+                    options={optionControlType}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
-                    name={'controlType'}
-                    label={i18n('checkpoint.fields.controlType')}
-                    options={userEnumerators.status.map(
-                      (value) => ({
-                        value,
-                        label: i18n(`user.status.${value}`),
-                      }),
-                    )}
+                    name='category'
+                    label='Categoria'
+                    options={optionCategory}
                   />
-                </Grid>
+                </Grid> 
               </Grid>
               <FilterButtons>
                 <Tooltip

@@ -1,4 +1,7 @@
-const prefix = 'AUTH';
+import checkpointViewActions from 'src/modules/config/checkpoint/view/checkpointViewActions';
+import processViewActions from 'src/modules/config/process/view/processViewActions';
+
+const prefix = 'MODAL';
 
 const modalActions = {
   MODAL_OPEN: `${prefix}_OPEN`,
@@ -9,6 +12,8 @@ const modalActions = {
   },
 
   closeModal: () => async (dispatch) => {
+    dispatch(checkpointViewActions.finishEdicion());
+    dispatch(processViewActions.finishEdicion());
     dispatch({ type: modalActions.MODAL_CLOSE});
   },
 

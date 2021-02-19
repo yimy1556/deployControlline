@@ -12,7 +12,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { i18n } from 'src/i18n';
 import yupFilterSchemas from 'src/modules/shared/yup/yupFilterSchemas';
-import actions from 'src/modules/user/list/userListActions';
+import actions from 'src/modules/config/process/list/processListActions';
 import selectors from 'src/modules/user/list/userListSelectors';
 import userEnumerators from 'src/modules/user/userEnumerators';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
@@ -29,6 +29,7 @@ import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import actionsModal from 'src/modules/modal/modalActions';
+import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -65,7 +66,7 @@ const emptyValues = {
   numberOfCheckpoints: null,
 };
 
-function UserFilter(props) {
+function ProcessFilter(props) {
   const rawFilter = useSelector(selectors.selectRawFilter);
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
@@ -83,11 +84,11 @@ function UserFilter(props) {
     mode: 'all',
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
+    dispatch(checkpointListActions.doLoadOption());
   }, [dispatch]);
-   */
   
   const onSubmit = (values) => {
     const rawValues = form.getValues();
@@ -205,4 +206,4 @@ function UserFilter(props) {
   );
 }
 
-export default UserFilter;
+export default ProcessFilter;

@@ -99,6 +99,7 @@ const yupFormSchemas = {
       .nullable(true)
       .label(label)
       .transform((value, originalValue) => {
+        console.log(value, originalValue)
         if (!originalValue || !originalValue.length) {
           return [];
         }

@@ -12,9 +12,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { i18n } from 'src/i18n';
 import yupFilterSchemas from 'src/modules/shared/yup/yupFilterSchemas';
-import actions from 'src/modules/user/list/userListActions';
-import selectors from 'src/modules/user/list/userListSelectors';
-import userEnumerators from 'src/modules/user/userEnumerators';
+import actions from 'src/modules/config/fault/list/faultListActions';
+import selectors from 'src/modules/config/fault/list/faultListSelectors';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import FilterWrapper, {
@@ -74,11 +73,11 @@ function UserFilter(props) {
     mode: 'all',
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
   }, [dispatch]);
-   */
+  
   const onSubmit = (values) => {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
@@ -124,12 +123,7 @@ function UserFilter(props) {
                   <SelectFormItem
                     name={'category'}
                     label={i18n('faults.fields.category')}
-                    options={userEnumerators.roles.map(
-                      (value) => ({
-                        value,
-                        label: i18n(`roles.${value}.label`),
-                      }),
-                    )}
+                    options={[]}
                   />
                 </Grid>
               </Grid>

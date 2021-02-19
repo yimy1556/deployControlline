@@ -10,31 +10,40 @@ import { Button } from '@material-ui/core';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
+import processViewSelectors from 'src/modules/config/process/view/processViewSelectors';
+import selectorsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import processFormActions from 'src/modules/config/process/form/processFormActions';
 
 const schema = yup.object().shape({
-  nombre: yupFormSchemas.string(i18n('user.fields.firstName'), {
+  name: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
-  planta: yupFormSchemas.string(i18n('process.fields.plant'), {
+  industrialPlant: yupFormSchemas.integer(i18n('process.fields.plant'), {
     required: true,
   }),
   sku: yupFormSchemas.string(i18n('process.fields.sku'), {
     required: true,
   }),
-  descripcion:  yupFormSchemas.string(i18n('process.fields.description'), {
+  description:  yupFormSchemas.string(i18n('process.fields.description'), {
     required: true,
   }),
-  cantidadPuestos:  yupFormSchemas.integer('puestos', {
+  checkpointNumber:  yupFormSchemas.integer('Puestos', {
     required: true,
+  }),
+  checkpoints: yupFormSchemas.stringArray('Puestos de control', {
+    required: false,
+  }),
+  category : yupFormSchemas.integer('Categoria', {
+    required:  false,
   })
 });
 
 const options = [
+  {value: {id: 1}, label: 'Chocolate'  },
+  { value: {id: 2}, label: 'Strawberry'  },
+  { value: {id: 3}, label: 'Vanilla'  },
   {value: 1, label: 'Chocolate'  },
   { value: 2, label: 'Strawberry'  },
-  { value: 3, label: 'Vanilla'  },
-  {value: 4, label: 'Chocolate'  },
-  { value: 5, label: 'Strawberry'  },
   { value: 6, label: 'Vanilla'  },
   {value: 7, label: 'Chocolate'  },
   { value: 8, label: 'Strawberry'  },
@@ -49,11 +58,19 @@ const options = [
 
 
 function ProcessDischarge() {
+  const valueInitial = useSelector(processViewSelectors.selectEdition);
+  console.log(valueInitial);
   const [initialValues] = useState({
-    nombre: '',
-    planta: '',
-    sku: '',
-    descripcion: '',
+    id:null,
+    userId: 2,
+    name: valueInitial?.name || '',
+    industrialPlant: valueInitial?.industrialPlant || 1,
+    sku: valueInitial?.sku || 'default',
+    description: valueInitial?.description || '',
+    status: valueInitial?.status || 'active',
+    checkpointNumber: valueInitial?.checkpointNumber || 1,
+    checkpoints:valueInitial?.checkpoints?.reduce((acc, el) => ([...acc, el.checkpoint.id]),[]) || [],
+    category: valueInitial?.category?.id || 1,
   });
 
   const form = useForm({
@@ -66,7 +83,12 @@ function ProcessDischarge() {
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
-  const onSubmit = (values) => console.log(values);
+
+  const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
+  const optionCheckpoint = useSelector(selectorsCheckpoint.selectRows)
+  const onSubmit = (values) => {
+    dispatch(processFormActions.doAdd({...initialValues, ...values}));
+  };
  
   return (
     <Grid container alignItems='stretch' justify='center' direction='column'>
@@ -80,44 +102,50 @@ function ProcessDischarge() {
                 <Grid item container justify='center' xs={10} spacing={3}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='nombre'
+                      name='name'
                       label={i18n('user.fields.firstName')}
                     />
                   </Grid>                 
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='cantidadPuestos'
+                      name='checkpointNumber'
                       label={i18n('process.fields.numberOfCheckpoint')}
                       type='number'
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='planta'
+                      name='industrialPlant'
                       options={options}
                       label={i18n('process.fields.plant')}
                       mode='unico'
                     />
-                  </Grid>
+                  </Grid>       
                   <Grid item xs={6}>
-                    <SelectFormItem 
+                    <InputFormItem
                       name='sku'
-                      options={options}
                       label={i18n('process.fields.sku')}
-                      mode={i18n('process.fields.sku')}
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <SelectFormItem 
-                      name='puestos'
-                      options={options}
+                      name='category'
+                      options={optionCategory}
+                      label='Categoria'
+                      mode='unico'
+                      />
+                      </Grid>
+                  <Grid item xs={12}>
+                    <SelectFormItem 
+                      name='checkpoints'
+                      options={optionCheckpoint.reduce((acc, el) => ([...acc, { value: el.id, label: el.name  }]),[])}
                       label={i18n('process.fields.checkpoint')}
                       mode='multiple'
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <InputFormItem
-                      name='descripcion'
+                      name='description'
                       label={i18n('process.fields.description')}
                       multiline
                       rows={6}

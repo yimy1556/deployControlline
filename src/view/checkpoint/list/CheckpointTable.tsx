@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import actionsView from 'src/modules/config/checkpoint/view/checkpointViewActions';
 import { Link } from 'react-router-dom';
 import { i18n } from 'src/i18n';
 import Pagination from 'src/view/shared/table/Pagination';
@@ -34,6 +35,9 @@ function CheckpointTable() {
   );
   const hasRows = useSelector(selectors.selectHasRows);
   
+  const doEdition = (id) => {
+    dispatch(actionsView.startEdicion(id));
+  }
   /*
   const doDestroy = (id) => {
     setRecordIdToDestroy(null);
@@ -81,9 +85,6 @@ function CheckpointTable() {
             <TableCellCustom  align='center'>
               Estado
               </TableCellCustom>
-              <TableCellCustom  align='center'>
-                {i18n('checkpoint.fields.failure')}
-              </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
           </TableHead>
@@ -112,11 +113,10 @@ function CheckpointTable() {
             {!loading &&
               rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align='center'>{row.name}</TableCell>
-                  <TableCell align='center'>{row.controlType.name}</TableCell>
-                  <TableCell align='center'>{row.verificationType}</TableCell>
-                  <TableCell align='center'>{row.status}</TableCell>
-                  <TableCell align='center'>Fallas de puesto</TableCell>
+                  <TableCell align='center'>{row?.name}</TableCell>
+                  <TableCell align='center'>{row?.controlType?.name}</TableCell>
+                  <TableCell align='center'>{row?.verificationType}</TableCell>
+                  <TableCell align='center'>{row?.status}</TableCell>
                   <TableCell>
                     <Box
                       display="flex"
@@ -128,15 +128,14 @@ function CheckpointTable() {
                       >
                         <IconButton
                           color="primary"
-                          component={Link}
-                          to={`/user/${row.id}/edit`}
+                          onClick={() => doEdition(row.id)}
                         >
                           <EditIcon />
                         </IconButton>
-                      </Tooltip>
-  
+                      </Tooltip> 
                       <Tooltip
                         title={i18n('common.disable')}
+                        onClick={() => setRecordIdToDestroy(row?.id)}
                       >
                         <IconButton
                           color="primary"

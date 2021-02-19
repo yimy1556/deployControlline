@@ -7,7 +7,7 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.put(
-      `/checkpoint`,
+      `/controlline`,
       body,
     );
     return response.data;
@@ -19,7 +19,7 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.put(
-      `/disable/checkpoint`,
+      `/disable/controlline`,
       {
         params,
       },
@@ -30,11 +30,11 @@ export default class CheckponitService {
 
   static async create(data) {
     const body = {
-      data,
+      ...data,
     };
 
     const response = await authAxios.post(
-      `/checkpoint/`,
+      `/controlline/`,
       body,
     );
 
@@ -43,19 +43,19 @@ export default class CheckponitService {
 
   static async find(id) {
     const response = await authAxios.get(
-      `/checkpoint/${id}`,
+      `/controlline/${id}`,
     );
     return response.data;
   }
 
-  static async fetchCheckpoint(filter, limit) {
+  static async fetchProcess(filter, limit) {
     const params = {
       filter,
       limit,
     };
 
     const response = await authAxios.get(
-      `/checkpoint/`,
+      `/controlline/`,
       {
         params,
       },

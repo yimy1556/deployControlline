@@ -1,25 +1,10 @@
 import { createSelector } from 'reselect';
 
-const selectRaw = (state) => state.config.checkpoint.list;
+const selectRaw = (state) => state.config.process.list;
 
 const selectLoading = createSelector(
   [selectRaw],
   (raw) => raw.loading,
-);
-
-const selectOptionControlType = createSelector(
-  [selectRaw],
-  (raw) => raw.optionControlType,
-);
-
-const selectOptionCategory = createSelector(
-  [selectRaw],
-  (raw) => raw.optionCategory,
-);
-
-const selectOptionVerificationType = createSelector(
-  [selectRaw],
-  (raw) => raw.optionVerificationtype,
 );
 
 const selectExportLoading = createSelector(
@@ -140,9 +125,6 @@ const checkpointListSelectors = {
   selectRawFilter,
   selectIsAllSelected,
   selectSorter,
-  selectOptionCategory,
-  selectOptionVerificationType,
-  selectOptionControlType,
 };
 
 export default checkpointListSelectors;

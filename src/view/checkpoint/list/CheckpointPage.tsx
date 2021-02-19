@@ -14,11 +14,11 @@ function CheckpointPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Línea De Puesto de control'],
+          ['Puesto de control'],
         ]}
       />
       <ContentWrapper>
-        <PageTitle>Línea De Puesto de control</PageTitle>
+        <PageTitle>Gestión de Puesto de control</PageTitle>
         <CheckpointFilter />
         <CheckpointTable />
         <Modal><Checkpoint /></Modal>

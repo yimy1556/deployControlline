@@ -8,29 +8,13 @@ const initialPagination = {
 } 
 
 const initialData = {
-  rows: [] as Array<any>,
+  rowsFault: [] as Array<any>,
   count: 0,
   loading: false,
   filter: {},
   rawFilter: {},
   pagination: initialPagination,
   sorter: {},
-  optionCategory: [],
-  optionControlType: [],
-  optionVerificationtype: [
-    {
-      value: 'manual',
-      label: "Manual",
-    },
-    {
-      value: 'automatico',
-      label: "Automatico",
-    },
-    {
-      value: 'manual y automatico',
-      label: "Manual y Automatico",
-    }
-  ]
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -47,14 +31,6 @@ export default (state = initialData, { type, payload }) => {
     };
   }
  
-  if (type === actions.LOAD_OPTION){
-    return{
-      ...state,
-      optionCategory: payload.category,
-      optionControlType: payload.controlType,
-    }
-  }
-
   if (type === actions.RESETED) {
     return {
       ...initialData,
@@ -65,7 +41,7 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...state,
       loading: false,
-      rows: payload.rows,
+      rowsFault: payload.rows,
       count: payload.count,
     };
   }
@@ -74,7 +50,7 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...state,
       loading: false,
-      rows: [],
+      rowsFault: [],
       count: 0,
     }
   }
