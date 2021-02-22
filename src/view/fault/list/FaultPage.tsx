@@ -14,11 +14,11 @@ function FaultPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión de fallas'],
+          ['Gestión De Fallas'],
         ]}
       />
       <ContentWrapper>
-        <PageTitle>Gestión de fallas</PageTitle>
+        <PageTitle>Gestión De Falla</PageTitle>
         <FaultFilter />
         <FaultTable />
         <Modal><FaultNew /></Modal>

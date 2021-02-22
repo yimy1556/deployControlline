@@ -32,6 +32,7 @@ import actionsModal from 'src/modules/modal/modalActions';
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
   category: yupFilterSchemas.string(i18n('faults.category')),
+  typeFalla: yupFilterSchemas.string('Tipo de Falla'),
 });
 
 const previewRenders = {
@@ -44,11 +45,18 @@ const previewRenders = {
     render: (value) =>
       value ? i18n(`roles.${value}.label`) : null,
   },
+  typeFalla: {
+    label: i18n('Tipo de Falla'),
+    render: (value) =>
+      value ? i18n(`roles.${value}.label`) : null,
+  },
+
 };
 
 const emptyValues = {
   name: null,
   category: null,
+  typeFalla: null,
 };
 
 function UserFilter(props) {
@@ -119,10 +127,17 @@ function UserFilter(props) {
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>
-                <Grid item lg={6} xs={12}>
+                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'category'}
                     label={i18n('faults.fields.category')}
+                    options={[]}
+                  />
+                </Grid>
+                <Grid item lg={6} xs={12}>
+                  <SelectFormItem
+                    name={'typeFalla'}
+                    label={'Tipo de Falla'}
                     options={[]}
                   />
                 </Grid>

@@ -66,22 +66,15 @@ function FaultTable() {
           <TableHead>
             <TableRow>
               <TableCellCustom
-                hasRows={hasRows}
-                name={'nombre'}
-                align='center'
-                label={i18n('user.fields.firstName')}
-              />
-              <TableCellCustom
-                hasRows={hasRows}
                 align='center'
                 name={'fullName'}
-                label={i18n('process.fields.sku')}
+                label={'Nombre'}
               />
               <TableCellCustom  align='center'>
-                {i18n('process.fields.plant')}
+                Tipo de falla
               </TableCellCustom>
               <TableCellCustom  align='center'>
-                {i18n('process.fields.numberOfCheckpoint')}
+                Categoria
               </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
@@ -111,10 +104,9 @@ function FaultTable() {
             {!loading &&
               rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align='center'>{row?.firstName || 'none'}</TableCell>
-                  <TableCell align='center'>{row.sku}</TableCell>
-                  <TableCell align='center'>{row.plant}</TableCell>
-                  <TableCell align='center'>{row.numberOfCheckpoint}</TableCell>
+                  <TableCell align='center'>{row?.name || 'none'}</TableCell>
+                  <TableCell align='center'>{row.typeFalla.name}</TableCell>
+                  <TableCell align='center'>{row.category.name}</TableCell>
                   <TableCell>
                     <Box
                       display="flex"

@@ -57,7 +57,7 @@ function FaultNew() {
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1>{i18n('checkpoint.title')}</h1>
+        <h1>Configuracion de Falla</h1>
       </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>
@@ -77,6 +77,13 @@ function FaultNew() {
                       options={options}
                       label={i18n('checkpoint.fields.controlType')}
                       mode='unico'
+                    />
+                  </Grid>
+                  <Grid item lg={12} xs={12}>
+                    <SelectFormItem
+                      name={'typeFalla'}
+                      label={'Tipo de Falla'}
+                      options={[]}
                     />
                   </Grid>
                   <Grid item xs={12}>

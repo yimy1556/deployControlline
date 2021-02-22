@@ -26,7 +26,6 @@ export default function App(props) {
     </Provider>
   );
 }
-
 function AppWithRedux(props) {
 
   const colors = {

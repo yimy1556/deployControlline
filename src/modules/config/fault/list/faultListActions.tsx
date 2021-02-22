@@ -59,7 +59,9 @@ const faultListActions = {
         filter,
         selectors.selectLimit(getState()),
       );
-
+      
+      console.log(response,'jshdjshjd')
+      
       dispatch({
         type: faultListActions.FETCH_SUCCESS,
         payload: {

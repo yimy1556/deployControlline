@@ -1,4 +1,4 @@
-import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import actions from 'src/modules/config/fault/list/faultListActions';
 
 const INITIAL_PAGE_SIZE = 10;
 
@@ -38,6 +38,7 @@ export default (state = initialData, { type, payload }) => {
   }
 
   if (type === actions.FETCH_SUCCESS) {
+
     return {
       ...state,
       loading: false,

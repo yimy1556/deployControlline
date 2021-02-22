@@ -1,7 +1,7 @@
 import processService from 'src/modules/config/process/processService';
 import selectors from 'src/modules/config/process/list/processListSelectors';
 
-const prefix = 'CHECKPOINT_LIST';
+const prefix = 'PROCESS_LIST';
 
 const processListActions = {
   FETCH_STARTED: `${prefix}_FETCH_STARTED`,

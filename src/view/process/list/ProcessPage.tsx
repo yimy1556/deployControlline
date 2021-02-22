@@ -14,11 +14,11 @@ function ProcessPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Línea De Controles'],
+          ['Gestión De Línea De Control'],
         ]}
       />
       <ContentWrapper>
-        <PageTitle>Línea De Controles</PageTitle>
+        <PageTitle> Gestión De Línea De Control</PageTitle>
         <ProcessFilter />
         <ProcessTable />
         <Modal><ProcessDischarge /></Modal>

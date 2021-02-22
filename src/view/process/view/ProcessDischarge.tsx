@@ -86,6 +86,7 @@ function ProcessDischarge() {
 
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
   const optionCheckpoint = useSelector(selectorsCheckpoint.selectRows)
+  console.log(optionCheckpoint,'ksjks')
   const onSubmit = (values) => {
     dispatch(processFormActions.doAdd({...initialValues, ...values}));
   };
