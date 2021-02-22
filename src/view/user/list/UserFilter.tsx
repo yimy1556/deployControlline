@@ -87,6 +87,7 @@ function UserFilter(props) {
 
   const onSubmit = (values) => {
     const rawValues = form.getValues();
+    console.log(rawValues)
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };

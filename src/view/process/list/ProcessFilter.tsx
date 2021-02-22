@@ -89,7 +89,7 @@ function ProcessFilter(props) {
     // eslint-disable-next-line
     dispatch(checkpointListActions.doLoadOption());
   }, [dispatch]);
-  
+
   const onSubmit = (values) => {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
@@ -97,7 +97,7 @@ function ProcessFilter(props) {
   };
 
   const openModel = () => {
-    dispatch(actionsModal.modalOpen());      
+    dispatch(actionsModal.modalOpen());
   };
 
   const onReset = () => {
@@ -136,12 +136,6 @@ function ProcessFilter(props) {
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
-                  <InputFormItem
-                    name={'numberOfCheckpoints'}
-                    label={i18n('process.fields.numberOfCheckpoint')}
-                  />
-                </Grid>
-                <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'process.fields.sku'}
                     label={i18n('process.fields.sku')}
@@ -170,8 +164,8 @@ function ProcessFilter(props) {
                 <Tooltip
                   title={i18n('process.newControlLine')}
                 >
-                  <Fab 
-                    size="small" 
+                  <Fab
+                    size="small"
                     color="primary"
                     onClick={openModel}
                   >

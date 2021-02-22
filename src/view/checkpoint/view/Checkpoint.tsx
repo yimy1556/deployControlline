@@ -12,64 +12,43 @@ import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import actions from 'src/modules/modal/modalActions';
 import checkpointViewSelectors from 'src/modules/config/checkpoint/view/checkpointViewSelectors';
 import selectorsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import selectorFaults from 'src/modules/config/fault/list/faultListSelectors';
+import actionsFaults from 'src/modules/config/fault/list/faultListActions';
+import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
+
 
 const options = [
-  {value: 1, label: 'Chocolate'  },
-  { value: 2, label: 'Strawberry'  },
-  { value: 3, label: 'Vanilla'  },
-  {value: 4, label: 'Chocolate'  },
-  { value: 5, label: 'Strawberry'  },
-  { value: 6, label: 'Vanilla'  },
-  {value: 7, label: 'Chocolate'  },
-  { value: 8, label: 'Strawberry'  },
-  { value: 9, label: 'Vanilla'  },
-  {value: 10, label: 'Chocolate'  },
-  { value: 11, label: 'Strawberry'  },
-  { value: 12, label: 'Vanilla'  },
-  {value: 331, label: 'Chocolate'  },
-  { value: 22, label: 'Strawberry'  },
-  { value: 39, label: 'Vanilla'  } 
+  { value: 3, label: 'Opeario 1' },
+  { value: 2, label: 'Operario 2' },
+  { value: 3, label: 'Operario 3' },
+  { value: 4, label: 'Operario 4' },
+  { value: 5, label: 'Operario 5' },
 ]
 
 const schema = yup.object().shape({
-  name: yupFormSchemas.string(i18n('user.fields.firstName'), {
-    required: true,
-  }),
-  description: yupFormSchemas.string(i18n('process.fields.description'), {
-    required: true,
-  }),
-  controlTypeId: yupFormSchemas.integer(i18n('checkpoint.fields.controlType'), {
-    required: true,
-  }),
-  verificationType: yupFormSchemas.integer(i18n('checkpoint.fields.typeOfVerification'), {
-    required: true,
-  }),
-  faults: yupFormSchemas.stringArray(i18n('chechpoint.fields.failure'),{
-    required: true,
-  }),
-  operators: yupFormSchemas.stringArray('Opérarios', {
-    required: true,
-  }),
-  category: yupFormSchemas.integer('Categoria', {
-    required: true,
-  }),
+
 });
 
 function Checkpoint() {
   const valuesInitial = useSelector(checkpointViewSelectors.selectEdition)
-  console.log(valuesInitial,'sdssdsddsds')
 
   const [initialValues] = useState({
     name: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
     userId: valuesInitial?.user?.id || 2,
     controlTypeId: valuesInitial?.controlType?.id || 2,
-    category: valuesInitial?.category?.id || 0,
+    categoryId: valuesInitial?.category?.id || 0,
     verificationType: valuesInitial?.verificationType || '',
     status: valuesInitial?.status || 'active',
     faults: valuesInitial?.faults || [],
-    operators: valuesInitial?.operators || [],
+    operaryId: valuesInitial?.operators || [],
   });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actionsFaults.doFetch({}))
+  }, [dispatch]);
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -77,16 +56,24 @@ function Checkpoint() {
     defaultValues: initialValues
   });
 
-  const dispatch = useDispatch();
+
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
 
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
-  const optionVerificationtype = useSelector(selectorsCheckpoint.selectOptionVerificationType);
-  const optionControlType = useSelector(selectorsCheckpoint.selectOptionControlType);  
-  const onSubmit = (values) => console.log(values);
- 
+  const optionControlType = useSelector(selectorsCheckpoint.selectOptionControlType);
+  const faults = useSelector(selectorFaults.selectRowsFault);
+
+  console.log(faults)
+
+  const onSubmit = (values) => {
+
+    const rawValues = form.getValues();
+    console.log(rawValues)
+    dispatch(actionsCheckpoint.doCreate(values))
+  };
+
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
@@ -96,52 +83,45 @@ function Checkpoint() {
         <FormProvider {...form}>
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Grid container  direction='column'  alignItems='center'>
+              <Grid container direction='column' alignItems='center'>
                 <Grid item container justify='center' xs={11} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
                       name='name'
                       label={i18n('user.fields.firstName')}
                     />
-                  </Grid>                 
+                  </Grid>
                   <Grid item xs={6}>
-                    <SelectFormItem 
+                    <SelectFormItem
                       name='controlTypeId'
                       options={optionControlType}
                       label={i18n('checkpoint.fields.controlType')}
                       mode='unico'
                     />
                   </Grid>
-                  <Grid item xs={6}>
-                    <SelectFormItem 
-                      name='verificationType'
-                      options={optionVerificationtype}
-                      label={i18n('checkpoint.fields.typeOfVerification')}
-                      mode='unico'
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <SelectFormItem 
-                      name='category'
+
+                  <Grid item xs={12}>
+                    <SelectFormItem
+                      name='categoryId'
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <SelectFormItem 
+                    <SelectFormItem
                       name='faults'
-                      options={options}
+                      options={faults.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), [])}
                       label={i18n('checkpoint.fields.failure')}
                       mode='multiple'
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <SelectFormItem 
-                      name='operators'
+                    <SelectFormItem
+                      name='operaryId'
                       options={options}
-                      label={'Opérarios'}
-                      mode='multiple'
+                      label={'Operarios'}
+                      mode='unico'
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -153,18 +133,18 @@ function Checkpoint() {
                     />
                   </Grid>
                 </Grid>
-                <Grid 
-                  style={{marginBottom:'10px'}}
-                  container 
-                  item 
-                  spacing={2} 
+                <Grid
+                  style={{ marginBottom: '10px' }}
+                  container
+                  item
+                  spacing={2}
                   xs={8}>
                   <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
                       color="primary"
-                      onClick= {() => closeModal()}
+                      onClick={() => closeModal()}
                       fullWidth
                     >
                       {i18n('common.cancel')}

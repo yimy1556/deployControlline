@@ -19,6 +19,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
+import UserStatusView from 'src/view/user/view/UserStatusView';
+import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 function CheckpointTable() {
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ function CheckpointTable() {
     selectors.selectPagination,
   );
   const hasRows = useSelector(selectors.selectHasRows);
-  
+
   const doEdition = (id) => {
     dispatch(actionsView.startEdicion(id));
   }
@@ -79,11 +81,14 @@ function CheckpointTable() {
                 name={'fullName'}
                 label={i18n('checkpoint.fields.controlType')}
               />
-              <TableCellCustom  align='center'>
-                {i18n('checkpoint.fields.typeOfVerification')}
-              </TableCellCustom>
-            <TableCellCustom  align='center'>
-              Estado
+              <TableCellCustom
+                hasRows={hasRows}
+                align='center'
+                name={'fullName'}
+                label={'Categoria'}
+              />
+              <TableCellCustom align='center'>
+                Estado
               </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
@@ -115,14 +120,14 @@ function CheckpointTable() {
                 <TableRow key={index}>
                   <TableCell align='center'>{row?.name}</TableCell>
                   <TableCell align='center'>{row?.controlType?.name}</TableCell>
-                  <TableCell align='center'>{row?.verificationType}</TableCell>
-                  <TableCell align='center'>{row?.status}</TableCell>
+                  <TableCell align='center'>{row?.category?.name}</TableCell>
+                  <TableCell align='center'> <UserStatusView value={row.status} /></TableCell>
                   <TableCell>
                     <Box
                       display="flex"
                       justifyContent="flex-end"
                     >
-                      
+
                       <Tooltip
                         title={i18n('common.edit')}
                       >
@@ -132,10 +137,10 @@ function CheckpointTable() {
                         >
                           <EditIcon />
                         </IconButton>
-                      </Tooltip> 
+                      </Tooltip>
                       <Tooltip
                         title={i18n('common.disable')}
-                        onClick={() => setRecordIdToDestroy(row?.id)}
+                        onClick={() => dispatch(actionsCheckpoint.disabled(row.id))}
                       >
                         <IconButton
                           color="primary"
@@ -143,7 +148,7 @@ function CheckpointTable() {
                           <NotInterested />
                         </IconButton>
                       </Tooltip>
-                    
+
                     </Box>
                   </TableCell>
                 </TableRow>

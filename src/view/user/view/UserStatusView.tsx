@@ -17,6 +17,14 @@ function UserStatusView(props) {
       ></ColoredChip>
     );
   }
+  if (value === 'inactive') {
+    return (
+      <ColoredChip
+        color="red"
+        label={'Inactivo'}
+      ></ColoredChip>
+    );
+  }
 
   if (value === 'empty-permissions') {
     return (

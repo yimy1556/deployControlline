@@ -39,22 +39,16 @@ const schema = yup.object().shape({
 
 const previewRenders = {
   name: {
-    label: i18n('user.fields.fullName'),
+    label: 'Nombre',
     render: filterRenders.generic(),
   },
   controlType: {
-    label: i18n('user.fields.email'),
+    label: 'Tipo de control',
     render: filterRenders.generic(),
   },
-  typeOfVerification: {
-    label: i18n('user.fields.role'),
-    render: (value) =>
-      value ? i18n(`roles.${value}.label`) : null,
-  },
   category: {
-    label: i18n('user.fields.role'),
-    render: (value) =>
-      value ? i18n(`roles.${value}.label`) : null,
+    label: 'Categoria',
+    render: filterRenders.generic(),
   },
 };
 
@@ -78,7 +72,7 @@ function UserFilter(props) {
   });
 
   const openModel = () => {
-    dispatch(actionsModal.modalOpen());      
+    dispatch(actionsModal.modalOpen());
   };
 
   const form = useForm({
@@ -92,13 +86,14 @@ function UserFilter(props) {
     // eslint-disable-next-line
     dispatch(actions.doLoadOption());
   }, [dispatch]);
- 
+
   const optionCategory = useSelector(selectors.selectOptionCategory);
   const optionVerificationtype = useSelector(selectors.selectOptionVerificationType);
   const optionControlType = useSelector(selectors.selectOptionControlType)
-
+  console.log(optionCategory)
   const onSubmit = (values) => {
     const rawValues = form.getValues();
+    console.log(rawValues)
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };
@@ -138,15 +133,9 @@ function UserFilter(props) {
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>
+
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
-                    name={'typeOfVerification'}
-                    label={i18n('checkpoint.fields.typeOfVerification')}
-                    options={optionVerificationtype}
-                  />
-                </Grid>
-              <Grid item lg={6} xs={12}>
-                <SelectFormItem
                     name={'controlType'}
                     label={i18n('checkpoint.fields.controlType')}
                     options={optionControlType}
@@ -158,14 +147,14 @@ function UserFilter(props) {
                     label='Categoria'
                     options={optionCategory}
                   />
-                </Grid> 
+                </Grid>
               </Grid>
               <FilterButtons>
                 <Tooltip
                   title={i18n('process.newControlLine')}
                 >
-                  <Fab 
-                    size="small" 
+                  <Fab
+                    size="small"
                     color="primary"
                     onClick={openModel}
                   >
