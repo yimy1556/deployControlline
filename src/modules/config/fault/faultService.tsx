@@ -13,16 +13,14 @@ export default class FaultService {
     return response.data;
   }
 
-  static async disable(ids) {
+  static async doDisabled(id) {
     const params = {
-      ids,
+      id,
     };
 
-    const response = await authAxios.put(
-      `/disable/falla/`,
-      {
-        params,
-      },
+    const response = await authAxios.delete(
+      `/falla/${id}`,
+
     );
 
     return response.data;
@@ -63,19 +61,19 @@ export default class FaultService {
 
     return response.data;
   }
-/*
-  static async fetchUserAutocomplete(query, limit) {
-    const params = {
-      query,
-      limit,
-    };
-
-    const response = await authAxios.get(
-      `/user/autocomplete`,
-      {
-        params,
-      },
-    );
-    return response.data;
-    }*/
+  /*
+    static async fetchUserAutocomplete(query, limit) {
+      const params = {
+        query,
+        limit,
+      };
+  
+      const response = await authAxios.get(
+        `/user/autocomplete`,
+        {
+          params,
+        },
+      );
+      return response.data;
+      }*/
 }

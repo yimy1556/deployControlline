@@ -19,6 +19,8 @@ import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/fault/view/faultViewActions';
+import UserStatusView from 'src/view/user/view/UserStatusView';
+import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 
 function FaultTable() {
   const dispatch = useDispatch();
@@ -32,17 +34,17 @@ function FaultTable() {
   const pagination = useSelector(
     selectors.selectPagination,
   );
-  console.log(rows) 
+  console.log(rows)
   const hasRows = useSelector(selectors.selectHasRows);
 
   const doDestroy = (id) => {
     setRecordIdToDestroy(null);
-//    dispatch(actions.doDestroy(id));
+    //    dispatch(actions.doDestroy(id));
   };
 
   const doEdition = (id) => {
     dispatch(actionsView.startEdicion(id));
-  } 
+  }
 
   const doChangePagination = (pagination) => {
     dispatch(actions.doChangePagination(pagination));
@@ -73,14 +75,14 @@ function FaultTable() {
                 name={'fullName'}
                 label={'Nombre'}
               />
-              <TableCellCustom  align='center'>
+              <TableCellCustom align='center'>
                 Tipo de falla
               </TableCellCustom>
-              <TableCellCustom  align='center'>
+              <TableCellCustom align='center'>
                 Categoria
               </TableCellCustom>
-                <TableCellCustom  align='center'>
-                  Estado
+              <TableCellCustom align='center'>
+                Estado
                 </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
@@ -113,7 +115,7 @@ function FaultTable() {
                   <TableCell align='center'>{row?.name || 'none'}</TableCell>
                   <TableCell align='center'>{row.typeFalla.name}</TableCell>
                   <TableCell align='center'>{row.category.name}</TableCell>
-                  <TableCell align='center'>{row?.status || 'none'}</TableCell>
+                  <TableCell align='center'><UserStatusView value={row.status || 'none'} /></TableCell>
                   <TableCell>
                     <Box
                       display="flex"
@@ -125,7 +127,7 @@ function FaultTable() {
                         >
                           <IconButton
                             color="primary"
-                            onClick={ () => doEdition(row?.id)}                         
+                            onClick={() => doEdition(row?.id)}
                           >
                             <EditIcon />
                           </IconButton>
@@ -137,7 +139,7 @@ function FaultTable() {
                         >
                           <IconButton
                             color="primary"
-                            onClick={() => setRecordIdToDestroy(row?.id)}
+                            onClick={() => dispatch(actionsFaults.disabled(row.id))}
                           >
                             <NotInterested />
                           </IconButton>

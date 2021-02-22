@@ -34,7 +34,14 @@ function UserStatusView(props) {
       ></ColoredChip>
     );
   }
-
+  if (value === 'none') {
+    return (
+      <ColoredChip
+        color="red"
+        label={'No asignado'}
+      ></ColoredChip>
+    );
+  }
   return (
     <ColoredChip
       color="yellow"

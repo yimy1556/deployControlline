@@ -124,7 +124,7 @@ const checkpointListActions = {
     try {
       const response = await checkpointService.create(value);
       console.log(response)
-      swal("Nuevo punto de control!", "", "success");
+      swal("Nueva falla creada!", "", "success");
 
       dispatch(
         checkpointListActions.doFetch({}),
@@ -132,7 +132,7 @@ const checkpointListActions = {
     }
     catch (error) {
       console.log(error);
-      swal("Error al crear punto de control", "", "error");
+      swal("Error al crear falla", "", "error");
     }
 
   },

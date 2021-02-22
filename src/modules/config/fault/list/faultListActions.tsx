@@ -1,8 +1,9 @@
 import faultService from 'src/modules/config/fault/faultService';
 import selectors from 'src/modules/config/fault/list/faultListSelectors';
 import TypeFallaService from 'src/modules/config/service/TypeFallaService'
-import checkpointListActions from  'src/modules/config/checkpoint/list/checkpointListActions';
-import {tr} from 'date-fns/locale';
+import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import swal from 'sweetalert';
+import modalActions from 'src/modules/modal/modalActions'
 
 const prefix = 'FAULT_LIST';
 
@@ -14,7 +15,7 @@ const faultListActions = {
   RESETED: `${prefix}_RESETED`,
 
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
-  
+
   LOAD_OPTION: `${prefix}_LOAD_OPTION`,
 
   DESTROY_STARTED: `${prefix}_DESTROY_STARTED`,
@@ -33,24 +34,35 @@ const faultListActions = {
     dispatch(faultListActions.doFetchCurrentFilter());
   },
 
-  doEdit : (value) => async () => {
-    try{
+  doEdit: (value) => async () => {
+    try {
       console.log(value)
       await faultService.edit(value);
       faultListActions.doFetch({});
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
   },
 
 
-  doCreate : (value) => async () => {
-    try{
-      console.log(value)
-      await faultService.create(value);
-      faultListActions.doFetch({});
-    }catch(error){
+  doCreate: (value) => async (dispatch) => {
+    try {
+
+      const response = await faultService.create(value);
+      console.log(response)
+
+      dispatch(
+        modalActions.closeModal()
+      )
+      swal("Nuevo punto de control!", "", "success");
+      dispatch(
+        faultListActions.doFetch({}),
+
+      )
+    } catch (error) {
       console.log(error);
+      swal("Error al crear punto de control", "", "error");
+
     }
   },
 
@@ -61,7 +73,7 @@ const faultListActions = {
 
     dispatch(faultListActions.doFetch());
   },
- 
+
   doFetchCurrentFilter: () => async (
     dispatch,
     getState,
@@ -70,7 +82,7 @@ const faultListActions = {
     const rawFilter = selectors.selectRawFilter(getState());
     dispatch(faultListActions.doFetch(filter, rawFilter, true));
   },
-  
+
   doFetch: (filter?, rawFilter?, keepPagination = false) => async (
     dispatch,
     getState,
@@ -85,9 +97,9 @@ const faultListActions = {
         filter,
         selectors.selectLimit(getState()),
       );
-      
-      console.log(response,'jshdjshjd')
-      
+
+      console.log(response, 'jshdjshjd')
+
       dispatch({
         type: faultListActions.FETCH_SUCCESS,
         payload: {
@@ -96,7 +108,7 @@ const faultListActions = {
         },
       });
     } catch (error) {
-      
+
       dispatch({
         type: faultListActions.FETCH_ERROR,
       });
@@ -104,14 +116,27 @@ const faultListActions = {
   },
 
   doLoadOption: () => async (dispatch) => {
-    const optionsTypeFalla  = await TypeFallaService.fetchTypeFalla({}, {});
-    const opTyFa = optionsTypeFalla.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]),[]);
+    const optionsTypeFalla = await TypeFallaService.fetchTypeFalla({}, {});
+    const opTyFa = optionsTypeFalla.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
     dispatch({
       type: faultListActions.LOAD_OPTION,
-      payload: opTyFa, 
+      payload: opTyFa,
     });
   },
+  disabled: (id) => async (dispatch) => {
+    console.log(id)
+    try {
+      const response = await faultService.doDisabled(id);
+      console.log(response)
+      dispatch(
+        faultListActions.doFetch({}),
+      )
+    }
+    catch (error) {
+      console.log(error);
+    }
 
+  },
 
 };
 
