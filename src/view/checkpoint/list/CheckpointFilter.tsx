@@ -138,14 +138,14 @@ function UserFilter(props) {
                   <SelectFormItem
                     name={'controlType'}
                     label={i18n('checkpoint.fields.controlType')}
-                    options={optionControlType}
+                    options={optionControlType.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name='category'
                     label='Categoria'
-                    options={optionCategory}
+                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
                   />
                 </Grid>
               </Grid>

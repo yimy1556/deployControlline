@@ -48,6 +48,8 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...initialData,
       optionCategory: state.optionCategory,
+      optionControlType: state.optionControlType,
+      optionVerificationtype: state.optionVerificationtype,
     };
   }
 
