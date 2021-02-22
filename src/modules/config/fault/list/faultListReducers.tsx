@@ -5,7 +5,7 @@ const INITIAL_PAGE_SIZE = 10;
 const initialPagination = {
   current: 1,
   pageSize: INITIAL_PAGE_SIZE,
-} 
+}
 
 const initialData = {
   rowsFault: [] as Array<any>,
@@ -18,11 +18,11 @@ const initialData = {
   optionsTypeFalla: [
     {
       value: 1,
-      label : "Bloqueante",
+      label: "Bloqueante",
     },
     {
       value: 2,
-      label : "Informativa",
+      label: "Declarativa",
     },
   ],
 };
@@ -32,21 +32,21 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...state,
       loading: true,
-      filter: payload? payload.filter : {},
-      rawFilter: payload? payload.rawFilter : {},
+      filter: payload ? payload.filter : {},
+      rawFilter: payload ? payload.rawFilter : {},
       pagination:
         payload && payload.keepPagination
           ? state.pagination
           : initialPagination,
     };
   }
-  
-  if(type === actions.LOAD_OPTION){
+
+  if (type === actions.LOAD_OPTION) {
     return {
       ...state,
       optionsTypeFalla: payload,
     }
-  } 
+  }
 
   if (type === actions.RESETED) {
     return {
