@@ -3,6 +3,7 @@ import CategoryService from 'src/modules/config/service/CategoryService';
 import ControlTypeService from 'src/modules/config/service/ControlTypeService';
 import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import swal from 'sweetalert';
+import modalActions from 'src/modules/modal/modalActions'
 
 const prefix = 'CHECKPOINT_LIST';
 
@@ -124,7 +125,10 @@ const checkpointListActions = {
     try {
       const response = await checkpointService.create(value);
       console.log(response)
-      swal("Nueva falla creada!", "", "success");
+      dispatch(
+        modalActions.closeModal()
+      )
+      swal("Nuevo puesto de control creado!", "", "success");
 
       dispatch(
         checkpointListActions.doFetch({}),
@@ -132,7 +136,7 @@ const checkpointListActions = {
     }
     catch (error) {
       console.log(error);
-      swal("Error al crear falla", "", "error");
+      swal("Error al crear nueva falla", "", "error");
     }
 
   },

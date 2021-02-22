@@ -54,14 +54,14 @@ const faultListActions = {
       dispatch(
         modalActions.closeModal()
       )
-      swal("Nuevo punto de control!", "", "success");
+      swal("Nueva falla creada!", "", "success");
       dispatch(
         faultListActions.doFetch({}),
 
       )
     } catch (error) {
       console.log(error);
-      swal("Error al crear punto de control", "", "error");
+      swal("Error al crear falla", "", "error");
 
     }
   },
