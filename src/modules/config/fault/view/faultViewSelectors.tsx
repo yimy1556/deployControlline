@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const selectView = (state) => state.config.checkpoint.view;
+const selectView = (state) => state.config.fault.view;
 
 const selectEdition = createSelector(
   [selectView],

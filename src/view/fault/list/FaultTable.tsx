@@ -18,7 +18,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
-
+import actionsView from 'src/modules/config/fault/view/faultViewActions';
 
 function FaultTable() {
   const dispatch = useDispatch();
@@ -40,6 +40,9 @@ function FaultTable() {
 //    dispatch(actions.doDestroy(id));
   };
 
+  const doEdition = (id) => {
+    dispatch(actionsView.startEdicion(id));
+  } 
 
   const doChangePagination = (pagination) => {
     dispatch(actions.doChangePagination(pagination));
@@ -76,6 +79,9 @@ function FaultTable() {
               <TableCellCustom  align='center'>
                 Categoria
               </TableCellCustom>
+                <TableCellCustom  align='center'>
+                  Estado
+                </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
           </TableHead>
@@ -107,6 +113,7 @@ function FaultTable() {
                   <TableCell align='center'>{row?.name || 'none'}</TableCell>
                   <TableCell align='center'>{row.typeFalla.name}</TableCell>
                   <TableCell align='center'>{row.category.name}</TableCell>
+                  <TableCell align='center'>{row?.status || 'none'}</TableCell>
                   <TableCell>
                     <Box
                       display="flex"
@@ -118,8 +125,7 @@ function FaultTable() {
                         >
                           <IconButton
                             color="primary"
-                            component={Link}
-                            to={`/user/${row.id}/edit`}
+                            onClick={ () => doEdition(row?.id)}                         
                           >
                             <EditIcon />
                           </IconButton>
@@ -131,6 +137,7 @@ function FaultTable() {
                         >
                           <IconButton
                             color="primary"
+                            onClick={() => setRecordIdToDestroy(row?.id)}
                           >
                             <NotInterested />
                           </IconButton>

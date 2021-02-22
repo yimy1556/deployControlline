@@ -15,6 +15,16 @@ const initialData = {
   rawFilter: {},
   pagination: initialPagination,
   sorter: {},
+  optionsTypeFalla: [
+    {
+      value: 1,
+      label : "Bloqueante",
+    },
+    {
+      value: 2,
+      label : "Informativa",
+    },
+  ],
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -30,7 +40,14 @@ export default (state = initialData, { type, payload }) => {
           : initialPagination,
     };
   }
- 
+  
+  if(type === actions.LOAD_OPTION){
+    return {
+      ...state,
+      optionsTypeFalla: payload,
+    }
+  } 
+
   if (type === actions.RESETED) {
     return {
       ...initialData,

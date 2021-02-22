@@ -38,12 +38,12 @@ function CheckpointTable() {
   const doEdition = (id) => {
     dispatch(actionsView.startEdicion(id));
   }
-  /*
+  
   const doDestroy = (id) => {
     setRecordIdToDestroy(null);
-    dispatch(actions.doDestroy(id));
+  //  dispatch(actions.doDestroy(id));
   };
-   */
+   
   const doChangePagination = (pagination) => {
     dispatch(actions.doChangePagination(pagination));
   };

@@ -28,6 +28,8 @@ import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import actionsModal from 'src/modules/modal/modalActions';
+import selectorsListCheckponint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -37,21 +39,18 @@ const schema = yup.object().shape({
 
 const previewRenders = {
   name: {
-    label: i18n('user.fields.fullName'),
+    label: 'Nombre',
     render: filterRenders.generic(),
   },
   category: {
-    label: i18n('user.fields.role'),
-    render: (value) =>
-      value ? i18n(`roles.${value}.label`) : null,
+    label: 'Cantegoria',
+    render: filterRenders.generic(),
   },
   typeFalla: {
-    label: i18n('Tipo de Falla'),
-    render: (value) =>
-      value ? i18n(`roles.${value}.label`) : null,
-  },
-
-};
+    label: 'Tipo de Falla',
+    render: filterRenders.generic(),
+  }
+}
 
 const emptyValues = {
   name: null,
@@ -84,6 +83,8 @@ function UserFilter(props) {
   useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
+    dispatch(actions.doLoadOption);
+    dispatch(checkpointListActions.doLoadOption())
   }, [dispatch]);
   
   const onSubmit = (values) => {
@@ -100,7 +101,12 @@ function UserFilter(props) {
     setExpanded(false);
   };
 
+
+  const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
+  const optionsTypeFalla =  useSelector(selectors.selectOptionTypeFalla);
   const { loading } = props;
+  
+  console.log(optionsTypeFalla, optionCategory,'yiy')
 
   return (
     <FilterWrapper>
@@ -131,14 +137,14 @@ function UserFilter(props) {
                   <SelectFormItem
                     name={'category'}
                     label={i18n('faults.fields.category')}
-                    options={[]}
+                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'typeFalla'}
                     label={'Tipo de Falla'}
-                    options={[]}
+                    options={optionsTypeFalla.reduce((acc, el) => ([...acc, { value: el.label, label: el.label  }]),[])}
                   />
                 </Grid>
               </Grid>

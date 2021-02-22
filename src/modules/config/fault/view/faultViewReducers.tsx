@@ -1,4 +1,4 @@
-import checkpointViewActions from 'src/modules/config/checkpoint/view/checkpointViewActions';
+import faultViewActions from 'src/modules/config/fault/view/faultViewActions';
 
 const initialData = {
   edicionStart : false,
@@ -6,17 +6,17 @@ const initialData = {
 };
 
 export default (state = initialData, { type, payload }) => {
-  if (type === checkpointViewActions.VIEW_EDICION_START){
+  if (type === faultViewActions.VIEW_EDICION_START){
     return {
       edicionStart: true,
       edition: payload,
     };
   }
 
-  if (type === checkpointViewActions.VIEW_EDICION_FINISH) {
+  if (type === faultViewActions.VIEW_EDICION_FINISH) {
     return {
       edicionStart: false,
-      edition: null,
+      edition: {},
     };
   }
   

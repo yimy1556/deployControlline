@@ -10,35 +10,24 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import actions from 'src/modules/modal/modalActions';
-
-const options = [
-  {value: 'chocolate', label: 'Chocolate'  },
-  { value: 'strawberry', label: 'Strawberry'  },
-  { value: 'vanilla', label: 'Vanilla'  }      
-]
+import faultViewSelectors from 'src/modules/config/fault/view/faultViewSelectors';
+import selectorsList from 'src/modules/config/fault/list/faultListSelectors';
+import selectorsListCheckponint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import actionsFault from 'src/modules/config/fault/list/faultListActions';
 
 const schema = yup.object().shape({
-  firstName: yupFormSchemas.string(i18n('user.fields.email'), {
-    required: true,
-  }),
-  description: yupFormSchemas.string(
-    i18n('user.fields.password'),
-    {
-      required: true,
-    },
-  ),
-  category: yupFormSchemas.boolean(
-    i18n('user.fields.rememberMe'),
-  ),
 });
 
 
-
 function FaultNew() {
+  const valuesInitial = useSelector(faultViewSelectors.selectEdition)
+
   const [initialValues] = useState({
-    firstNamer: '',
-    description: '',
-    category: '',
+    id : valuesInitial?.id || null,
+    name: valuesInitial?.name || '',
+    description: valuesInitial?.description || '',
+    categoryId: valuesInitial?.category?.id || '' ,
+    typeFallaId:  valuesInitial?.typeFalla?.id || '',
   });
 
   const form = useForm({
@@ -48,11 +37,27 @@ function FaultNew() {
   });
 
 
+  const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
+  const optionsTypeFalla =  useSelector(selectorsList.selectOptionTypeFalla);
+
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
-  const onSubmit = (values) => console.log(values);
+  const onSubmit = (values) => {
+    if(!valuesInitial.id){
+      console.log('new')
+      dispatch(actionsFault.doCreate({
+        ...initialValues,...values
+      }));
+    }
+    else{
+      console.log('edit')
+      dispatch(actionsFault.doEdit({
+        ...initialValues,...values
+      }));
+    }
+  }
  
   return (
     <Grid container alignItems='center' direction='column'>
@@ -67,23 +72,24 @@ function FaultNew() {
                 <Grid item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='firstName'
+                      name='name'
                       label={i18n('user.fields.firstName')}
-                    />
+                   />
                   </Grid>                 
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='category'
-                      options={options}
-                      label={i18n('checkpoint.fields.controlType')}
+                      name='categoryId'
+                      options={optionCategory}
+                      label='Categoria'
                       mode='unico'
                     />
                   </Grid>
                   <Grid item lg={12} xs={12}>
                     <SelectFormItem
-                      name={'typeFalla'}
+                      name={'typeFallaId'}
                       label={'Tipo de Falla'}
-                      options={[]}
+                      options={optionsTypeFalla}
+                      mode = 'unico'
                     />
                   </Grid>
                   <Grid item xs={12}>

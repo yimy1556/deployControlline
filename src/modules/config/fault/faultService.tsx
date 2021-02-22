@@ -30,9 +30,9 @@ export default class FaultService {
 
   static async create(data) {
     const body = {
-      data,
+      ...data,
     };
-
+    console.log(body)
     const response = await authAxios.post(
       `/falla/`,
       body,

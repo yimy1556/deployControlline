@@ -44,8 +44,6 @@ const checkpointListActions = {
     }
   },
 
-
-
   doChangePagination: (pagination) => async (
     dispatch,
     getState,
@@ -61,7 +59,7 @@ const checkpointListActions = {
   doLoadOption: () => async (dispatch) => {
     const optionCategory = await CategoryService.fetchCheckpoint({}, {});
     const optionControlType = await ControlTypeService.fetchCheckpoint({},{});
-
+    console.log('yimy')
     const op = optionCategory.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]),[]);
     const opC = optionControlType.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]),[]);
 
