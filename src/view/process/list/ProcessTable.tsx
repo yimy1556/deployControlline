@@ -18,6 +18,7 @@ import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/process/view/processViewActions';
+import UserStatusView from 'src/view/user/view/UserStatusView';
 
 function ProcessTable() {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function ProcessTable() {
   );
   const hasRows = useSelector(selectors.selectHasRows);
   const sorter = useSelector(selectors.selectSorter);
-  
+
   const doDisabled = (id) => {
     setRecordIdToDisabled(null);
     dispatch(actions.doDisabled(id));
@@ -74,7 +75,7 @@ function ProcessTable() {
                 align='center'
                 label={i18n('process.fields.sku')}
               />
-              <TableCellCustom  align='center'>
+              <TableCellCustom align='center'>
                 {i18n('process.fields.plant')}
               </TableCellCustom>
               <TableCellCustom
@@ -111,8 +112,8 @@ function ProcessTable() {
                 <TableRow key={index}>
                   <TableCell align='center'>{row?.name || 'none'}</TableCell>
                   <TableCell align='center'>{row?.sku || 'none'}</TableCell>
-                  <TableCell align='center'>{row?.plant?.name || 'none' }</TableCell>
-                  <TableCell align='center'>{row?.status || 'none' }</TableCell>
+                  <TableCell align='center'>{row?.plant?.name || 'none'}</TableCell>
+                  <TableCell align='center'><UserStatusView value={row.status} /></TableCell>
                   <TableCell>
                     <Box
                       display="flex"

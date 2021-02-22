@@ -2,6 +2,7 @@ import checkpointService from 'src/modules/config/checkpoint/checkpointService';
 import CategoryService from 'src/modules/config/service/CategoryService';
 import ControlTypeService from 'src/modules/config/service/ControlTypeService';
 import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import swal from 'sweetalert';
 
 const prefix = 'CHECKPOINT_LIST';
 
@@ -9,9 +10,9 @@ const checkpointListActions = {
   FETCH_STARTED: `${prefix}_FETCH_STARTED`,
   FETCH_SUCCESS: `${prefix}_FETCH_SUCCESS`,
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
-  
+
   LOAD_OPTION: `${prefix}_LOAD_OPTION`,
-  
+
   RESETED: `${prefix}_RESETED`,
 
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
@@ -58,10 +59,10 @@ const checkpointListActions = {
 
   doLoadOption: () => async (dispatch) => {
     const optionCategory = await CategoryService.fetchCheckpoint({}, {});
-    const optionControlType = await ControlTypeService.fetchCheckpoint({},{});
-    console.log('yimy')
-    const op = optionCategory.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]),[]);
-    const opC = optionControlType.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]),[]);
+    const optionControlType = await ControlTypeService.fetchCheckpoint({}, {});
+
+    const op = optionCategory.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
+    const opC = optionControlType.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
 
     dispatch({
       type: checkpointListActions.LOAD_OPTION,
@@ -79,7 +80,7 @@ const checkpointListActions = {
 
     dispatch(checkpointListActions.doFetch());
   },
- 
+
   doFetchCurrentFilter: () => async (
     dispatch,
     getState,
@@ -88,7 +89,7 @@ const checkpointListActions = {
     const rawFilter = selectors.selectRawFilter(getState());
     dispatch(checkpointListActions.doFetch(filter, rawFilter, true));
   },
-  
+
   doFetch: (filter?, rawFilter?, keepPagination = false) => async (
     dispatch,
     getState,
@@ -112,11 +113,42 @@ const checkpointListActions = {
         },
       });
     } catch (error) {
-      
+
       dispatch({
         type: checkpointListActions.FETCH_ERROR,
       });
     }
+  },
+  doCreate: (value) => async (dispatch) => {
+    console.log(value)
+    try {
+      const response = await checkpointService.create(value);
+      console.log(response)
+      swal("Nuevo punto de control!", "", "success");
+
+      dispatch(
+        checkpointListActions.doFetch({}),
+      )
+    }
+    catch (error) {
+      console.log(error);
+      swal("Error al crear punto de control", "", "error");
+    }
+
+  },
+  disabled: (id) => async (dispatch) => {
+    console.log(id)
+    try {
+      const response = await checkpointService.doDisabled(id);
+      console.log(response)
+      dispatch(
+        checkpointListActions.doFetch({}),
+      )
+    }
+    catch (error) {
+      console.log(error);
+    }
+
   },
 
 };

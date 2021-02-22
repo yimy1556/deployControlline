@@ -5,7 +5,7 @@ const INITIAL_PAGE_SIZE = 10;
 const initialPagination = {
   current: 1,
   pageSize: INITIAL_PAGE_SIZE,
-} 
+}
 
 const initialData = {
   rows: [] as Array<any>,
@@ -18,18 +18,7 @@ const initialData = {
   optionCategory: [],
   optionControlType: [],
   optionVerificationtype: [
-    {
-      value: 'manual',
-      label: "Manual",
-    },
-    {
-      value: 'automatico',
-      label: "Automatico",
-    },
-    {
-      value: 'manual y automatico',
-      label: "Manual y Automatico",
-    }
+
   ]
 };
 
@@ -38,17 +27,17 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...state,
       loading: true,
-      filter: payload? payload.filter : {},
-      rawFilter: payload? payload.rawFilter : {},
+      filter: payload ? payload.filter : {},
+      rawFilter: payload ? payload.rawFilter : {},
       pagination:
         payload && payload.keepPagination
           ? state.pagination
           : initialPagination,
     };
   }
- 
-  if (type === actions.LOAD_OPTION){
-    return{
+
+  if (type === actions.LOAD_OPTION) {
+    return {
       ...state,
       optionCategory: payload.category,
       optionControlType: payload.controlType,
@@ -58,6 +47,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.RESETED) {
     return {
       ...initialData,
+      optionCategory: state.optionCategory,
     };
   }
 

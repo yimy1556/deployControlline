@@ -13,16 +13,14 @@ export default class CheckponitService {
     return response.data;
   }
 
-  static async doDisabled(ids) {
+  static async doDisabled(id) {
     const params = {
-      ids,
+      id,
     };
 
-    const response = await authAxios.put(
-      `/disable/checkpoint`,
-      {
-        params,
-      },
+    const response = await authAxios.delete(
+      `/checkpoint/${id}`,
+
     );
 
     return response.data;
@@ -30,7 +28,7 @@ export default class CheckponitService {
 
   static async create(data) {
     const body = {
-      data,
+      ...data,
     };
 
     const response = await authAxios.post(
@@ -63,19 +61,19 @@ export default class CheckponitService {
 
     return response.data;
   }
-/*
-  static async fetchUserAutocomplete(query, limit) {
-    const params = {
-      query,
-      limit,
-    };
-
-    const response = await authAxios.get(
-      `/user/autocomplete`,
-      {
-        params,
-      },
-    );
-    return response.data;
-    }*/
+  /*
+    static async fetchUserAutocomplete(query, limit) {
+      const params = {
+        query,
+        limit,
+      };
+  
+      const response = await authAxios.get(
+        `/user/autocomplete`,
+        {
+          params,
+        },
+      );
+      return response.data;
+      }*/
 }
