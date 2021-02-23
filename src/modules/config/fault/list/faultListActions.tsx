@@ -57,15 +57,21 @@ const faultListActions = {
 
       const response = await faultService.create(value);
 
-      dispatch(
-        modalActions.closeModal()
-      )
-      swal("Nueva falla creada!", "", "success");
-      dispatch(
-        faultListActions.doFetch({}),
+      if (response) {
+        dispatch(
+          modalActions.closeModal()
+        )
+        swal("Nueva falla creada!", "", "success");
+        dispatch(
+          faultListActions.doFetch({}),
 
-      )
+        )
+      } else {
+        swal("Nombre de falla repetido", "", "error");
+      }
+
     } catch (error) {
+      console.log(error)
       swal("Error al crear falla", "", "error");
 
     }

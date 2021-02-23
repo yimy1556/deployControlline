@@ -62,21 +62,21 @@ const checkpointListActions = {
   doLoadOption: () => async (dispatch) => {
     const optionCategory = await CategoryService.fetchCheckpoint({}, {});
     const optionControlType = await ControlTypeService.fetchCheckpoint({}, {});
-    const optionOperary = await UserService.fetchUsers({},{},{},{});
+    const optionOperary = await UserService.fetchUsers({}, {}, {}, {});
 
     const op = optionCategory.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
     const opC = optionControlType.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
     const opOper = optionOperary.rows.filter(row => {
-        const  esOperary = row.roles.find(rol => rol.name === 'OPERATIONAL');
-        return esOperary;
-      }).reduce((acc, el) => ([...acc, { value: el.id, label: el.fullName }]), []);
-    
+      const esOperary = row.roles.find(rol => rol.name === 'OPERATIONAL');
+      return esOperary;
+    }).reduce((acc, el) => ([...acc, { value: el.id, label: el.fullName }]), []);
+
     dispatch({
       type: checkpointListActions.LOAD_OPTION,
       payload: {
         category: op,
         controlType: opC,
-        operarys : opOper,
+        operarys: opOper,
       }
     })
   },
@@ -132,14 +132,19 @@ const checkpointListActions = {
     try {
       const response = await checkpointService.create(value);
       console.log(response)
-      dispatch(
-        modalActions.closeModal()
-      )
-      swal("Nuevo puesto de control creado!", "", "success");
+      if (response) {
+        dispatch(
+          modalActions.closeModal()
+        )
+        swal("Nuevo puesto de control creado!", "", "success");
+        dispatch(
+          checkpointListActions.doFetch({}),
+        )
+      } else {
+        swal("Nombre puesto de control repetido", "", "error");
+      }
 
-      dispatch(
-        checkpointListActions.doFetch({}),
-      )
+
     }
     catch (error) {
       console.log(error);
