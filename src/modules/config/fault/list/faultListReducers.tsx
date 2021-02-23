@@ -22,7 +22,7 @@ const initialData = {
     },
     {
       value: 2,
-      label: "Declarativa",
+      label: "Declarativa ",
     },
   ],
 };

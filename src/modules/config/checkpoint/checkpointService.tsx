@@ -3,11 +3,11 @@ import authAxios from 'src/modules/shared/axios/authAxios';
 export default class CheckponitService {
   static async edit(data) {
     const body = {
-      data,
+      ...data,
     };
 
     const response = await authAxios.put(
-      `/checkpoint`,
+      `/checkpoint/`,
       body,
     );
     return response.data;

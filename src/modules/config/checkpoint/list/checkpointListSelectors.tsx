@@ -12,6 +12,11 @@ const selectOptionControlType = createSelector(
   (raw) => raw.optionControlType,
 );
 
+const selectOptionOperary = createSelector(
+  [selectRaw],
+  (raw) => raw.optionOperary,
+);
+
 const selectOptionCategory = createSelector(
   [selectRaw],
   (raw) => raw.optionCategory,
@@ -143,6 +148,7 @@ const checkpointListSelectors = {
   selectOptionCategory,
   selectOptionVerificationType,
   selectOptionControlType,
+  selectOptionOperary,
 };
 
 export default checkpointListSelectors;

@@ -58,7 +58,7 @@ export default class UserService {
     };
 
     const response = await authAxios.get(
-      `/user`,
+      `/user/`,
       {
         params,
       },

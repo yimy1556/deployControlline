@@ -34,13 +34,19 @@ const faultListActions = {
     dispatch(faultListActions.doFetchCurrentFilter());
   },
 
-  doEdit: (value) => async () => {
+  doEdit: (value) => async (dispatch) => {
     try {
       console.log(value)
       await faultService.edit(value);
-      faultListActions.doFetch({});
+      dispatch(
+        modalActions.closeModal()
+      )
+      swal("Se Pudo modificar correctamente Falla", "", "success");
+      dispatch(
+        faultListActions.doFetch({}),
+      )
     } catch (error) {
-      console.log(error);
+      swal("Error al modificar Falla", "", "error");
     }
   },
 
@@ -49,18 +55,22 @@ const faultListActions = {
     try {
 
       const response = await faultService.create(value);
-      console.log(response)
 
-      dispatch(
-        modalActions.closeModal()
-      )
-      swal("Nueva falla creada!", "", "success");
-      dispatch(
-        faultListActions.doFetch({}),
+      if (response) {
+        dispatch(
+          modalActions.closeModal()
+        )
+        swal("Nueva falla creada!", "", "success");
+        dispatch(
+          faultListActions.doFetch({}),
 
-      )
+        )
+      } else {
+        swal("Nombre de falla repetido", "", "error");
+      }
+
     } catch (error) {
-      console.log(error);
+      console.log(error)
       swal("Error al crear falla", "", "error");
 
     }

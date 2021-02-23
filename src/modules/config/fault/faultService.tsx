@@ -3,7 +3,7 @@ import authAxios from 'src/modules/shared/axios/authAxios';
 export default class FaultService {
   static async edit(data) {
     const body = {
-      data,
+      ...data,
     };
 
     const response = await authAxios.put(
