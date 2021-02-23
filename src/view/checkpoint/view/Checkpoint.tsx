@@ -29,7 +29,7 @@ const schema = yup.object().shape({
   categoryId: yupFormSchemas.integer('Categoria', {
     required: true,
   }),
-  faults: yupFormSchemas.stringArray(i18n('chechpoint.fields.failure'),{
+  faults: yupFormSchemas.stringArray(i18n('checkpoint.fields.failure'),{
     required: true,
   }),
   operaryId: yupFormSchemas.integer('Opérarios', {
@@ -39,7 +39,6 @@ const schema = yup.object().shape({
 
 function Checkpoint() {
   const valuesInitial = useSelector(checkpointViewSelectors.selectEdition)
-  console.log(valuesInitial,'kajkajkj8888')
   const [initialValues] = useState({
     id: valuesInitial?.id || null,
     name: valuesInitial?.name || null,
@@ -89,19 +88,18 @@ function Checkpoint() {
     }
   }
   
-  useEffect(() => {
-  }, [faults]);
 
   const aux = () => {
     return defindFaults.filter(fault => fault.categoryId === faults)
   }
 
-console.log(faults)
-
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1>{i18n('checkpoint.title')}</h1>
+        <h1>{!valuesInitial?
+          i18n('checkpoint.title')
+          : 'Edicion De Puesto de control'}
+        </h1>
       </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>

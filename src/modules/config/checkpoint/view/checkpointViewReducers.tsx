@@ -2,7 +2,7 @@ import checkpointViewActions from 'src/modules/config/checkpoint/view/checkpoint
 
 const initialData = {
   edicionStart : false,
-  edition: {},
+  edition: null,
 };
 
 export default (state = initialData, { type, payload }) => {

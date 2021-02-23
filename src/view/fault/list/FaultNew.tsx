@@ -59,13 +59,11 @@ function FaultNew() {
   }
   const onSubmit = (values) => {
     if(!valuesInitial.id){
-      console.log('new')
       dispatch(actionsFault.doCreate({
         ...initialValues,...values
       }));
     }
     else{
-      console.log('edit')
       dispatch(actionsFault.doEdit({
         ...initialValues,...values
       }));
@@ -75,7 +73,10 @@ function FaultNew() {
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1>Configuracion de Falla</h1>
+        <h1> {valuesInitial.id? 
+          'Edicion De Falla'
+          :'Configuracion de Falla'}
+        </h1>
       </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>
