@@ -39,8 +39,9 @@ const schema = yup.object().shape({
 
 function Checkpoint() {
   const valuesInitial = useSelector(checkpointViewSelectors.selectEdition)
-
+  console.log(valuesInitial,'kajkajkj8888')
   const [initialValues] = useState({
+    id: valuesInitial?.id || null,
     name: valuesInitial?.name || null,
     description: valuesInitial?.description || null,
     userId: valuesInitial?.user?.id || null,
@@ -51,8 +52,6 @@ function Checkpoint() {
     operaryId: valuesInitial?.user?.id  || null,
   });
   
-console.log(initialValues, 'edicion')
-
   console.log(valuesInitial, initialValues);
   const dispatch = useDispatch();
 
@@ -73,15 +72,31 @@ console.log(initialValues, 'edicion')
 
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
   const optionControlType = useSelector(selectorsCheckpoint.selectOptionControlType);
-  const faults = useSelector(selectorFaults.selectRowsFault);
+  const defindFaults = useSelector(selectorFaults.selectOptionFaultActive);
+  const [faults, setFaults] = useState(valuesInitial? valuesInitial?.category?.id: null);
   const optionOperary = useSelector(selectorsCheckpoint.selectOptionOperary);
 
-  console.log(faults)
-
   const onSubmit = (values) => {
-    console.log(values)
-    dispatch(actionsCheckpoint.doCreate(values))
-  };
+    if(!valuesInitial?.id){
+      dispatch(actionsCheckpoint.doCreate({
+        ...initialValues,...values
+      }));
+    }
+    else{
+      dispatch(actionsCheckpoint.doEdit({
+        ...initialValues,...values
+      }));
+    }
+  }
+  
+  useEffect(() => {
+  }, [faults]);
+
+  const aux = () => {
+    return defindFaults.filter(fault => fault.categoryId === faults)
+  }
+
+console.log(faults)
 
   return (
     <Grid container alignItems='center' direction='column'>
@@ -114,13 +129,14 @@ console.log(initialValues, 'edicion')
                       name='categoryId'
                       options={optionCategory}
                       label='Categoria'
+                      func= {setFaults}
                       mode='unico'
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <SelectFormItem
                       name='faults'
-                      options={faults.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), [])}
+                      options={aux()}
                       label={i18n('checkpoint.fields.failure')}
                       mode='multiple'
                     />

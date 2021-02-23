@@ -61,6 +61,18 @@ export default class FaultService {
 
     return response.data;
   }
+
+  static async fetchFaultActive(){
+    const response = await authAxios.get(
+      '/falla/active/',
+      {
+        params: {}
+      }
+    );
+    
+    return response.data;
+  }
+
   /*
     static async fetchUserAutocomplete(query, limit) {
       const params = {

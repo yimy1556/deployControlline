@@ -12,6 +12,12 @@ const selectOptionTypeFalla = createSelector(
   (raw) => raw.optionsTypeFalla,
 );
 
+const selectOptionFaultActive = createSelector(
+  [selectRaw],
+  (raw) => raw.optionsFaultActive,
+);
+
+
 const selectExportLoading = createSelector(
   [selectRaw],
   (raw) => raw.exportLoading,
@@ -85,6 +91,7 @@ const faultListSelectors = {
   selectExportLoading,
   selectRawFilter,
   selectOptionTypeFalla,
+  selectOptionFaultActive,
 };
 
 export default faultListSelectors;

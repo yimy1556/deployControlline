@@ -25,6 +25,7 @@ const initialData = {
       label: "Declarativa",
     },
   ],
+  optionsFaultActive: [],
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -42,15 +43,19 @@ export default (state = initialData, { type, payload }) => {
   }
 
   if (type === actions.LOAD_OPTION) {
+    console.log(payload,'sdsssssssssss')
     return {
       ...state,
-      optionsTypeFalla: payload,
+      optionsTypeFalla: payload.typeFalla,
+      optionsFaultActive: payload.faultActive
     }
   }
 
   if (type === actions.RESETED) {
     return {
       ...initialData,
+      optionsTypeFalla: state.optionsTypeFalla,
+      optionsFaultActive: state.optionsFaultActive,
     };
   }
 

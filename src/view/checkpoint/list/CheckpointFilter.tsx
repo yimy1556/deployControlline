@@ -29,6 +29,7 @@ import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import actionsModal from 'src/modules/modal/modalActions';
+import actionsFault from 'src/modules/config/fault/list/faultListActions';
 
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -85,6 +86,7 @@ function UserFilter(props) {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
     dispatch(actions.doLoadOption());
+    dispatch(actionsFault.doLoadOption());
   }, [dispatch]);
 
   const optionCategory = useSelector(selectors.selectOptionCategory);

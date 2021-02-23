@@ -128,7 +128,7 @@ const checkpointListActions = {
     }
   },
   doCreate: (value) => async (dispatch) => {
-    console.log(value)
+    console.log('ñññññ',value,'jksjkjk')
     try {
       const response = await checkpointService.create(value);
       console.log(response)
@@ -147,6 +147,24 @@ const checkpointListActions = {
     }
 
   },
+
+  doEdit: (value) => async (dispatch) => {
+    console.log('edit',value,'jksjkjk')
+    try {
+      console.log(value)
+      await checkpointService.edit(value);
+      dispatch(
+        modalActions.closeModal()
+      )
+      swal("Se Pudo modificar correctamente el Puesto de Control", "", "success");
+      dispatch(
+        checkpointListActions.doFetch({}),
+      )
+    } catch (error) {
+      swal("Error al modificar el Puesto de control", "", "error");
+    }
+  },
+
   disabled: (id) => async (dispatch) => {
     console.log(id)
     try {

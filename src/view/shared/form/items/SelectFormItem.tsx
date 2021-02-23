@@ -23,6 +23,7 @@ function SelectFormItem(props) {
     placeholder,
     isClearable,
     externalErrorMessage,
+    func
   } = props;
 
   const {
@@ -80,6 +81,11 @@ function SelectFormItem(props) {
 
   const handleSelect = (data) => {
     const { mode } = props;
+    console.log(data,func)
+    if(func){
+      console.log('skjksjk')
+      func(data.value)
+    }
     if (mode === 'multiple') {
       return handleSelectMultiple(data);
     } else {
@@ -166,6 +172,7 @@ function SelectFormItem(props) {
 SelectFormItem.defaultProps = {
   required: false,
   isClearable: true,
+  func: null,
 };
 
 SelectFormItem.propTypes = {
@@ -176,6 +183,7 @@ SelectFormItem.propTypes = {
   required: PropTypes.bool,
   externalErrorMessage: PropTypes.string,
   mode: PropTypes.string,
+  func: PropTypes.any,
   isClearable: PropTypes.bool,
 };
 

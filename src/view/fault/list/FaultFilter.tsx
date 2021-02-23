@@ -83,7 +83,7 @@ function UserFilter(props) {
   useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
-    dispatch(actions.doLoadOption);
+    dispatch(actions.doLoadOption());
     dispatch(checkpointListActions.doLoadOption())
   }, [dispatch]);
   

@@ -4,6 +4,7 @@ import TypeFallaService from 'src/modules/config/service/TypeFallaService'
 import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import swal from 'sweetalert';
 import modalActions from 'src/modules/modal/modalActions'
+import FaultService from 'src/modules/config/fault/faultService';
 
 const prefix = 'FAULT_LIST';
 
@@ -86,7 +87,7 @@ const faultListActions = {
     const rawFilter = selectors.selectRawFilter(getState());
     dispatch(faultListActions.doFetch(filter, rawFilter, true));
   },
-
+  
   doFetch: (filter?, rawFilter?, keepPagination = false) => async (
     dispatch,
     getState,
@@ -122,9 +123,19 @@ const faultListActions = {
   doLoadOption: () => async (dispatch) => {
     const optionsTypeFalla = await TypeFallaService.fetchTypeFalla({}, {});
     const opTyFa = optionsTypeFalla.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
+    
+    const opFaultActiva = await faultService.fetchFaultActive();
+    const opFault = opFaultActiva.rows.reduce((acc, el) => ([...acc, { 
+      value: el.id, label: el.name, 
+      categoryId: el.category.id }]), []
+    );
+    
     dispatch({
       type: faultListActions.LOAD_OPTION,
-      payload: opTyFa,
+      payload: {
+        typeFalla:  opTyFa,
+        faultActive: opFault,
+      },
     });
   },
   disabled: (id) => async (dispatch) => {
