@@ -130,6 +130,7 @@ console.log(faults)
                       options={optionCategory}
                       label='Categoria'
                       func= {setFaults}
+                      disabled= {Boolean(valuesInitial)}  
                       mode='unico'
                     />
                   </Grid>

@@ -23,7 +23,8 @@ function SelectFormItem(props) {
     placeholder,
     isClearable,
     externalErrorMessage,
-    func
+    func,
+    disabled,
   } = props;
 
   const {
@@ -141,6 +142,7 @@ function SelectFormItem(props) {
       value={value()}
       onChange={handleSelect}
       inputId={name}
+      isDisabled={disabled}
       TextFieldProps={{
         label,
         required,
@@ -173,6 +175,7 @@ SelectFormItem.defaultProps = {
   required: false,
   isClearable: true,
   func: null,
+  disabled: false,
 };
 
 SelectFormItem.propTypes = {
@@ -184,6 +187,7 @@ SelectFormItem.propTypes = {
   externalErrorMessage: PropTypes.string,
   mode: PropTypes.string,
   func: PropTypes.any,
+  disabledi: PropTypes.bool,
   isClearable: PropTypes.bool,
 };
 
