@@ -17,9 +17,8 @@ const initialData = {
   sorter: {},
   optionCategory: [],
   optionControlType: [],
-  optionVerificationtype: [
-
-  ]
+  optionVerificationtype: [],
+  optionOperary: [],
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -41,6 +40,7 @@ export default (state = initialData, { type, payload }) => {
       ...state,
       optionCategory: payload.category,
       optionControlType: payload.controlType,
+      optionOperary: payload.operarys,
     }
   }
 
@@ -50,6 +50,7 @@ export default (state = initialData, { type, payload }) => {
       optionCategory: state.optionCategory,
       optionControlType: state.optionControlType,
       optionVerificationtype: state.optionVerificationtype,
+      optionOperary: state.optionOperary,
     };
   }
 

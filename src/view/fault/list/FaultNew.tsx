@@ -16,6 +16,18 @@ import selectorsListCheckponint from 'src/modules/config/checkpoint/list/checkpo
 import actionsFault from 'src/modules/config/fault/list/faultListActions';
 
 const schema = yup.object().shape({
+  name: yupFormSchemas.string('Nombre', {
+    required: true, 
+  }),
+  description: yupFormSchemas.string(i18n('process.fields.description'), {
+    required: true, 
+  }),
+  categoryId: yupFormSchemas.integer('Categoria', {
+    required: true,
+  }),
+  typeFallaId: yupFormSchemas.integer('Tipo de falla', {
+    required: true,
+  }),
 });
 
 
@@ -23,11 +35,12 @@ function FaultNew() {
   const valuesInitial = useSelector(faultViewSelectors.selectEdition)
 
   const [initialValues] = useState({
+    status: valuesInitial?.status || null,
     id : valuesInitial?.id || null,
     name: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
-    categoryId: valuesInitial?.category?.id || '' ,
-    typeFallaId:  valuesInitial?.typeFalla?.id || '',
+    categoryId: valuesInitial?.category?.id || null,
+    typeFallaId:  valuesInitial?.typeFalla?.id || null,
   });
 
   const form = useForm({

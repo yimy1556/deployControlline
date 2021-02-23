@@ -16,34 +16,44 @@ import selectorFaults from 'src/modules/config/fault/list/faultListSelectors';
 import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
-
-const options = [
-  { value: 3, label: 'Opeario 1' },
-  { value: 2, label: 'Operario 2' },
-  { value: 3, label: 'Operario 3' },
-  { value: 4, label: 'Operario 4' },
-  { value: 5, label: 'Operario 5' },
-]
-
 const schema = yup.object().shape({
-
+  name: yupFormSchemas.string(i18n('user.fields.firstName'), {
+    required: true,
+  }),
+  description: yupFormSchemas.string(i18n('process.fields.description'), {
+    required: true,
+  }),
+  controlTypeId: yupFormSchemas.integer(i18n('checkpoint.fields.controlType'), {
+    required: true,
+  }),
+  categoryId: yupFormSchemas.integer('Categoria', {
+    required: true,
+  }),
+  faults: yupFormSchemas.stringArray(i18n('chechpoint.fields.failure'),{
+    required: true,
+  }),
+  operaryId: yupFormSchemas.integer('Opérarios', {
+    required: true,
+  })
 });
 
 function Checkpoint() {
   const valuesInitial = useSelector(checkpointViewSelectors.selectEdition)
 
   const [initialValues] = useState({
-    name: valuesInitial?.name || '',
-    description: valuesInitial?.description || '',
-    userId: valuesInitial?.user?.id || 2,
-    controlTypeId: valuesInitial?.controlType?.id || 2,
-    categoryId: valuesInitial?.category?.id || 0,
-    verificationType: valuesInitial?.verificationType || '',
-    status: valuesInitial?.status || 'active',
-    faults: valuesInitial?.faults || [],
-    operaryId: valuesInitial?.operators || [],
+    name: valuesInitial?.name || null,
+    description: valuesInitial?.description || null,
+    userId: valuesInitial?.user?.id || null,
+    controlTypeId: valuesInitial?.controlType?.id || null,
+    categoryId: valuesInitial?.category?.id || null,
+    status: valuesInitial?.status || null,
+    faults: valuesInitial?.checkpointDetails?.reduce((acc, el) => ([...acc, el.fault.id]), []) || [],
+    operaryId: valuesInitial?.user?.id  || null,
   });
+  
+console.log(initialValues, 'edicion')
 
+  console.log(valuesInitial, initialValues);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,13 +74,12 @@ function Checkpoint() {
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
   const optionControlType = useSelector(selectorsCheckpoint.selectOptionControlType);
   const faults = useSelector(selectorFaults.selectRowsFault);
+  const optionOperary = useSelector(selectorsCheckpoint.selectOptionOperary);
 
   console.log(faults)
 
   const onSubmit = (values) => {
-
-    const rawValues = form.getValues();
-    console.log(rawValues)
+    console.log(values)
     dispatch(actionsCheckpoint.doCreate(values))
   };
 
@@ -119,7 +128,7 @@ function Checkpoint() {
                   <Grid item xs={12}>
                     <SelectFormItem
                       name='operaryId'
-                      options={options}
+                      options={optionOperary}
                       label={'Operarios'}
                       mode='unico'
                     />
