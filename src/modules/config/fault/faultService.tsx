@@ -14,13 +14,8 @@ export default class FaultService {
   }
 
   static async doDisabled(id) {
-    const params = {
-      id,
-    };
-
     const response = await authAxios.delete(
       `/falla/${id}`,
-
     );
 
     return response.data;

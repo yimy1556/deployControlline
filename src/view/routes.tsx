@@ -16,11 +16,17 @@ const privateRoutes = [
     exact: true,
   },
   {
-    path: '/process/:id/new',
+    path: '/process/new-process',
     loader: () => import('src/view/process/view/ProcessViewPage'),
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: '/process/:id/edit-process',
+    loader: () => import('src/view/process/view/ProcessViewPage'),
+    permissionRequired: null,
+    exact: true,
+  }, 
   {
     path: '/checkpoint',
     loader: () => import('src/view/checkpoint/list/CheckpointPage'),

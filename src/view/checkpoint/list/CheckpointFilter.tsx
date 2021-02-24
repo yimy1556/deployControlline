@@ -14,7 +14,6 @@ import { i18n } from 'src/i18n';
 import yupFilterSchemas from 'src/modules/shared/yup/yupFilterSchemas';
 import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
-import userEnumerators from 'src/modules/user/userEnumerators';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import FilterWrapper, {
@@ -90,12 +89,9 @@ function UserFilter(props) {
   }, [dispatch]);
 
   const optionCategory = useSelector(selectors.selectOptionCategory);
-  const optionVerificationtype = useSelector(selectors.selectOptionVerificationType);
   const optionControlType = useSelector(selectors.selectOptionControlType)
-  console.log(optionCategory)
   const onSubmit = (values) => {
     const rawValues = form.getValues();
-    console.log(rawValues)
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'src/modules/config/fault/list/faultListSelectors';
 import actions from 'src/modules/config/fault/list/faultListActions';
-import { Link } from 'react-router-dom';
 import { i18n } from 'src/i18n';
 import Pagination from 'src/view/shared/table/Pagination';
 import Spinner from 'src/view/shared/Spinner';
@@ -20,13 +19,12 @@ import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/fault/view/faultViewActions';
 import UserStatusView from 'src/view/user/view/UserStatusView';
-import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 
 function FaultTable() {
   const dispatch = useDispatch();
   const [
-    recordIdToDestroy,
-    setRecordIdToDestroy,
+    recordIdToDisabled,
+    setRecordIdToDisabled,
   ] = useState(null);
 
   const loading = useSelector(selectors.selectLoading);
@@ -34,12 +32,11 @@ function FaultTable() {
   const pagination = useSelector(
     selectors.selectPagination,
   );
-  console.log(rows)
   const hasRows = useSelector(selectors.selectHasRows);
 
-  const doDestroy = (id) => {
-    setRecordIdToDestroy(null);
-    //    dispatch(actions.doDestroy(id));
+  const doDisabled = (id) => {
+    setRecordIdToDisabled(null);
+    dispatch(actions.disabled(id));
   };
 
   const doEdition = (id) => {
@@ -139,7 +136,7 @@ function FaultTable() {
                         >
                           <IconButton
                             color="primary"
-                            onClick={() => dispatch(actionsFaults.disabled(row.id))}
+                            onClick={() => setRecordIdToDisabled(row.id)}
                           >
                             <NotInterested />
                           </IconButton>
@@ -159,11 +156,11 @@ function FaultTable() {
         pagination={pagination}
       />
 
-      {recordIdToDestroy && (
+      {recordIdToDisabled && (
         <ConfirmModal
           title={i18n('common.areYouSure')}
-          onConfirm={() => doDestroy(recordIdToDestroy)}
-          onClose={() => setRecordIdToDestroy(null)}
+          onConfirm={() => doDisabled(recordIdToDisabled)}
+          onClose={() => setRecordIdToDisabled(null)}
           okText={i18n('common.yes')}
           cancelText={i18n('common.no')}
         />

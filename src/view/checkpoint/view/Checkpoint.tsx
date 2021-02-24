@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import { i18n } from 'src/i18n';
 import React, { useEffect, useState } from 'react';
@@ -51,7 +51,6 @@ function Checkpoint() {
     operaryId: valuesInitial?.user?.id  || null,
   });
   
-  console.log(valuesInitial, initialValues);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -144,7 +143,7 @@ function Checkpoint() {
                     <SelectFormItem
                       name='operaryId'
                       options={optionOperary}
-                      label={'Operarios'}
+                      label={'Operario'}
                       mode='unico'
                     />
                   </Grid>

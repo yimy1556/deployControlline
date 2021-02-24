@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import actionsView from 'src/modules/config/checkpoint/view/checkpointViewActions';
-import { Link } from 'react-router-dom';
 import { i18n } from 'src/i18n';
 import Pagination from 'src/view/shared/table/Pagination';
 import Spinner from 'src/view/shared/Spinner';
@@ -20,32 +19,29 @@ import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import UserStatusView from 'src/view/user/view/UserStatusView';
-import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 function CheckpointTable() {
   const dispatch = useDispatch();
   const [
-    recordIdToDestroy,
-    setRecordIdToDestroy,
+    recordIdToDisabled,
+    setRecordIdToDisabled,
   ] = useState(null);
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRows);
-  console.log(rows)
   const pagination = useSelector(
     selectors.selectPagination,
   );
 
-  console.log(pagination, 'sds......')
   const hasRows = useSelector(selectors.selectHasRows);
 
   const doEdition = (id) => {
     dispatch(actionsView.startEdicion(id));
   }
   
-  const doDestroy = (id) => {
-    setRecordIdToDestroy(null);
-  //  dispatch(actions.doDestroy(id));
+  const doDisabled = (id) => {
+    setRecordIdToDisabled(null);
+    dispatch(actions.doDisabled(id));
   };
    
   const doChangePagination = (pagination) => {
@@ -142,7 +138,7 @@ function CheckpointTable() {
                       </Tooltip>
                       <Tooltip
                         title={i18n('common.disable')}
-                        onClick={() => dispatch(actionsCheckpoint.disabled(row.id))}
+                        onClick={() => setRecordIdToDisabled(row.id)}
                       >
                         <IconButton
                           color="primary"
@@ -165,10 +161,11 @@ function CheckpointTable() {
         pagination={pagination}
       />
 
-      {recordIdToDestroy && (
+      {recordIdToDisabled && (
         <ConfirmModal
           title={i18n('common.areYouSure')}
-          onClose={() => setRecordIdToDestroy(null)}
+          onConfirm={() => doDisabled(recordIdToDisabled)}
+          onClose={() => setRecordIdToDisabled(null)}
           okText={i18n('common.yes')}
           cancelText={i18n('common.no')}
         />

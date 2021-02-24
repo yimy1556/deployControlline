@@ -29,7 +29,6 @@ import FilterPreview from 'src/view/shared/filter/FilterPreview';
 import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
-import actionsModal from 'src/modules/modal/modalActions';
 import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 const schema = yup.object().shape({
@@ -95,10 +94,6 @@ function ProcessFilter(props) {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
-  };
-
-  const openModel = () => {
-    dispatch(actionsModal.modalOpen());
   };
 
   const onReset = () => {
@@ -169,7 +164,7 @@ function ProcessFilter(props) {
                     size="small"
                     color="primary"
                     component={Link}
-                    to={`/process/${null}/new`}
+                    to={`/process/new-process`}
                   >
                     <AddIcon />
                   </Fab>

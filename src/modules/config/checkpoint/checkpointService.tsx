@@ -14,13 +14,9 @@ export default class CheckponitService {
   }
 
   static async doDisabled(id) {
-    const params = {
-      id,
-    };
 
     const response = await authAxios.delete(
       `/checkpoint/${id}`,
-
     );
 
     return response.data;

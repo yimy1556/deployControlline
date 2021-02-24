@@ -1,10 +1,8 @@
 import faultService from 'src/modules/config/fault/faultService';
 import selectors from 'src/modules/config/fault/list/faultListSelectors';
 import TypeFallaService from 'src/modules/config/service/TypeFallaService'
-import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import swal from 'sweetalert';
 import modalActions from 'src/modules/modal/modalActions'
-import FaultService from 'src/modules/config/fault/faultService';
 
 const prefix = 'FAULT_LIST';
 
@@ -105,7 +103,6 @@ const faultListActions = {
         selectors.selectLimit(getState()),
         selectors.selectOffset(getState()),
       );
-      console.log(response, 'jshdjshjd')
 
       dispatch({
         type: faultListActions.FETCH_SUCCESS,
@@ -142,7 +139,7 @@ const faultListActions = {
   },
   disabled: (id) => async (dispatch) => {
     try {
-      const response = await faultService.doDisabled(id);
+      await faultService.doDisabled(id);
       dispatch(
         faultListActions.doFetchCurrentFilter(),
       )

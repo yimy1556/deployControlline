@@ -19,6 +19,7 @@ import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/process/view/processViewActions';
 import UserStatusView from 'src/view/user/view/UserStatusView';
+import { Link   } from 'react-router-dom';
 
 function ProcessTable() {
   const dispatch = useDispatch();
@@ -33,15 +34,10 @@ function ProcessTable() {
     selectors.selectPagination,
   );
   const hasRows = useSelector(selectors.selectHasRows);
-  const sorter = useSelector(selectors.selectSorter);
 
   const doDisabled = (id) => {
     setRecordIdToDisabled(null);
     dispatch(actions.doDisabled(id));
-  };
-
-  const doEdition = (id) => {
-    dispatch(actionsView.startEdicion(id));
   };
 
   const doChangePagination = (pagination) => {
@@ -124,7 +120,8 @@ function ProcessTable() {
                       >
                         <IconButton
                           color="primary"
-                          onClick={() => doEdition(row.id)}
+                          component={Link}
+                          to={`/process/${row.id}/edit-process`}
                         >
                           <EditIcon />
                         </IconButton>

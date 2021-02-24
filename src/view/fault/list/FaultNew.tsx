@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import { i18n } from 'src/i18n';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
@@ -74,7 +74,7 @@ function FaultNew() {
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
         <h1> {valuesInitial.id? 
-          'Edicion De Falla'
+          'Edicion de Falla'
           :'Configuracion de Falla'}
         </h1>
       </Grid>

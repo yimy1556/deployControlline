@@ -8,15 +8,18 @@ import Modal from 'src/view/shared/modals/Modal';
 import ProcessDischarge from 'src/view/process/view/ProcessDischarge';
 import Breadcrumb from 'src/view/shared/Breadcrumb';
 
-function ProcessViewPage(props) {
 
+
+function ProcessViewPage(props) {
+  const { match } = props;
   console.log(props)
   return (
     <>
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión De Línea De Control'],
+          ['Gestión De Línea De Control', '/process'],
+          ['kjkljak']
         ]}
       />
       <ContentWrapper>

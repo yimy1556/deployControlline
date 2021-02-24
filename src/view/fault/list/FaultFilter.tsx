@@ -106,7 +106,6 @@ function UserFilter(props) {
   const optionsTypeFalla =  useSelector(selectors.selectOptionTypeFalla);
   const { loading } = props;
   
-  console.log(optionsTypeFalla, optionCategory,'yiy')
 
   return (
     <FilterWrapper>
