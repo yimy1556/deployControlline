@@ -27,8 +27,6 @@ const processListActions = {
       dispatch({
         type: processListActions.DISABLED_SUCCESS,
       });
-
-
       dispatch(processListActions.doFetchCurrentFilter());
     } catch (error) {
 
@@ -57,7 +55,7 @@ const processListActions = {
       type: processListActions.RESETED,
     });
 
-    dispatch(processListActions.doFetch());
+    dispatch(processListActions.doFetchCurrentFilter());
   },
  
   doFetchCurrentFilter: () => async (
@@ -82,6 +80,7 @@ const processListActions = {
       const response = await processService.fetchProcess(
         filter,
         selectors.selectLimit(getState()),
+        selectors.selectOffset(getState()),
       );
       dispatch({
         type: processListActions.FETCH_SUCCESS,

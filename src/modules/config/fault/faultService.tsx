@@ -46,10 +46,11 @@ export default class FaultService {
     return response.data;
   }
 
-  static async fetchFault(filter, limit) {
+  static async fetchFault(filter, size, page) {
     const params = {
       filter,
-      limit,
+      size,
+      page,
     };
 
     const response = await authAxios.get(

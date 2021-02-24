@@ -35,6 +35,8 @@ function CheckpointTable() {
   const pagination = useSelector(
     selectors.selectPagination,
   );
+
+  console.log(pagination, 'sds......')
   const hasRows = useSelector(selectors.selectHasRows);
 
   const doEdition = (id) => {

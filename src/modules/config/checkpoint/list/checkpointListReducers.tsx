@@ -71,6 +71,16 @@ export default (state = initialData, { type, payload }) => {
       count: 0,
     }
   }
+  
+  if (type === actions.PAGINATION_CHANGED) {
+    return {
+      ...state,
+      pagination: payload || {
+        current: 1,
+        pageSize: INITIAL_PAGE_SIZE,
+      },
+    };
+  }
 
   return state;
 };

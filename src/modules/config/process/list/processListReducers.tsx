@@ -8,7 +8,7 @@ const initialPagination = {
 } 
 
 const initialData = {
-  rows: ['ajhsjashj'] as Array<any>,
+  rows: [] as Array<any>,
   count: 0,
   loading: false,
   filter: {},
@@ -53,6 +53,16 @@ export default (state = initialData, { type, payload }) => {
       rows: [],
       count: 0,
     }
+  }
+   
+  if (type === actions.PAGINATION_CHANGED) {
+    return {
+      ...state,
+      pagination: payload || {
+        current: 1,
+        pageSize: INITIAL_PAGE_SIZE,
+      },
+    };
   }
 
   return state;

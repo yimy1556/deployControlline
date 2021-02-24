@@ -2,7 +2,7 @@ import processViewActions from 'src/modules/config/process/view/processViewActio
 
 const initialData = {
   edicionStart : false,
-  edition: {},
+  edition: null,
 };
 
 export default (state = initialData, { type, payload }) => {

@@ -73,7 +73,7 @@ const selectOffset = createSelector([selectRaw], (raw) => {
 
   const current = pagination.current || 1;
 
-  return (current - 1) * pagination.pageSize;
+  return (current - 1);
 });
 
 const selectPagination = createSelector(

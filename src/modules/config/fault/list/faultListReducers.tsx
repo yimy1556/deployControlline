@@ -43,7 +43,6 @@ export default (state = initialData, { type, payload }) => {
   }
 
   if (type === actions.LOAD_OPTION) {
-    console.log(payload,'sdsssssssssss')
     return {
       ...state,
       optionsTypeFalla: payload.typeFalla,
@@ -77,6 +76,17 @@ export default (state = initialData, { type, payload }) => {
       count: 0,
     }
   }
+
+  if (type === actions.PAGINATION_CHANGED) {
+    return {
+      ...state,
+      pagination: payload || {
+        current: 1,
+        pageSize: INITIAL_PAGE_SIZE,
+      },
+    };
+  }
+
 
   return state;
 };

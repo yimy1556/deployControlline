@@ -38,14 +38,16 @@ const faultListActions = {
   doEdit: (value) => async (dispatch) => {
     try {
       console.log(value)
-      await faultService.edit(value);
-      dispatch(
-        modalActions.closeModal()
-      )
-      swal("Se Pudo modificar correctamente Falla", "", "success");
-      dispatch(
-        faultListActions.doFetch({}),
-      )
+      const response = await faultService.edit(value);
+      if (response) {
+        dispatch(modalActions.closeModal());
+        swal("Se Pudo modificar correctamente Falla", "", "success");
+        dispatch(
+          faultListActions.doFetchCurrentFilter(),
+        )
+      } else {
+        swal("Nombre de falla repetido", "", "error");
+      }
     } catch (error) {
       swal("Error al modificar Falla", "", "error");
     }
@@ -54,22 +56,16 @@ const faultListActions = {
 
   doCreate: (value) => async (dispatch) => {
     try {
-
       const response = await faultService.create(value);
-
       if (response) {
-        dispatch(
-          modalActions.closeModal()
-        )
+        dispatch(modalActions.closeModal());
         swal("Nueva falla creada!", "", "success");
         dispatch(
-          faultListActions.doFetch({}),
-
+          faultListActions.doFetchCurrentFilter(),
         )
       } else {
         swal("Nombre de falla repetido", "", "error");
       }
-
     } catch (error) {
       console.log(error)
       swal("Error al crear falla", "", "error");
@@ -82,7 +78,7 @@ const faultListActions = {
       type: faultListActions.RESETED,
     });
 
-    dispatch(faultListActions.doFetch());
+    dispatch(faultListActions.doFetchCurrentFilter());
   },
 
   doFetchCurrentFilter: () => async (
@@ -107,8 +103,8 @@ const faultListActions = {
       const response = await faultService.fetchFault(
         filter,
         selectors.selectLimit(getState()),
+        selectors.selectOffset(getState()),
       );
-
       console.log(response, 'jshdjshjd')
 
       dispatch({
@@ -145,12 +141,10 @@ const faultListActions = {
     });
   },
   disabled: (id) => async (dispatch) => {
-    console.log(id)
     try {
       const response = await faultService.doDisabled(id);
-      console.log(response)
       dispatch(
-        faultListActions.doFetch({}),
+        faultListActions.doFetchCurrentFilter(),
       )
     }
     catch (error) {

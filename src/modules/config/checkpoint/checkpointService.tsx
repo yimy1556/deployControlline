@@ -46,12 +46,13 @@ export default class CheckponitService {
     return response.data;
   }
 
-  static async fetchCheckpoint(filter, limit) {
+  static async fetchCheckpoint(filter, size, page) {
     const params = {
       filter,
-      limit,
+      size,
+      page,
     };
-
+  
     const response = await authAxios.get(
       `/checkpoint/`,
       {

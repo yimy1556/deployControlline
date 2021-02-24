@@ -5,6 +5,7 @@ import {
   Grid,
   Fab,
 } from '@material-ui/core';
+import { Link  } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import UndoIcon from '@material-ui/icons/Undo';
 import React, { useEffect, useState } from 'react';
@@ -167,7 +168,8 @@ function ProcessFilter(props) {
                   <Fab
                     size="small"
                     color="primary"
-                    onClick={openModel}
+                    component={Link}
+                    to={`/process/${null}/new`}
                   >
                     <AddIcon />
                   </Fab>

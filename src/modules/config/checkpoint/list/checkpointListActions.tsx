@@ -34,8 +34,6 @@ const checkpointListActions = {
       dispatch({
         type: checkpointListActions.DISABLED_SUCCESS,
       });
-
-
       dispatch(checkpointListActions.doFetchCurrentFilter());
     } catch (error) {
 
@@ -111,6 +109,7 @@ const checkpointListActions = {
       const response = await checkpointService.fetchCheckpoint(
         filter,
         selectors.selectLimit(getState()),
+        selectors.selectOffset(getState()),
       );
 
       dispatch({
@@ -131,20 +130,17 @@ const checkpointListActions = {
     console.log('ñññññ',value,'jksjkjk')
     try {
       const response = await checkpointService.create(value);
-      console.log(response)
       if (response) {
         dispatch(
           modalActions.closeModal()
         )
         swal("Nuevo puesto de control creado!", "", "success");
         dispatch(
-          checkpointListActions.doFetch({}),
+          checkpointListActions.doFetchCurrentFilter(),
         )
       } else {
         swal("Nombre puesto de control repetido", "", "error");
       }
-
-
     }
     catch (error) {
       console.log(error);
@@ -154,18 +150,19 @@ const checkpointListActions = {
   },
 
   doEdit: (value) => async (dispatch) => {
-    console.log('edit',value,'jksjkjk')
     try {
       console.log(value)
-      await checkpointService.edit(value);
-      dispatch(
-        modalActions.closeModal()
-      )
-      swal("Se Pudo modificar correctamente el Puesto de Control", "", "success");
-      dispatch(
-        checkpointListActions.doFetch({}),
-      )
-    } catch (error) {
+      const response = await checkpointService.edit(value);
+      if (response) {
+        dispatch(modalActions.closeModal());
+        swal("Se Pudo modificar correctamente el Puesto de Control", "", "success");
+        dispatch(
+          checkpointListActions.doFetchCurrentFilter(),
+        );
+      } else {
+        swal("Nombre puesto de control repetido", "", "error");
+      }
+    }catch (error) {
       swal("Error al modificar el Puesto de control", "", "error");
     }
   },
@@ -176,13 +173,12 @@ const checkpointListActions = {
       const response = await checkpointService.doDisabled(id);
       console.log(response)
       dispatch(
-        checkpointListActions.doFetch({}),
+        checkpointListActions.doFetchCurrentFilter(),
       )
     }
     catch (error) {
       console.log(error);
     }
-
   },
 
 };

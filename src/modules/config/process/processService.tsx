@@ -48,10 +48,11 @@ export default class CheckponitService {
     return response.data;
   }
 
-  static async fetchProcess(filter, limit) {
+  static async fetchProcess(filter, size, page) {
     const params = {
       filter,
-      limit,
+      size,
+      page,
     };
 
     const response = await authAxios.get(
@@ -63,19 +64,4 @@ export default class CheckponitService {
 
     return response.data;
   }
-/*
-  static async fetchUserAutocomplete(query, limit) {
-    const params = {
-      query,
-      limit,
-    };
-
-    const response = await authAxios.get(
-      `/user/autocomplete`,
-      {
-        params,
-      },
-    );
-    return response.data;
-    }*/
 }

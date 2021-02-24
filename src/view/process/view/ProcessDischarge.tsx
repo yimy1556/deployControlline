@@ -94,7 +94,10 @@ function ProcessDischarge() {
   return (
     <Grid container alignItems='stretch' justify='center' direction='column'>
       <Grid container justify='center' item xs={12}>
-        <h1>{i18n('process.title')}</h1>
+        <h1>{!valueInitial?  
+          i18n('process.title'):
+          'Edicion de linea de control'
+        }</h1>
       </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>
@@ -106,22 +109,7 @@ function ProcessDischarge() {
                       name='name'
                       label={i18n('user.fields.firstName')}
                     />
-                  </Grid>                 
-                  <Grid item xs={6}>
-                    <InputFormItem
-                      name='checkpointNumber'
-                      label={i18n('process.fields.numberOfCheckpoint')}
-                      type='number'
-                    />
                   </Grid>
-                  <Grid item xs={6}>
-                    <SelectFormItem 
-                      name='industrialPlant'
-                      options={options}
-                      label={i18n('process.fields.plant')}
-                      mode='unico'
-                    />
-                  </Grid>       
                   <Grid item xs={6}>
                     <InputFormItem
                       name='sku'
@@ -130,19 +118,40 @@ function ProcessDischarge() {
                   </Grid>
                   <Grid item xs={12}>
                     <SelectFormItem 
+                      name='industrialPlant'
+                      options={options}
+                      label={i18n('process.fields.plant')}
+                      mode='unico'
+                    />
+                  </Grid>       
+                  <Grid item xs={12}>
+                    <SelectFormItem 
                       name='category'
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
                       />
-                      </Grid>
-                  <Grid item xs={12}>
-                    <SelectFormItem 
-                      name='checkpoints'
-                      options={optionCheckpoint.reduce((acc, el) => ([...acc, { value: el.id, label: el.name  }]),[])}
-                      label={i18n('process.fields.checkpoint')}
-                      mode='multiple'
-                    />
+                  </Grid> 
+                  <Grid item container xs={12} spacing={1} alignItems='center'>
+                    <Grid item xs={10}>
+                      <SelectFormItem 
+                        name='checkpoints'
+                        options={optionCheckpoint.reduce((acc, el) => ([...acc, { value: el.id, label: el.name  }]),[])}
+                        label={i18n('process.fields.checkpoint')}
+                        mode='multiple'
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button
+                        style={{ marginTop: '8px' }}
+                        variant="contained"
+                        color="primary"
+                        onClick= {() => {}}
+                        fullWidth
+                      >
+                        {i18n('common.cancel')}
+                      </Button>
+                    </Grid>
                   </Grid>
                   <Grid item xs={12}>
                     <InputFormItem
