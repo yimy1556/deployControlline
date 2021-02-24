@@ -18,15 +18,12 @@ function ProcessViewPage(props) {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión De Línea De Control', '/process'],
-          ['kjkljak']
+          ['Gestión De Línea De Control']
         ]}
       />
       <ContentWrapper>
         <PageTitle> Gestión De Línea De Control</PageTitle>
-        <ProcessFilter />
-        <ProcessTable />
-        <Modal><ProcessDischarge /></Modal>
+        <ProcessDischarge />
       </ContentWrapper>
     </>
   );
