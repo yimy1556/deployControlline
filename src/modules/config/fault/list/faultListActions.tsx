@@ -37,6 +37,7 @@ const faultListActions = {
     try {
       console.log(value)
       const response = await faultService.edit(value);
+      console.log(response)
       if (response) {
         dispatch(modalActions.closeModal());
         swal("Se Pudo modificar correctamente Falla", "", "success");
@@ -55,6 +56,8 @@ const faultListActions = {
   doCreate: (value) => async (dispatch) => {
     try {
       const response = await faultService.create(value);
+      
+      console.log(response)
       if (response) {
         dispatch(modalActions.closeModal());
         swal("Nueva falla creada!", "", "success");

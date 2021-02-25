@@ -17,7 +17,7 @@ import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 const schema = yup.object().shape({
-  name: yupFormSchemas.string(i18n('user.fields.firstName'), {
+  nameCheckpoint: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
   description: yupFormSchemas.string(i18n('process.fields.description'), {
@@ -37,11 +37,16 @@ const schema = yup.object().shape({
   })
 });
 
+const addName = (value) => ({
+  ...value,
+  name: value.nameCheckpoint,
+})
+
 function Checkpoint() {
   const valuesInitial = useSelector(checkpointViewSelectors.selectEdition)
   const [initialValues] = useState({
     id: valuesInitial?.id || null,
-    name: valuesInitial?.name || null,
+    nameCheckpoint: valuesInitial?.name || null,
     description: valuesInitial?.description || null,
     userId: valuesInitial?.user?.id || null,
     controlTypeId: valuesInitial?.controlType?.id || null,
@@ -77,12 +82,14 @@ function Checkpoint() {
   const onSubmit = (values) => {
     if(!valuesInitial?.id){
       dispatch(actionsCheckpoint.doCreate({
-        ...initialValues,...values
+        ...initialValues,
+        ...addName(values),
       }));
     }
     else{
       dispatch(actionsCheckpoint.doEdit({
-        ...initialValues,...values
+        ...initialValues,
+        ...addName(values),
       }));
     }
   }
@@ -108,7 +115,7 @@ function Checkpoint() {
                 <Grid item container justify='center' xs={11} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='name'
+                      name='nameCheckpoint'
                       label={i18n('user.fields.firstName')}
                     />
                   </Grid>

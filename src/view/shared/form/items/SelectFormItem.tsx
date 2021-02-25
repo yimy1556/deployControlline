@@ -82,10 +82,8 @@ function SelectFormItem(props) {
 
   const handleSelect = (data) => {
     const { mode } = props;
-    console.log(data,func)
     if(func){
-      console.log('skjksjk')
-      func(data.value)
+      func(data?.value || data)
     }
     if (mode === 'multiple') {
       return handleSelectMultiple(data);

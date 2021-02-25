@@ -127,7 +127,6 @@ const checkpointListActions = {
     }
   },
   doCreate: (value) => async (dispatch) => {
-    console.log('ñññññ',value,'jksjkjk')
     try {
       const response = await checkpointService.create(value);
       if (response) {
@@ -151,7 +150,6 @@ const checkpointListActions = {
 
   doEdit: (value) => async (dispatch) => {
     try {
-      console.log(value)
       const response = await checkpointService.edit(value);
       if (response) {
         dispatch(modalActions.closeModal());

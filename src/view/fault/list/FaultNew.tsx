@@ -15,8 +15,13 @@ import selectorsList from 'src/modules/config/fault/list/faultListSelectors';
 import selectorsListCheckponint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import actionsFault from 'src/modules/config/fault/list/faultListActions';
 
+const addName = (value) => ({
+  ...value,
+  name: value.nameFault,
+})
+
 const schema = yup.object().shape({
-  name: yupFormSchemas.string('Nombre', {
+  nameFault: yupFormSchemas.string('Nombre', {
     required: true, 
   }),
   description: yupFormSchemas.string(i18n('process.fields.description'), {
@@ -37,7 +42,7 @@ function FaultNew() {
   const [initialValues] = useState({
     status: valuesInitial?.status || null,
     id : valuesInitial?.id || null,
-    name: valuesInitial?.name || '',
+    nameFault: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
     categoryId: valuesInitial?.category?.id || null,
     typeFallaId:  valuesInitial?.typeFalla?.id || null,
@@ -60,12 +65,14 @@ function FaultNew() {
   const onSubmit = (values) => {
     if(!valuesInitial.id){
       dispatch(actionsFault.doCreate({
-        ...initialValues,...values
+        ...initialValues,
+        ...addName(values),
       }));
     }
     else{
       dispatch(actionsFault.doEdit({
-        ...initialValues,...values
+        ...initialValues,
+        ...addName(values),
       }));
     }
   }
@@ -86,7 +93,7 @@ function FaultNew() {
                 <Grid item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='name'
+                      name='nameFault'
                       label={i18n('user.fields.firstName')}
                    />
                   </Grid>                 

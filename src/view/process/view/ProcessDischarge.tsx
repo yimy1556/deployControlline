@@ -59,7 +59,6 @@ const options = [
 
 function ProcessDischarge() {
   const valueInitial = useSelector(processViewSelectors.selectEdition);
-  console.log(valueInitial);
   const [initialValues] = useState({
     id:null,
     userId: 2,
@@ -72,6 +71,8 @@ function ProcessDischarge() {
     checkpoints:valueInitial?.checkpoints?.reduce((acc, el) => ([...acc, el.checkpoint.id]),[]) || [],
     category: valueInitial?.category?.id || 1,
   });
+  
+  const [checkpoints, setCheckpoints] = useState([]);
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -86,19 +87,12 @@ function ProcessDischarge() {
 
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
   const optionCheckpoint = useSelector(selectorsCheckpoint.selectRows)
-  console.log(optionCheckpoint,'ksjks')
   const onSubmit = (values) => {
     dispatch(processFormActions.doAdd({...initialValues, ...values}));
   };
  
   return (
     <Grid container alignItems='stretch' justify='center' direction='column'>
-      <Grid container justify='center' item xs={12}>
-        <h1>{!valueInitial?  
-          i18n('process.title'):
-          'Edicion de linea de control'
-        }</h1>
-      </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -116,7 +110,7 @@ function ProcessDischarge() {
                       label={i18n('process.fields.sku')}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <SelectFormItem 
                       name='industrialPlant'
                       options={options}
@@ -124,7 +118,7 @@ function ProcessDischarge() {
                       mode='unico'
                     />
                   </Grid>       
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
                     <SelectFormItem 
                       name='category'
                       options={optionCategory}
@@ -132,27 +126,16 @@ function ProcessDischarge() {
                       mode='unico'
                       />
                   </Grid> 
-                  <Grid item container xs={12} spacing={1} alignItems='center'>
-                    <Grid item xs={10}>
-                      <SelectFormItem 
-                        name='checkpoints'
-                        options={optionCheckpoint.reduce((acc, el) => ([...acc, { value: el.id, label: el.name  }]),[])}
-                        label={i18n('process.fields.checkpoint')}
-                        mode='multiple'
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <Button
-                        style={{ marginTop: '8px' }}
-                        variant="contained"
-                        color="primary"
-                        onClick= {() => {}}
-                        fullWidth
-                      >
-                        {i18n('common.cancel')}
-                      </Button>
-                    </Grid>
+                  <Grid item xs={12}>
+                    <SelectFormItem 
+                      name='checkpoints'
+                      options={optionCheckpoint.reduce((acc, el) => ([...acc, { value: el.id, label: el.name  }]),[])}
+                      label={i18n('process.fields.checkpoint')}
+                      mode='multiple'
+                      func={setCheckpoints}
+                    />
                   </Grid>
+                  {console.log(checkpoints)}
                   <Grid item xs={12}>
                     <InputFormItem
                       name='description'
