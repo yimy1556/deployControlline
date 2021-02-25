@@ -84,13 +84,10 @@ function UserFilter(props) {
     mode: 'all',
   });
 
-  useEffect(() => {
-    dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
-    // eslint-disable-next-line
-  }, [dispatch]);
 
   const onSubmit = (values) => {
     const rawValues = form.getValues();
+    console.log(rawValues)
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };

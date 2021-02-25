@@ -17,6 +17,14 @@ function UserStatusView(props) {
       ></ColoredChip>
     );
   }
+  if (value === 'inactive') {
+    return (
+      <ColoredChip
+        color="red"
+        label={'Inactivo'}
+      ></ColoredChip>
+    );
+  }
 
   if (value === 'inactive') {
     return (
@@ -26,7 +34,14 @@ function UserStatusView(props) {
       ></ColoredChip>
     );
   }
-
+  if (value === 'none') {
+    return (
+      <ColoredChip
+        color="red"
+        label={'No asignado'}
+      ></ColoredChip>
+    );
+  }
   return (
     <ColoredChip
       color="yellow"

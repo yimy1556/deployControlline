@@ -9,11 +9,52 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
-
+  {
+    path: '/process',
+    loader: () => import('src/view/process/list/ProcessPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: '/process/new-process',
+    loader: () => import('src/view/process/view/ProcessViewPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: '/process/:id/edit-process',
+    loader: () => import('src/view/process/view/ProcessViewPage'),
+    permissionRequired: null,
+    exact: true,
+  }, 
+  {
+    path: '/checkpoint',
+    loader: () => import('src/view/checkpoint/list/CheckpointPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: '/ops',
+    loader: () => import('src/view/ops/OpsPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: '/faults',
+    loader: () => import('src/view/fault/list/FaultPage'),
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: '/settings',
+    loader: () => import('src/view/settings/MenuSettings'),
+    permissionRequired: null,
+    exact: true,
+  },
   {
     path: '/user',
     loader: () => import('src/view/user/list/UserPage'),
-    permissionRequired: permissions.userRead,
+    permissionRequired: null,
     exact: true,
   },
 

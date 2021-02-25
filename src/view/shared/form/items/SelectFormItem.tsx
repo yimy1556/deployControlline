@@ -23,6 +23,8 @@ function SelectFormItem(props) {
     placeholder,
     isClearable,
     externalErrorMessage,
+    func,
+    disabled,
   } = props;
 
   const {
@@ -58,7 +60,7 @@ function SelectFormItem(props) {
 
   const valueMultiple = () => {
     if (originalValue) {
-      return originalValue.map((value) =>
+      return originalValue?.map((value) =>
         options.find((option) => option.value === value),
       );
     }
@@ -80,6 +82,9 @@ function SelectFormItem(props) {
 
   const handleSelect = (data) => {
     const { mode } = props;
+    if(func){
+      func(data?.value || data)
+    }
     if (mode === 'multiple') {
       return handleSelectMultiple(data);
     } else {
@@ -135,6 +140,7 @@ function SelectFormItem(props) {
       value={value()}
       onChange={handleSelect}
       inputId={name}
+      isDisabled={disabled}
       TextFieldProps={{
         label,
         required,
@@ -166,6 +172,8 @@ function SelectFormItem(props) {
 SelectFormItem.defaultProps = {
   required: false,
   isClearable: true,
+  func: null,
+  disabled: false,
 };
 
 SelectFormItem.propTypes = {
@@ -176,6 +184,8 @@ SelectFormItem.propTypes = {
   required: PropTypes.bool,
   externalErrorMessage: PropTypes.string,
   mode: PropTypes.string,
+  func: PropTypes.any,
+  disabledi: PropTypes.bool,
   isClearable: PropTypes.bool,
 };
 

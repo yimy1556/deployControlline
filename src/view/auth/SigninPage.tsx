@@ -76,7 +76,7 @@ function SigninPage() {
     >
       <Content>
         <Logo>
-            <h1>{i18n('app.title')}</h1>
+          <img src='/images/Logos-NS-bordo.png' height='52px' />
         </Logo>
 
         <FormProvider {...form}>

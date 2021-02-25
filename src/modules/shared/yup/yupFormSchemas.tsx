@@ -69,11 +69,10 @@ const yupFormSchemas = {
       .ensure()
       .of(
         yup
-          .string()
+          .number()
           .transform((cv, ov) => {
             return ov === '' ? null : cv;
           })
-          .trim(),
       )
       .label(label);
 
