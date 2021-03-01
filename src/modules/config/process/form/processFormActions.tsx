@@ -30,7 +30,6 @@ const processFormActions = {
       dispatch({
         type: processFormActions.ADD_STARTED,
       });
-      console.log(values)
       await processService.create(values);
       
       dispatch({

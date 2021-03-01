@@ -13,7 +13,6 @@ const processViewActions = {
     );
 
 
-  console.log(232323)
     dispatch({ 
       type: processViewActions.VIEW_EDICION_START,
       payload: rows.find(row => row.id === id),

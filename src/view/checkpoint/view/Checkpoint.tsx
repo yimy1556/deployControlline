@@ -53,7 +53,7 @@ function Checkpoint() {
     categoryId: valuesInitial?.category?.id || null,
     status: valuesInitial?.status || null,
     faults: valuesInitial?.checkpointDetails?.reduce((acc, el) => ([...acc, el.fault.id]), []) || [],
-    operators: valuesInitial?.operatorsCheckpoint?.reduce((acc, el) => ([...acc, el.id]), []) || [],
+    operators: valuesInitial?.operatorsCheckpoint?.reduce((acc, el) => ([...acc, el.user.id]), []) || [],
   });
   
   const dispatch = useDispatch();
