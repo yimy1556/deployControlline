@@ -95,7 +95,7 @@ function ProcessDischarge() {
   const onSubmit = async(values) => {
     const newValue = await addValue(values, checkpoints);
    
-    if(!valueInitial){
+    if(!initialValues.id){
       console.log('crea')
       dispatch(processFormActions.doAdd({
         ...initialValues,
