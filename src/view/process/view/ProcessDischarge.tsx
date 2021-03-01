@@ -48,7 +48,7 @@ function ProcessDischarge() {
   const valueInitial = useSelector(processViewSelectors.selectEdition);
   
   const [initialValues] = useState({
-    id:valueInitial?.id,
+    id:valueInitial?.id || null,
     userId: 2,
     nameProcess: valueInitial?.name || null,
     industrialPlantId: valueInitial?.industrialPlant.id || null,
@@ -89,15 +89,21 @@ function ProcessDischarge() {
   const optionCheckpoint = useSelector(selectProcess.selectOptionCheckpoint);
   const optionIndustrialPlant = useSelector(selectProcess.selectOptionIndustrialPlants);
 
-  const onSubmit = (values) => {
-    const newValue = addValue(values, checkpoints);
-    if(!valueInitial?.id){
+
+
+  console.log(valueInitial,'sssssdsd')
+  const onSubmit = async(values) => {
+    const newValue = await addValue(values, checkpoints);
+   
+    if(!valueInitial){
+      console.log('crea')
       dispatch(processFormActions.doAdd({
         ...initialValues,
         ...newValue,
       }));
     }
     else{
+      console.log('edit')
       dispatch(processListActions.doEdit({
         ...initialValues,
         ...newValue,

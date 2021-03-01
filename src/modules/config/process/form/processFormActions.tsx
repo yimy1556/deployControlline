@@ -30,17 +30,16 @@ const processFormActions = {
       dispatch({
         type: processFormActions.ADD_STARTED,
       });
-      await processService.create(values);
-      
+      const response =  await processService.create(values);
+      if(!response){
+        return swal("Nombre repetido", "", "error");
+      }
       dispatch({
         type: processFormActions.ADD_SUCCESS,
-      });
-      
-      getHistory().push('/process')
-      dispatch(modalActions.closeModal());
-      dispatch(processListActions.doFetchCurrentFilter());
+      }); 
+      getHistory().push('/process');
+      swal("Linea de control creado correctamente", "", "success");
     } catch (error) {
-      console.log(error)
       dispatch({
         type: processFormActions.ADD_ERROR,
       });

@@ -79,16 +79,16 @@ const processListActions = {
     const response = await processService.edit(value);
       if (response) {
         dispatch(modalActions.closeModal());
-        swal("Se Pudo modificar correctamente el Puesto de Control", "", "success");
+        swal("Se Pudo modificar correctamente la linea de Control", "", "success");
         dispatch(
           processListActions.doFetchCurrentFilter(),
         );
         getHistory().push('/process');
       } else {
-        swal("Nombre puesto de control repetido", "", "error");
+        swal("Nombre linea de control repetido", "", "error");
       }
     }catch (error) {
-      swal("Error al modificar el Puesto de control", "", "error");
+      swal("Error al modificar la linea de control", "", "error");
     }
   },
 
