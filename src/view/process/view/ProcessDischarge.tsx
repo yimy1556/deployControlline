@@ -17,6 +17,7 @@ import View from 'src/view/process/orde/VistCheckpoint';
 import Modal from 'src/view/shared/modals/Modal';
 import processListActions from 'src/modules/config/process/list/processListActions';
 import { Link } from 'react-router-dom';
+import selectProcess from 'src/modules/config/process/list/processListSelectors';
 
 const schema = yup.object().shape({ 
   nameProcess: yupFormSchemas.string(i18n('user.fields.firstName'), {
@@ -42,9 +43,10 @@ const addValue = (value, checkpoints) => ({
   checkpoints: checkpoints.reduce((acc, el) => [...acc, el.id],[]),
 })
 
-function ProcessDischarge() {
+function ProcessDischarge() { 
+  const dispatch = useDispatch();
   const valueInitial = useSelector(processViewSelectors.selectEdition);
- 
+  
   const [initialValues] = useState({
     id:valueInitial?.id,
     userId: 2,
@@ -53,9 +55,15 @@ function ProcessDischarge() {
     sku: valueInitial?.sku || null,
     description: valueInitial?.description || null,
     status: valueInitial?.status || null,
-    categoryId: valueInitial?.category?.id || 1,
+    categoryId: valueInitial?.category?.id || null,
   });
   
+  useEffect(() => {
+    dispatch(processListActions.doLoadOption());
+  }, [dispatch]);
+
+
+
   const editCheckpoints = valueInitial?.checkpoints?.reduce((acc, el) => 
     ([...acc,
       {
@@ -64,7 +72,7 @@ function ProcessDischarge() {
       }
     ]),[]);
   
-
+  const [category, setCategory] = useState(valueInitial? initialValues.categoryId:null);
   const [checkpoints, setCheckpoints] = useState( editCheckpoints || [] );
 
   const form = useForm({
@@ -73,13 +81,14 @@ function ProcessDischarge() {
     defaultValues: initialValues
   });
 
-  const dispatch = useDispatch();
   const configCheckpoint = () => {
     dispatch(actions.modalOpen());
   }
 
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
-  const optionCheckpoint = useSelector(selectorsCheckpoint.selectRows)
+  const optionCheckpoint = useSelector(selectProcess.selectOptionCheckpoint);
+  const optionIndustrialPlant = useSelector(selectProcess.selectOptionIndustrialPlants);
+
   const onSubmit = (values) => {
     const newValue = addValue(values, checkpoints);
     if(!valueInitial?.id){
@@ -96,14 +105,20 @@ function ProcessDischarge() {
     }
   }
   
+  
+
+
   const optionCheckpoints = (doCheckpoints) => {
+
     const options = optionCheckpoint.reduce((acc, el) => ([...acc, 
       { 
-        id: el.id,
-        value: el.id,
-        label: el.name,
-      }]),[]);
+        ...el,
+        id: el.value,
+      }]),[])
+    .filter(option => option.categoryId === category); 
     
+    console.log(options)
+
     return  options.filter(option => 
       (!doCheckpoints.find(check => 
         (check.id === option.id)
@@ -132,7 +147,7 @@ function ProcessDischarge() {
                   <Grid item xs={6}>
                     <SelectFormItem 
                       name='industrialPlantId'
-                      options={[{value:1, label: 'matanza'}]}
+                      options={optionIndustrialPlant}
                       label={i18n('process.fields.plant')}
                       mode='unico'
                     />
@@ -143,6 +158,7 @@ function ProcessDischarge() {
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
+                      func={setCategory}
                       />
                   </Grid>
                   <Modal full sm={'sm'}>

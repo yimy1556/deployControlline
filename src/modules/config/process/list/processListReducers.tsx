@@ -15,6 +15,8 @@ const initialData = {
   rawFilter: {},
   pagination: initialPagination,
   sorter: {},
+  checkpoint:[],
+  industrialPlants: [],
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -34,6 +36,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.RESETED) {
     return {
       ...initialData,
+      checkpoint: state.checkpoint,
     };
   }
 
@@ -54,7 +57,15 @@ export default (state = initialData, { type, payload }) => {
       count: 0,
     }
   }
-   
+  
+  if (type === actions.LOAD_OPTION) {
+    return {
+      ...state,
+      checkpoint: payload.checkpoint,
+      industrialPlants: payload.industrialPlants,
+    }
+  }
+
   if (type === actions.PAGINATION_CHANGED) {
     return {
       ...state,

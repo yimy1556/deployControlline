@@ -17,19 +17,4 @@ export default class CategoryService {
 
     return response.data;
   }
-/*
-  static async fetchUserAutocomplete(query, limit) {
-    const params = {
-      query,
-      limit,
-    };
-
-    const response = await authAxios.get(
-      `/user/autocomplete`,
-      {
-        params,
-      },
-    );
-    return response.data;
-    }*/
 }

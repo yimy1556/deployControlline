@@ -58,6 +58,19 @@ export default class CheckponitService {
 
     return response.data;
   }
+  
+  static async fetchCheckpointActive(){
+      const response = await authAxios.get(
+        '/checkpoint/active/',
+        {
+          params: {}
+        }
+      );
+    
+      return response.data;
+  }
+
+
   /*
     static async fetchUserAutocomplete(query, limit) {
       const params = {

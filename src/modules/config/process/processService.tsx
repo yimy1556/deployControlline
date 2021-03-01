@@ -58,4 +58,16 @@ export default class CheckponitService {
 
     return response.data;
   }
+
+  static async fetchProcessActive(){
+      const response = await authAxios.get(
+        '/controlline/active/',
+        {
+          params: {}
+        }
+      );
+    
+      return response.data;
+  }
+
 }

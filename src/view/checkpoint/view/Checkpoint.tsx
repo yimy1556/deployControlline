@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   faults: yupFormSchemas.stringArray(i18n('checkpoint.fields.failure'),{
     required: true,
   }),
-  operaryId: yupFormSchemas.integer('Opérarios', {
+  operaryId: yupFormSchemas.stringArray('Opérarios', {
     required: true,
   })
 });
@@ -146,7 +146,7 @@ function Checkpoint() {
               name='operaryId'
               options={optionOperary}
               label={'Operario'}
-              mode='unico'
+              mode='multiple'
             />
           </Grid>
           <Grid item xs={12}>

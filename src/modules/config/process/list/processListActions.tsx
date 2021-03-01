@@ -3,6 +3,9 @@ import selectors from 'src/modules/config/process/list/processListSelectors';
 import modalActions from 'src/modules/modal/modalActions';
 import swal from 'sweetalert';
 import { getHistory  } from 'src/modules/store';
+import IndustrialPlantService from '../../service/IndustrialPlantService';
+import checkpointListActions from '../../checkpoint/list/checkpointListActions';
+import CheckponitService from '../../checkpoint/checkpointService';
 
 const prefix = 'PROCESS_LIST';
 
@@ -41,6 +44,33 @@ const processListActions = {
 
       dispatch(processListActions.doFetchCurrentFilter());
     }
+  },
+
+  doLoadOption: () => async (dispatch) => {
+    
+    dispatch(checkpointListActions.doLoadOption());
+
+    const optionIndustrialPlant = await IndustrialPlantService.fetchIndustrialPlant();
+    const optionCheckpoint = await CheckponitService.fetchCheckpointActive();
+  
+
+    const opIn = optionIndustrialPlant.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
+    const op = optionCheckpoint.rows.reduce((acc, el) => (
+      [...acc, 
+        { value: el.id, 
+          label: el.name,
+          categoryId: el.category.id,
+        }])
+      , []);
+
+
+    dispatch({
+      type: processListActions.LOAD_OPTION,
+      payload: {
+        checkpoint: op,
+        industrialPlants: opIn,
+      }
+    })
   },
 
 
