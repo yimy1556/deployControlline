@@ -25,7 +25,14 @@ function UserStatusView(props) {
       ></ColoredChip>
     );
   }
-
+  if (value === 'iniciada') {
+    return (
+      <ColoredChip
+        color="green"
+        label={"Iniciada"}
+      ></ColoredChip>
+    );
+  }
   if (value === 'empty-permissions') {
     return (
       <ColoredChip

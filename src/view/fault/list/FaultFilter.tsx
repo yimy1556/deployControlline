@@ -71,7 +71,7 @@ function UserFilter(props) {
   });
 
   const openModel = () => {
-    dispatch(actionsModal.modalOpen());      
+    dispatch(actionsModal.modalOpen());
   };
 
   const form = useForm({
@@ -86,7 +86,7 @@ function UserFilter(props) {
     dispatch(actions.doLoadOption());
     dispatch(checkpointListActions.doLoadOption())
   }, [dispatch]);
-  
+
   const onSubmit = (values) => {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
@@ -103,9 +103,9 @@ function UserFilter(props) {
 
 
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
-  const optionsTypeFalla =  useSelector(selectors.selectOptionTypeFalla);
+  const optionsTypeFalla = useSelector(selectors.selectOptionTypeFalla);
   const { loading } = props;
-  
+
 
   return (
     <FilterWrapper>
@@ -132,33 +132,23 @@ function UserFilter(props) {
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>
-                 <Grid item lg={6} xs={12}>
+                <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'category'}
                     label={i18n('faults.fields.category')}
-                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
+                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label }]), [])}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'typeFalla'}
                     label={'Tipo de Falla'}
-                    options={optionsTypeFalla.reduce((acc, el) => ([...acc, { value: el.label, label: el.label  }]),[])}
+                    options={optionsTypeFalla.reduce((acc, el) => ([...acc, { value: el.label, label: el.label }]), [])}
                   />
                 </Grid>
               </Grid>
               <FilterButtons>
-                <Tooltip
-                  title={i18n('process.newControlLine')}
-                >
-                  <Fab 
-                    size="small" 
-                    color="primary"
-                    onClick={openModel}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
+
 
                 <Button
                   variant="contained"
