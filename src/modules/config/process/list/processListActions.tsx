@@ -1,5 +1,8 @@
 import processService from 'src/modules/config/process/processService';
 import selectors from 'src/modules/config/process/list/processListSelectors';
+import modalActions from 'src/modules/modal/modalActions';
+import swal from 'sweetalert';
+import { getHistory  } from 'src/modules/store';
 
 const prefix = 'PROCESS_LIST';
 
@@ -9,6 +12,8 @@ const processListActions = {
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
 
   RESETED: `${prefix}_RESETED`,
+  
+  LOAD_OPTION: `${prefix}_LOAD_OPTION`,
 
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
 
@@ -35,6 +40,25 @@ const processListActions = {
       });
 
       dispatch(processListActions.doFetchCurrentFilter());
+    }
+  },
+
+
+  doEdit: (value) => async (dispatch) => {
+  try {
+    const response = await processService.edit(value);
+      if (response) {
+        dispatch(modalActions.closeModal());
+        swal("Se Pudo modificar correctamente el Puesto de Control", "", "success");
+        dispatch(
+          processListActions.doFetchCurrentFilter(),
+        );
+        getHistory().push('/process');
+      } else {
+        swal("Nombre puesto de control repetido", "", "error");
+      }
+    }catch (error) {
+      swal("Error al modificar el Puesto de control", "", "error");
     }
   },
 

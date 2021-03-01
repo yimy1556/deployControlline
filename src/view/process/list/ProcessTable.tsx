@@ -108,7 +108,7 @@ function ProcessTable() {
                 <TableRow key={index}>
                   <TableCell align='center'>{row?.name || 'none'}</TableCell>
                   <TableCell align='center'>{row?.sku || 'none'}</TableCell>
-                  <TableCell align='center'>{row?.plant?.name || 'none'}</TableCell>
+                  <TableCell align='center'>{row?.industrialPlant?.name || 'none'}</TableCell>
                   <TableCell align='center'><UserStatusView value={row.status} /></TableCell>
                   <TableCell>
                     <Box
@@ -117,6 +117,7 @@ function ProcessTable() {
                     >
                       <Tooltip
                         title={i18n('common.edit')}
+                        onClick= {() => dispatch(actionsView.startEdicion(row.id))}
                       >
                         <IconButton
                           color="primary"

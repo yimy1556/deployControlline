@@ -94,111 +94,103 @@ function Checkpoint() {
     }
   }
   
-
   const aux = () => {
     return defindFaults.filter(fault => fault.categoryId === faults)
   }
 
   return (
-    <Grid container alignItems='center' direction='column'>
-      <Grid item xs={12}>
-        <h1>{!valuesInitial?
-          i18n('checkpoint.title')
-          : 'Edicion De Puesto de control'}
-        </h1>
-      </Grid>
-      <Grid item xs={12}>
-        <FormProvider {...form}>
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Grid container direction='column' alignItems='center'>
           <Grid item xs={12}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Grid container direction='column' alignItems='center'>
-                <Grid item container justify='center' xs={11} spacing={2}>
-                  <Grid item xs={6}>
-                    <InputFormItem
-                      name='nameCheckpoint'
-                      label={i18n('user.fields.firstName')}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <SelectFormItem
-                      name='controlTypeId'
-                      options={optionControlType}
-                      label={i18n('checkpoint.fields.controlType')}
-                      mode='unico'
-                    />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <SelectFormItem
-                      name='categoryId'
-                      options={optionCategory}
-                      label='Categoria'
-                      func= {setFaults}
-                      disabled= {Boolean(valuesInitial)}  
-                      mode='unico'
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <SelectFormItem
-                      name='faults'
-                      options={aux()}
-                      label={i18n('checkpoint.fields.failure')}
-                      mode='multiple'
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <SelectFormItem
-                      name='operaryId'
-                      options={optionOperary}
-                      label={'Operario'}
-                      mode='unico'
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <InputFormItem
-                      name='description'
-                      label={i18n('process.fields.description')}
-                      multiline
-                      rows={6}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid
-                  style={{ marginBottom: '10px' }}
-                  container
-                  item
-                  spacing={2}
-                  xs={8}>
-                  <Grid item xs={6}>
-                    <Button
-                      style={{ marginTop: '8px' }}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => closeModal()}
-                      fullWidth
-                    >
-                      {i18n('common.cancel')}
-                    </Button>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Button
-                      style={{ marginTop: '8px' }}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      fullWidth
-                      disabled={false}
-                    >
-                      {i18n('common.save')}
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </form>
+            <h1>{!valuesInitial?
+              i18n('checkpoint.title')
+              : 'Edicion De Puesto de control'}
+            </h1>
           </Grid>
-        </FormProvider>
-      </Grid>
-    </Grid>
+          <Grid item container justify='center' xs={11} spacing={2}>
+            <Grid item xs={6}>
+              <InputFormItem
+                name='nameCheckpoint'
+                label={i18n('user.fields.firstName')}
+              />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectFormItem
+              name='controlTypeId'
+              options={optionControlType}
+              label={i18n('checkpoint.fields.controlType')}
+              mode='unico'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SelectFormItem
+              name='categoryId'
+              options={optionCategory}
+              label='Categoria'
+              func= {setFaults}
+              disabled= {Boolean(valuesInitial)}  
+              mode='unico'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SelectFormItem
+              name='faults'
+              options={aux()}
+              label={i18n('checkpoint.fields.failure')}
+              mode='multiple'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <SelectFormItem
+              name='operaryId'
+              options={optionOperary}
+              label={'Operario'}
+              mode='unico'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <InputFormItem
+              name='description'
+              label={i18n('process.fields.description')}
+              multiline
+              rows={6}
+            />
+          </Grid>
+          </Grid>
+          <Grid
+            style={{ marginBottom: '10px' }}
+            container
+            item
+            spacing={2}
+            xs={8}>
+            <Grid item xs={6}>
+            <Button
+              style={{ marginTop: '8px' }}
+              variant="contained"
+              color="primary"
+              onClick={() => closeModal()}
+              fullWidth
+            >
+              {i18n('common.cancel')}
+            </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                style={{ marginTop: '8px' }}
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+                disabled={false}
+            >
+                {i18n('common.save')}
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </form>
+    </FormProvider>
   );
 }
 

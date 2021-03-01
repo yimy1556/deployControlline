@@ -3,26 +3,20 @@ import authAxios from 'src/modules/shared/axios/authAxios';
 export default class CheckponitService {
   static async edit(data) {
     const body = {
-      data,
+      ...data,
     };
 
     const response = await authAxios.put(
-      `/controlline`,
+      `/controlline/`,
       body,
     );
     return response.data;
   }
 
-  static async doDisabled(ids) {
-    const params = {
-      ids,
-    };
+  static async doDisabled(id) {
 
-    const response = await authAxios.put(
-      `/disable/controlline`,
-      {
-        params,
-      },
+    const response = await authAxios.delete(
+      `/controlline/${id}`,
     );
 
     return response.data;

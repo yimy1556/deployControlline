@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 function Modal(props) {
   
-  const {children, onClose} = props;
+  const {children,full,sm, onClose} = props;
   
   const open = useSelector(
     modalSelectors.selectModalOpen,
@@ -17,9 +17,10 @@ function Modal(props) {
       open={open}
       onClose={onClose || undefined}
       fullWidth={true}
-      maxWidth='md'
+      maxWidth= {sm || 'md'}
     >
-      <DialogContent>
+      <DialogContent  
+      >
         {children}
       </DialogContent>      
     </Dialog>,

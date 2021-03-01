@@ -21,7 +21,9 @@ function FaultPage() {
         <PageTitle>Gestión de Falla</PageTitle>
         <FaultFilter />
         <FaultTable />
-        <Modal><FaultNew /></Modal>
+        <Modal sm={'sm'}>
+          <FaultNew />
+        </Modal>
       </ContentWrapper>
     </>
   );

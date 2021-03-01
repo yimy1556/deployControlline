@@ -1,5 +1,4 @@
 import processListSelectors from 'src/modules/config/process/list/processListSelectors';
-import actionsModal from 'src/modules/modal/modalActions';
 
 const prefix = 'PROCESS_VIEW';
 
@@ -12,12 +11,13 @@ const processViewActions = {
     const rows = processListSelectors.selectRows(
       getState(),
     );
-   console.log(rows) 
+
+
+  console.log(232323)
     dispatch({ 
       type: processViewActions.VIEW_EDICION_START,
       payload: rows.find(row => row.id === id),
     });
-    dispatch(actionsModal.modalOpen());
   },
 
   finishEdicion: () => (dispatch) => {

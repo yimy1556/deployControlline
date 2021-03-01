@@ -13,12 +13,16 @@ import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import processViewSelectors from 'src/modules/config/process/view/processViewSelectors';
 import selectorsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import processFormActions from 'src/modules/config/process/form/processFormActions';
+import View from 'src/view/process/orde/VistCheckpoint';
+import Modal from 'src/view/shared/modals/Modal';
+import processListActions from 'src/modules/config/process/list/processListActions';
+import { Link } from 'react-router-dom';
 
-const schema = yup.object().shape({
-  name: yupFormSchemas.string(i18n('user.fields.firstName'), {
+const schema = yup.object().shape({ 
+  nameProcess: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
-  industrialPlant: yupFormSchemas.integer(i18n('process.fields.plant'), {
+  industrialPlantId: yupFormSchemas.integer(i18n('process.fields.plant'), {
     required: true,
   }),
   sku: yupFormSchemas.string(i18n('process.fields.sku'), {
@@ -27,52 +31,41 @@ const schema = yup.object().shape({
   description:  yupFormSchemas.string(i18n('process.fields.description'), {
     required: true,
   }),
-  checkpointNumber:  yupFormSchemas.integer('Puestos', {
-    required: true,
-  }),
-  checkpoints: yupFormSchemas.stringArray('Puestos de control', {
-    required: false,
-  }),
-  category : yupFormSchemas.integer('Categoria', {
-    required:  false,
+  categoryId : yupFormSchemas.integer('Categoria', {
+    required:  true,
   })
 });
 
-const options = [
-  {value: {id: 1}, label: 'Chocolate'  },
-  { value: {id: 2}, label: 'Strawberry'  },
-  { value: {id: 3}, label: 'Vanilla'  },
-  {value: 1, label: 'Chocolate'  },
-  { value: 2, label: 'Strawberry'  },
-  { value: 6, label: 'Vanilla'  },
-  {value: 7, label: 'Chocolate'  },
-  { value: 8, label: 'Strawberry'  },
-  { value: 9, label: 'Vanilla'  },
-  {value: 10, label: 'Chocolate'  },
-  { value: 11, label: 'Strawberry'  },
-  { value: 12, label: 'Vanilla'  },
-  {value: 331, label: 'Chocolate'  },
-  { value: 22, label: 'Strawberry'  },
-  { value: 39, label: 'Vanilla'  } 
-]
-
+const addValue = (value, checkpoints) => ({
+  ...value,
+  name: value.nameProcess,
+  checkpoints: checkpoints.reduce((acc, el) => [...acc, el.id],[]),
+})
 
 function ProcessDischarge() {
   const valueInitial = useSelector(processViewSelectors.selectEdition);
+ 
   const [initialValues] = useState({
-    id:null,
+    id:valueInitial?.id,
     userId: 2,
-    name: valueInitial?.name || '',
-    industrialPlant: valueInitial?.industrialPlant || 1,
-    sku: valueInitial?.sku || 'default',
-    description: valueInitial?.description || '',
-    status: valueInitial?.status || 'active',
-    checkpointNumber: valueInitial?.checkpointNumber || 1,
-    checkpoints:valueInitial?.checkpoints?.reduce((acc, el) => ([...acc, el.checkpoint.id]),[]) || [],
-    category: valueInitial?.category?.id || 1,
+    nameProcess: valueInitial?.name || null,
+    industrialPlantId: valueInitial?.industrialPlant.id || null,
+    sku: valueInitial?.sku || null,
+    description: valueInitial?.description || null,
+    status: valueInitial?.status || null,
+    categoryId: valueInitial?.category?.id || 1,
   });
   
-  const [checkpoints, setCheckpoints] = useState([]);
+  const editCheckpoints = valueInitial?.checkpoints?.reduce((acc, el) => 
+    ([...acc,
+      {
+        id:el.checkpoint.id,
+        label: el.checkpoint.name
+      }
+    ]),[]);
+  
+
+  const [checkpoints, setCheckpoints] = useState( editCheckpoints || [] );
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -81,16 +74,42 @@ function ProcessDischarge() {
   });
 
   const dispatch = useDispatch();
-  const closeModal = () => {
-    dispatch(actions.closeModal());
+  const configCheckpoint = () => {
+    dispatch(actions.modalOpen());
   }
 
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
   const optionCheckpoint = useSelector(selectorsCheckpoint.selectRows)
   const onSubmit = (values) => {
-    dispatch(processFormActions.doAdd({...initialValues, ...values}));
-  };
- 
+    const newValue = addValue(values, checkpoints);
+    if(!valueInitial?.id){
+      dispatch(processFormActions.doAdd({
+        ...initialValues,
+        ...newValue,
+      }));
+    }
+    else{
+      dispatch(processListActions.doEdit({
+        ...initialValues,
+        ...newValue,
+      }));
+    }
+  }
+  
+  const optionCheckpoints = (doCheckpoints) => {
+    const options = optionCheckpoint.reduce((acc, el) => ([...acc, 
+      { 
+        id: el.id,
+        value: el.id,
+        label: el.name,
+      }]),[]);
+    
+    return  options.filter(option => 
+      (!doCheckpoints.find(check => 
+        (check.id === option.id)
+      )));
+  }
+
   return (
     <Grid container alignItems='stretch' justify='center' direction='column'>
       <Grid item xs={12}>
@@ -100,7 +119,7 @@ function ProcessDischarge() {
                 <Grid item container justify='center' xs={10} spacing={3}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='name'
+                      name='nameProcess'
                       label={i18n('user.fields.firstName')}
                     />
                   </Grid>
@@ -112,29 +131,48 @@ function ProcessDischarge() {
                   </Grid>
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='industrialPlant'
-                      options={options}
+                      name='industrialPlantId'
+                      options={[{value:1, label: 'matanza'}]}
                       label={i18n('process.fields.plant')}
                       mode='unico'
                     />
                   </Grid>       
                   <Grid item xs={6}>
                     <SelectFormItem 
-                      name='category'
+                      name='categoryId'
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
                       />
-                  </Grid> 
-                  <Grid item xs={12}>
-                    <SelectFormItem 
-                      name='checkpoints'
-                      options={optionCheckpoint.reduce((acc, el) => ([...acc, { value: el.id, label: el.name  }]),[])}
-                      label={i18n('process.fields.checkpoint')}
-                      mode='multiple'
-                      func={setCheckpoints}
-                    />
                   </Grid>
+                  <Modal full sm={'sm'}>
+                    <h2 style={{textAlign:'center'}}>Asignacion de puesto de control</h2>
+                    <Grid item xs={12}>
+                      <SelectFormItem 
+                        name='checkpoints'
+                        options={optionCheckpoints(checkpoints)}
+                        label={i18n('process.fields.checkpoint')}
+                        mode='multiple'
+                        notSeve={checkpoints}
+                        func={setCheckpoints}
+                      />
+                    </Grid>
+                    <View items={checkpoints} setItems={setCheckpoints} />
+                      <Grid item xs={6}>
+                      <Button
+                        style={{ 
+                          marginTop: '8px',
+                          marginLeft: '50%',
+                        }}
+                        variant="contained"
+                        color="primary"
+                        onClick= {() => dispatch(actions.closeModal())}
+                        fullWidth
+                      >
+                        {i18n('Cerrar')}
+                      </Button>
+                    </Grid>
+                  </Modal>
                   {console.log(checkpoints)}
                   <Grid item xs={12}>
                     <InputFormItem
@@ -146,22 +184,35 @@ function ProcessDischarge() {
                   </Grid>
                 </Grid>
                 <Grid
-                  style={{ marginBottom: '5px' }}
+                  style={{marginTop: '10px',}}
                   container 
                   item 
                   spacing={2} xs={8}>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
                       color="primary"
-                      onClick= {() => closeModal()}
                       fullWidth
+                      component={Link}
+                      to='/process'
                     >
                       {i18n('common.cancel')}
                     </Button>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
+                    <Button
+                      style={{ marginTop: '8px' }}
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      disabled={false}
+                      onClick={configCheckpoint}
+                    >
+                      {i18n('Asignar puestos de control')}
+                    </Button>
+                  </Grid>
+                  <Grid item xs={4}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
