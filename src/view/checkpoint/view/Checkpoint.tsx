@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   faults: yupFormSchemas.stringArray(i18n('checkpoint.fields.failure'),{
     required: true,
   }),
-  operaryId: yupFormSchemas.stringArray('Opérarios', {
+  operators: yupFormSchemas.stringArray('Opérarios', {
     required: true,
   })
 });
@@ -53,7 +53,7 @@ function Checkpoint() {
     categoryId: valuesInitial?.category?.id || null,
     status: valuesInitial?.status || null,
     faults: valuesInitial?.checkpointDetails?.reduce((acc, el) => ([...acc, el.fault.id]), []) || [],
-    operaryId: valuesInitial?.user?.id  || null,
+    operators: valuesInitial?.operators?.reduce((acc, el) => ([...acc, el.fault.id]), []) || [],
   });
   
   const dispatch = useDispatch();
@@ -143,7 +143,7 @@ function Checkpoint() {
           </Grid>
           <Grid item xs={12}>
             <SelectFormItem
-              name='operaryId'
+              name='operators'
               options={optionOperary}
               label={'Operario'}
               mode='multiple'
