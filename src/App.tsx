@@ -17,18 +17,19 @@ import Message from 'src/view/shared/message';
 
 const store = configureStore();
 
+
 export default function App(props) {
+
   return (
     <Provider store={store}>
       <AppWithRedux {...props} />
     </Provider>
   );
 }
-
 function AppWithRedux(props) {
 
   const colors = {
-    primary: '#2196f3',
+    primary: '#8A2432',
     secondary: '#f50057',
   };
 

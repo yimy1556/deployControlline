@@ -23,6 +23,9 @@ function SelectFormItem(props) {
     placeholder,
     isClearable,
     externalErrorMessage,
+    func,
+    disabled,
+    notSeve,
   } = props;
 
   const {
@@ -44,8 +47,13 @@ function SelectFormItem(props) {
   const originalValue = watch(name);
 
   useEffect(() => {
-    register({ name });
-  }, [register, name]);
+    if(notSeve) {
+      setValue(name, notSeve.reduce((acc,el) =>[...acc, el.id],[]), { shouldValidate: true });
+      return;
+    }else{
+      register({ name });
+    } 
+  }, [register, name,notSeve]);
 
   const value = () => {
     const { mode } = props;
@@ -58,7 +66,7 @@ function SelectFormItem(props) {
 
   const valueMultiple = () => {
     if (originalValue) {
-      return originalValue.map((value) =>
+      return originalValue?.map((value) =>
         options.find((option) => option.value === value),
       );
     }
@@ -80,6 +88,16 @@ function SelectFormItem(props) {
 
   const handleSelect = (data) => {
     const { mode } = props;
+    if(func && !notSeve){
+      func(data?.value || data);
+    }
+    if(notSeve) {
+      const newData = [...data, ...notSeve];
+      func(newData);
+      setValue(name, newData.reduce((acc,el) =>[...acc, el.id],[]), { shouldValidate: true });
+      return;
+    }
+    
     if (mode === 'multiple') {
       return handleSelectMultiple(data);
     } else {
@@ -93,11 +111,11 @@ function SelectFormItem(props) {
       props.onChange && props.onChange([]);
       return;
     }
-
+    console.log(values,'1111');
     const newValue = values
       .map((data) => (data ? data.value : data))
       .filter((value) => value != null);
-
+    console.log(newValue,'2222')
     setValue(name, newValue, { shouldValidate: true });
     props.onChange && props.onChange(newValue);
   };
@@ -135,6 +153,7 @@ function SelectFormItem(props) {
       value={value()}
       onChange={handleSelect}
       inputId={name}
+      isDisabled={disabled}
       TextFieldProps={{
         label,
         required,
@@ -166,6 +185,9 @@ function SelectFormItem(props) {
 SelectFormItem.defaultProps = {
   required: false,
   isClearable: true,
+  func: null,
+  notSeve: false,
+  disabled: false,
 };
 
 SelectFormItem.propTypes = {
@@ -176,6 +198,9 @@ SelectFormItem.propTypes = {
   required: PropTypes.bool,
   externalErrorMessage: PropTypes.string,
   mode: PropTypes.string,
+  func: PropTypes.any,
+  notSeve: PropTypes.any,
+  disabledi: PropTypes.bool,
   isClearable: PropTypes.bool,
 };
 

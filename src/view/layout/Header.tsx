@@ -53,7 +53,7 @@ function Header(props) {
         </IconButton>
 
         <Link className={classes.logo} to="/">
-            <>{i18n('app.title')}</>
+          <img src='/images/Logos-NS-blanco.png' height='32px' />
         </Link>
 
         <div className={classes.grow} />
