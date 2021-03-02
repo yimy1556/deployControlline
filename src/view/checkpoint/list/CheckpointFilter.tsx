@@ -38,7 +38,7 @@ const schema = yup.object().shape({
 
 
 const previewRenders = {
-  name: {
+  nameCheckpoint: {
     label: 'Nombre',
     render: filterRenders.generic(),
   },
@@ -53,7 +53,7 @@ const previewRenders = {
 };
 
 const emptyValues = {
-  name: null,
+  nameCheckpoint: null,
   verificationType: null,
   controlType: null,
   category: null,
@@ -127,7 +127,7 @@ function UserFilter(props) {
               <Grid container spacing={2}>
                 <Grid item lg={6} xs={12}>
                   <InputFormItem
-                    name={'name'}
+                    name={'nameCheckpoint'}
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>
