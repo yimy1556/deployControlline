@@ -52,9 +52,9 @@ export default class UserService {
   static async fetchUsers(filter, orderBy, limit, offset) {
     const params = {
       filter,
-      orderBy,
-      limit,
-      offset,
+      sort: orderBy,
+      size: limit,
+      page: offset,
     };
 
     const response = await authAxios.get(
