@@ -26,11 +26,11 @@ function UserStatusView(props) {
     );
   }
 
-  if (value === 'empty-permissions') {
+  if (value === 'inactive') {
     return (
       <ColoredChip
         color="red"
-        label={i18n('user.status.empty-permissions')}
+        label={i18n('user.status.inactive')}
       ></ColoredChip>
     );
   }
