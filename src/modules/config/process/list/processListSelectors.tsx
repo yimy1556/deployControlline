@@ -12,6 +12,11 @@ const selectExportLoading = createSelector(
   (raw) => raw.exportLoading,
 );
 
+const selectOptionCheckpoint =  createSelector(
+  [selectRaw],
+  (raw) => raw.checkpoint,
+);
+
 const selectRows = createSelector(
   [selectRaw],
   (raw) => raw.rows,
@@ -109,6 +114,12 @@ const selectIsAllSelected = createSelector(
   },
 );
 
+const selectOptionIndustrialPlants = createSelector(
+  [selectRaw],
+  (raw) => raw.industrialPlants,
+);
+
+
 const checkpointListSelectors = {
   selectLoading,
   selectRows,
@@ -125,6 +136,8 @@ const checkpointListSelectors = {
   selectRawFilter,
   selectIsAllSelected,
   selectSorter,
+  selectOptionCheckpoint,
+  selectOptionIndustrialPlants,
 };
 
 export default checkpointListSelectors;

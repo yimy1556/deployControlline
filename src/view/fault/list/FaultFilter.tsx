@@ -38,7 +38,7 @@ const schema = yup.object().shape({
 });
 
 const previewRenders = {
-  name: {
+  nameFault: {
     label: 'Nombre',
     render: filterRenders.generic(),
   },
@@ -53,7 +53,7 @@ const previewRenders = {
 }
 
 const emptyValues = {
-  name: null,
+  nameFault: null,
   category: null,
   typeFalla: null,
 };
@@ -128,7 +128,7 @@ function UserFilter(props) {
               <Grid container spacing={2}>
                 <Grid item lg={6} xs={12}>
                   <InputFormItem
-                    name={'name'}
+                    name={'nameFault'}
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>

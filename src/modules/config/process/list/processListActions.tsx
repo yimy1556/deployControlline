@@ -1,5 +1,11 @@
 import processService from 'src/modules/config/process/processService';
 import selectors from 'src/modules/config/process/list/processListSelectors';
+import modalActions from 'src/modules/modal/modalActions';
+import swal from 'sweetalert';
+import { getHistory  } from 'src/modules/store';
+import IndustrialPlantService from '../../service/IndustrialPlantService';
+import checkpointListActions from '../../checkpoint/list/checkpointListActions';
+import CheckponitService from '../../checkpoint/checkpointService';
 
 const prefix = 'PROCESS_LIST';
 
@@ -9,6 +15,8 @@ const processListActions = {
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
 
   RESETED: `${prefix}_RESETED`,
+  
+  LOAD_OPTION: `${prefix}_LOAD_OPTION`,
 
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
 
@@ -35,6 +43,52 @@ const processListActions = {
       });
 
       dispatch(processListActions.doFetchCurrentFilter());
+    }
+  },
+
+  doLoadOption: () => async (dispatch) => {
+    
+    dispatch(checkpointListActions.doLoadOption());
+
+    const optionIndustrialPlant = await IndustrialPlantService.fetchIndustrialPlant();
+    const optionCheckpoint = await CheckponitService.fetchCheckpointActive();
+  
+
+    const opIn = optionIndustrialPlant.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
+    const op = optionCheckpoint.rows.reduce((acc, el) => (
+      [...acc, 
+        { value: el.id, 
+          label: el.name,
+          categoryId: el.category.id,
+        }])
+      , []);
+
+
+    dispatch({
+      type: processListActions.LOAD_OPTION,
+      payload: {
+        checkpoint: op,
+        industrialPlants: opIn,
+      }
+    })
+  },
+
+
+  doEdit: (value) => async (dispatch) => {
+  try {
+    const response = await processService.edit(value);
+      if (response) {
+        dispatch(modalActions.closeModal());
+        swal("Se Pudo modificar correctamente la linea de Control", "", "success");
+        dispatch(
+          processListActions.doFetchCurrentFilter(),
+        );
+        getHistory().push('/process');
+      } else {
+        swal("Nombre linea de control repetido", "", "error");
+      }
+    }catch (error) {
+      swal("Error al modificar la linea de control", "", "error");
     }
   },
 

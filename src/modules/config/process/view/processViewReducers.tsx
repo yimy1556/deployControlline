@@ -7,6 +7,7 @@ const initialData = {
 
 export default (state = initialData, { type, payload }) => {
   if (type === processViewActions.VIEW_EDICION_START){
+    console.log(23200000323 ,payload)
     return {
       edicionStart: true,
       edition: payload,

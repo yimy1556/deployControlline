@@ -7,6 +7,8 @@ const selectEdition = createSelector(
   (view) => view.edition,
 );
 
+
+
 const viewSelectors = {
   selectEdition,
   selectView,

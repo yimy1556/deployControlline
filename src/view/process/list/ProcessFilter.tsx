@@ -15,7 +15,6 @@ import { i18n } from 'src/i18n';
 import yupFilterSchemas from 'src/modules/shared/yup/yupFilterSchemas';
 import actions from 'src/modules/config/process/list/processListActions';
 import selectors from 'src/modules/user/list/userListSelectors';
-import userEnumerators from 'src/modules/user/userEnumerators';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import FilterWrapper, {
@@ -38,7 +37,6 @@ const schema = yup.object().shape({
   numberOfCheckpoints: yupFilterSchemas.integer('nuesto'),
 });
 
-
 const previewRenders = {
   name: {
     label: i18n('user.fields.fullName'),
@@ -50,27 +48,24 @@ const previewRenders = {
   },
   sku: {
     label: i18n('process.fields.sku'),
-    render: (value) =>
-      value ? i18n(`roles.${value}.label`) : null,
-  },
-  numberOfCheckpoints: {
-    label: 'puestos',
     render: filterRenders.generic(),
-  }
+  },
 };
 
 const emptyValues = {
   name: null,
   plant: null,
   sku: null,
-  numberOfCheckpoints: null,
 };
 
 function ProcessFilter(props) {
   const rawFilter = useSelector(selectors.selectRawFilter);
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
+  
 
+  const { loading } = props;
+    
   const [initialValues] = useState(() => {
     return {
       ...emptyValues,
@@ -104,7 +99,6 @@ function ProcessFilter(props) {
     setExpanded(false);
   };
 
-  const { loading } = props;
 
   return (
     <FilterWrapper>
@@ -132,27 +126,16 @@ function ProcessFilter(props) {
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
-                  <SelectFormItem
-                    name={'process.fields.sku'}
+                  <InputFormItem
+                    name={'sku'}
                     label={i18n('process.fields.sku')}
-                    options={userEnumerators.roles.map(
-                      (value) => ({
-                        value,
-                        label: i18n(`roles.${value}.label`),
-                      }),
-                    )}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'plant'}
                     label={i18n('process.fields.plant')}
-                    options={userEnumerators.status.map(
-                      (value) => ({
-                        value,
-                        label: i18n(`user.status.${value}`),
-                      }),
-                    )}
+                    options={[]}
                   />
                 </Grid>
               </Grid>
