@@ -170,6 +170,7 @@ function ProcessDischarge() {
                       label='Categoria'
                       mode='unico'
                       func={resetCategory}
+                      disabled={initialValues.id}
                       />
                   </Grid>
                   <Modal full sm={'sm'}>
