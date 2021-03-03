@@ -23,7 +23,6 @@ export default function FilterPreview(props) {
   const classes = useStyles();
 
   const { values, renders } = props;
-
   const itemsNotEmpty = Object.keys(values || {})
     .map((key) => {
       return {
