@@ -31,7 +31,7 @@ function FaultPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <PageTitle>Gestión de Falla</PageTitle>
           <Tooltip
-            title={i18n('process.newControlLine')}
+            title={i18n('faults.newfaults')}
           >
             <Fab
               size="small"

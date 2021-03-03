@@ -30,7 +30,7 @@ function CheckpointPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <PageTitle>Gestion de puesto de control</PageTitle>
           <Tooltip
-            title={i18n('process.newControlLine')}
+            title={i18n('Nuevo puesto de control')}
           >
             <Fab
               size="small"

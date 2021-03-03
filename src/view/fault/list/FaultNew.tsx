@@ -22,10 +22,10 @@ const addName = (value) => ({
 
 const schema = yup.object().shape({
   nameFault: yupFormSchemas.string('Nombre', {
-    required: true, 
+    required: true,
   }),
   description: yupFormSchemas.string(i18n('process.fields.description'), {
-    required: true, 
+    required: true,
   }),
   categoryId: yupFormSchemas.integer('Categoria', {
     required: true,
@@ -41,11 +41,11 @@ function FaultNew() {
 
   const [initialValues] = useState({
     status: valuesInitial?.status || null,
-    id : valuesInitial?.id || null,
+    id: valuesInitial?.id || null,
     nameFault: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
     categoryId: valuesInitial?.category?.id || null,
-    typeFallaId:  valuesInitial?.typeFalla?.id || null,
+    typeFallaId: valuesInitial?.typeFalla?.id || null,
   });
 
   const form = useForm({
@@ -56,49 +56,49 @@ function FaultNew() {
 
 
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
-  const optionsTypeFalla =  useSelector(selectorsList.selectOptionTypeFalla);
+  const optionsTypeFalla = useSelector(selectorsList.selectOptionTypeFalla);
 
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
   const onSubmit = (values) => {
-    if(!valuesInitial.id){
+    if (!valuesInitial.id) {
       dispatch(actionsFault.doCreate({
         ...initialValues,
         ...addName(values),
       }));
     }
-    else{
+    else {
       dispatch(actionsFault.doEdit({
         ...initialValues,
         ...addName(values),
       }));
     }
   }
- 
+
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1> {valuesInitial.id? 
+        <h1> {valuesInitial.id ?
           'Edicion de Falla'
-          :'Configuracion de Falla'}
+          : 'Configuracion de Falla'}
         </h1>
       </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Grid container  direction='column'  alignItems='center'>
+              <Grid container direction='column' alignItems='center'>
                 <Grid item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
                       name='nameFault'
                       label={i18n('user.fields.firstName')}
-                   />
-                  </Grid>                 
+                    />
+                  </Grid>
                   <Grid item xs={6}>
-                    <SelectFormItem 
+                    <SelectFormItem
                       name='categoryId'
                       options={optionCategory}
                       label='Categoria'
@@ -110,7 +110,7 @@ function FaultNew() {
                       name={'typeFallaId'}
                       label={'Tipo de Falla'}
                       options={optionsTypeFalla}
-                      mode = 'unico'
+                      mode='unico'
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -124,22 +124,22 @@ function FaultNew() {
                 </Grid>
                 <Grid
                   style={{ marginBottom: '5px' }}
-                  container 
-                  item 
-                  spacing={2} 
-                  xs={8}>
-                  <Grid item xs={6}>
+                  container
+                  item
+                  spacing={2}
+                  xs={12}>
+                  <Grid item xs={4}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
                       color="primary"
-                      onClick= {() => closeModal()}
+                      onClick={() => closeModal()}
                       fullWidth
                     >
                       {i18n('common.cancel')}
                     </Button>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={4}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
@@ -150,6 +150,18 @@ function FaultNew() {
                     >
                       {i18n('common.save')}
                     </Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button
+                      style={{ marginTop: '8px' }}
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      disabled={false}
+                    >
+                      Pegar
+                      </Button>
+
                   </Grid>
                 </Grid>
               </Grid>

@@ -142,6 +142,8 @@ function FaultTable() {
                           </IconButton>
                         </Tooltip>
                       )}
+
+
                     </Box>
                   </TableCell>
                 </TableRow>
