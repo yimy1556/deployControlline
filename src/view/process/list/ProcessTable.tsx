@@ -19,7 +19,9 @@ import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/process/view/processViewActions';
 import UserStatusView from 'src/view/user/view/UserStatusView';
-import { Link   } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import CheckIcon from '@material-ui/icons/Check';
 
 function ProcessTable() {
   const dispatch = useDispatch();
@@ -117,7 +119,7 @@ function ProcessTable() {
                     >
                       <Tooltip
                         title={i18n('common.edit')}
-                        onClick= {() => dispatch(actionsView.startEdicion(row.id))}
+                        onClick={() => dispatch(actionsView.startEdicion(row.id))}
                       >
                         <IconButton
                           color="primary"
@@ -137,6 +139,25 @@ function ProcessTable() {
                           <NotInterested />
                         </IconButton>
                       </Tooltip>
+                      <Tooltip
+                        title={'Habilitar'}
+                      >
+                        <IconButton
+                          color="primary"
+                        >
+                          <CheckIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={'Copiar'}
+                      >
+                        <IconButton
+                          color="primary"
+                        >
+                          <FileCopyIcon />
+                        </IconButton>
+                      </Tooltip>
+
                     </Box>
                   </TableCell>
                 </TableRow>
