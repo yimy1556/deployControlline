@@ -139,7 +139,7 @@ function ProcessTable() {
                           <NotInterested />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip
+                      {/*<Tooltip
                         title={'Habilitar'}
                       >
                         <IconButton
@@ -147,12 +147,15 @@ function ProcessTable() {
                         >
                           <CheckIcon />
                         </IconButton>
-                      </Tooltip>
+                      </Tooltip>*/}
                       <Tooltip
                         title={'Copiar'}
+                        onClick={() => dispatch(actionsView.startCopy(row.id))}
                       >
                         <IconButton
                           color="primary"
+                          component={Link}
+                          to={`/process/new-process`}
                         >
                           <FileCopyIcon />
                         </IconButton>

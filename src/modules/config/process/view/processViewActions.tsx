@@ -5,6 +5,8 @@ const prefix = 'PROCESS_VIEW';
 const processViewActions = {
   VIEW_EDICION_START: `${prefix}_EDICION_START`,
   VIEW_EDICION_FINISH: `${prefix}_EDICION_FINISH`,
+  
+  VIEW_COPY: `${prefix}_COPY`,
 
   startEdicion: (id) => async (dispatch, getState) => {
     
@@ -15,6 +17,19 @@ const processViewActions = {
 
     dispatch({ 
       type: processViewActions.VIEW_EDICION_START,
+      payload: rows.find(row => row.id === id),
+    });
+  },
+  
+  startCopy: (id) => async (dispatch, getState) => {
+    
+    const rows = processListSelectors.selectRows(
+      getState(),
+    );
+
+
+    dispatch({ 
+      type: processViewActions.VIEW_COPY,
       payload: rows.find(row => row.id === id),
     });
   },

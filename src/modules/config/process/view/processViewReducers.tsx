@@ -12,6 +12,11 @@ export default (state = initialData, { type, payload }) => {
       edition: payload,
     };
   }
+  if (type === processViewActions.VIEW_COPY){
+    return {
+      edition: payload,
+    };
+  }
 
   if (type === processViewActions.VIEW_EDICION_FINISH) {
     return {
