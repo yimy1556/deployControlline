@@ -7,8 +7,17 @@ import CheckpointTable from 'src/view/checkpoint/list/CheckpointTable';
 import Modal from 'src/view/shared/modals/Modal';
 import Checkpoint from 'src/view/checkpoint/view/Checkpoint';
 import Breadcrumb from 'src/view/shared/Breadcrumb';
+import AddIcon from '@material-ui/icons/Add';
+import { Fab } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
+import actionsModal from 'src/modules/modal/modalActions';
+import { useDispatch } from 'react-redux';
 
 function CheckpointPage() {
+  const dispatch = useDispatch();
+  const openModel = () => {
+    dispatch(actionsModal.modalOpen());
+  };
   return (
     <>
       <Breadcrumb
@@ -18,7 +27,20 @@ function CheckpointPage() {
         ]}
       />
       <ContentWrapper>
-        <PageTitle>Gestión de Puesto de Control</PageTitle>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <PageTitle>Gestion de puesto de control</PageTitle>
+          <Tooltip
+            title={i18n('process.newControlLine')}
+          >
+            <Fab
+              size="small"
+              color="primary"
+              onClick={openModel}
+            >
+              <AddIcon />
+            </Fab>
+          </Tooltip>
+        </div>
         <CheckpointFilter />
         <CheckpointTable />
         <Modal><Checkpoint /></Modal>

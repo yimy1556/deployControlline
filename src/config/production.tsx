@@ -6,8 +6,8 @@ const backendUrl = `https://newsan-qualitycontrol-test.herokuapp.com/api`;
  * Frontend URL.
  */
 const frontendUrl = {
-  host: 'domain.com',
-  protocol: 'https',
+  host: 'ns-quality-control-front-ns-ce-dev.pappsn.nwsn.local',
+  protocol: 'http',
 };
 
 
