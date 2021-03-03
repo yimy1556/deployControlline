@@ -127,8 +127,8 @@ function FaultNew() {
                   container
                   item
                   spacing={2}
-                  xs={12}>
-                  <Grid item xs={4}>
+                  xs={8}>
+                  <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
@@ -139,7 +139,7 @@ function FaultNew() {
                       {i18n('common.cancel')}
                     </Button>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
@@ -151,18 +151,7 @@ function FaultNew() {
                       {i18n('common.save')}
                     </Button>
                   </Grid>
-                  <Grid item xs={4}>
-                    <Button
-                      style={{ marginTop: '8px' }}
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      disabled={false}
-                    >
-                      Pegar
-                      </Button>
 
-                  </Grid>
                 </Grid>
               </Grid>
             </form>
