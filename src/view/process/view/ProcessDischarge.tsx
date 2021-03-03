@@ -74,6 +74,11 @@ function ProcessDischarge() {
   
   const [category, setCategory] = useState(valueInitial? initialValues.categoryId:null);
   const [checkpoints, setCheckpoints] = useState( editCheckpoints || [] );
+  
+  const resetCategory = (category) => {
+    setCheckpoints([]);
+    setCategory(category);
+  }
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -164,7 +169,7 @@ function ProcessDischarge() {
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
-                      func={setCategory}
+                      func={resetCategory}
                       />
                   </Grid>
                   <Modal full sm={'sm'}>

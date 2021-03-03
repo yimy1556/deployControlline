@@ -5,7 +5,6 @@ import {
   Grid,
   Fab,
 } from '@material-ui/core';
-import { Link  } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import UndoIcon from '@material-ui/icons/Undo';
 import React, { useEffect, useState } from 'react';
@@ -62,10 +61,10 @@ function ProcessFilter(props) {
   const rawFilter = useSelector(selectors.selectRawFilter);
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
-  
+
 
   const { loading } = props;
-    
+
   const [initialValues] = useState(() => {
     return {
       ...emptyValues,
@@ -140,18 +139,7 @@ function ProcessFilter(props) {
                 </Grid>
               </Grid>
               <FilterButtons>
-                <Tooltip
-                  title={i18n('process.newControlLine')}
-                >
-                  <Fab
-                    size="small"
-                    color="primary"
-                    component={Link}
-                    to={`/process/new-process`}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
+
                 <Button
                   variant="contained"
                   color="primary"
