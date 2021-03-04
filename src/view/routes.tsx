@@ -26,7 +26,7 @@ const privateRoutes = [
     loader: () => import('src/view/process/view/ProcessViewPage'),
     permissionRequired: null,
     exact: true,
-  }, 
+  },
   {
     path: '/checkpoint',
     loader: () => import('src/view/checkpoint/list/CheckpointPage'),
@@ -35,7 +35,7 @@ const privateRoutes = [
   },
   {
     path: '/ops',
-    loader: () => import('src/view/ops/OpsPage'),
+    loader: () => import('src/view/ops/list/OpsPage'),
     permissionRequired: null,
     exact: true,
   },

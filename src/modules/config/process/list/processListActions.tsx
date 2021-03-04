@@ -75,6 +75,10 @@ const processListActions = {
 
 
   doEdit: (value) => async (dispatch) => {
+    if(value?.checkpoints?.length === 0){
+      swal("Tadavia no asignaste puestos", "", "error");
+      return;
+    }
   try {
     const response = await processService.edit(value);
       if (response) {

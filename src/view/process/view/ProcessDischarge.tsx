@@ -45,16 +45,21 @@ const addValue = (value, checkpoints) => ({
 
 function ProcessDischarge() { 
   const dispatch = useDispatch();
-  const valueInitial = useSelector(processViewSelectors.selectEdition);
-  
+  const valueInitial = useSelector(processViewSelectors.selectEdition);  
+  const isEdit = useSelector(processViewSelectors.selectIsEdit);
+  const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
+  const optionCheckpoint = useSelector(selectProcess.selectOptionCheckpoint);
+  const optionIndustrialPlant = useSelector(selectProcess.selectOptionIndustrialPlants);
+
+
   const [initialValues] = useState({
-    id:valueInitial?.id || null,
+    id: isEdit?  valueInitial?.id: null,
+    sku: isEdit? valueInitial?.sku: null,
+    status: isEdit? valueInitial?.status: null,
+    nameProcess: isEdit? valueInitial?.name: null,
     userId: 2,
-    nameProcess: valueInitial?.name || null,
     industrialPlantId: valueInitial?.industrialPlant.id || null,
-    sku: valueInitial?.sku || null,
     description: valueInitial?.description || null,
-    status: valueInitial?.status || null,
     categoryId: valueInitial?.category?.id || null,
   });
   
@@ -74,6 +79,11 @@ function ProcessDischarge() {
   
   const [category, setCategory] = useState(valueInitial? initialValues.categoryId:null);
   const [checkpoints, setCheckpoints] = useState( editCheckpoints || [] );
+  
+  const resetCategory = (category) => {
+    setCheckpoints([]);
+    setCategory(category);
+  }
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -85,17 +95,11 @@ function ProcessDischarge() {
     dispatch(actions.modalOpen());
   }
 
-  const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
-  const optionCheckpoint = useSelector(selectProcess.selectOptionCheckpoint);
-  const optionIndustrialPlant = useSelector(selectProcess.selectOptionIndustrialPlants);
-
-
-
   console.log(valueInitial,'sssssdsd')
   const onSubmit = async(values) => {
     const newValue = await addValue(values, checkpoints);
    
-    if(!initialValues.id){
+    if(!initialValues.id || !isEdit){
       console.log('crea')
       dispatch(processFormActions.doAdd({
         ...initialValues,
@@ -164,7 +168,8 @@ function ProcessDischarge() {
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
-                      func={setCategory}
+                      func={resetCategory}
+                      disabled={initialValues.id}
                       />
                   </Grid>
                   <Modal full sm={'sm'}>

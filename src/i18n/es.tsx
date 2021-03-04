@@ -120,7 +120,7 @@ const es = {
     fields: {
       plant: 'Planta',
       sku: 'SKU',
-      description: 'Descripcion',
+      description: 'Descripción',
       numberOfCheckpoint: 'N° puestos',
       checkpoint: 'Puestos de control',
     }

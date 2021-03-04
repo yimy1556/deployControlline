@@ -83,7 +83,6 @@ function UserFilter(props) {
 
   useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
-    // eslint-disable-next-line
     dispatch(actions.doLoadOption());
     dispatch(actionsFault.doLoadOption());
   }, [dispatch]);
@@ -91,8 +90,6 @@ function UserFilter(props) {
   const optionCategory = useSelector(selectors.selectOptionCategory);
   const optionControlType = useSelector(selectors.selectOptionControlType)
   const onSubmit = (values) => {
-    const rawValues = form.getValues();
-    dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };
 
@@ -136,29 +133,18 @@ function UserFilter(props) {
                   <SelectFormItem
                     name={'controlType'}
                     label={i18n('checkpoint.fields.controlType')}
-                    options={optionControlType.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
+                    options={optionControlType.reduce((acc, el) => ([...acc, { value: el.label, label: el.label }]), [])}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name='category'
                     label='Categoria'
-                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
+                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label }]), [])}
                   />
                 </Grid>
               </Grid>
               <FilterButtons>
-                <Tooltip
-                  title={i18n('process.newControlLine')}
-                >
-                  <Fab
-                    size="small"
-                    color="primary"
-                    onClick={openModel}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
                 <Button
                   variant="contained"
                   color="primary"
