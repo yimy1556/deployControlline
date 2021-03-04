@@ -23,14 +23,14 @@ function CheckpointPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión de Puesto de Control'],
+          [i18n('checkpoint.title')],
         ]}
       />
       <ContentWrapper>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <PageTitle>Gestion de puesto de control</PageTitle>
+          <PageTitle> {i18n('checkpoint.title')}</PageTitle>
           <Tooltip
-            title={i18n('Nuevo puesto de control')}
+            title={i18n('checkpoint.new')}
           >
             <Fab
               size="small"

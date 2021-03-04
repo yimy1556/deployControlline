@@ -162,7 +162,7 @@ function UserFilter(props) {
                   startIcon={<UndoIcon />}
                   size="small"
                 >
-                  Limpiar Filtros
+                  {i18n('common.cleanFilters')}
                 </Button>
               </FilterButtons>
             </form>

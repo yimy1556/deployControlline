@@ -24,12 +24,12 @@ function OpsPage() {
             <Breadcrumb
                 items={[
                     [i18n('dashboard.menu'), '/'],
-                    ['Ordenes de producción'],
+                    [i18n('process.title')],
                 ]}
             />
             <ContentWrapper>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <PageTitle>Ordenes de producción</PageTitle>
+                    <PageTitle>{i18n('process.title')}</PageTitle>
                     <Tooltip
                         title={i18n('process.newControlLine')}
                     >

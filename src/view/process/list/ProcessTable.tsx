@@ -78,7 +78,7 @@ function ProcessTable() {
               </TableCellCustom>
               <TableCellCustom
                 align='center'
-                label='Estado'
+                label={i18n('user.fields.status')}
               />
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>

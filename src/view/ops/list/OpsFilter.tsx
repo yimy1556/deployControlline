@@ -157,8 +157,8 @@ function OpsFilter(props) {
                                         startIcon={<UndoIcon />}
                                         size="small"
                                     >
-                                        Limpiar Filtros
-                </Button>
+                                        {i18n('common.cleanFilters')}
+                                    </Button>
                                 </FilterButtons>
                             </form>
                         </FormProvider>

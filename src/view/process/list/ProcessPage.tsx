@@ -24,14 +24,14 @@ function ProcessPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión De Línea De Control'],
+          [i18n('controlLine.title')],
         ]}
       />
       <ContentWrapper>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <PageTitle> Gestión De Línea De Control</PageTitle>
+          <PageTitle>{i18n('controlLine.title')}</PageTitle>
           <Tooltip
-            title={i18n('process.newControlLine')}
+            title={i18n('controlLine.newControlLine')}
           >
             <Fab
               size="small"

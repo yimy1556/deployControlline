@@ -90,7 +90,7 @@ function ProcessFilter(props) {
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };
-  
+
   const industrialPlantOption = useSelector(
     processSelectList.selectOptionIndustrialPlants
   );
@@ -139,7 +139,7 @@ function ProcessFilter(props) {
                   <SelectFormItem
                     name={'industrialPlant'}
                     label={i18n('process.fields.plant')}
-                    options={industrialPlantOption.reduce((acc, el) => [...acc,{value: el.label, label: el.label}],[])}
+                    options={industrialPlantOption.reduce((acc, el) => [...acc, { value: el.label, label: el.label }], [])}
                   />
                 </Grid>
               </Grid>
@@ -162,7 +162,7 @@ function ProcessFilter(props) {
                   startIcon={<UndoIcon />}
                   size="small"
                 >
-                  {i18n('common.reset')}
+                  {i18n('common.cleanFilters')}
                 </Button>
               </FilterButtons>
             </form>

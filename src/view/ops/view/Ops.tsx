@@ -36,7 +36,7 @@ function Ops(props) {
     return (
         <Grid container alignItems='center' direction='column'>
             <Grid item xs={12}>
-                <h1>Ordenes de producción </h1>
+                <h1>{i18n('process.title')}</h1>
 
             </Grid>
             <Grid item xs={12}>
@@ -48,14 +48,14 @@ function Ops(props) {
                                     <Grid item xs={6}>
                                         <InputFormItem
                                             name='id'
-                                            label={'Id'}
+                                            label={i18n('process.fields.id')}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <SelectFormItem
                                             name='process'
                                             options={['Heladera', 'Notebook']}
-                                            label={'Linea de control'}
+                                            label={i18n('process.fields.controlLine')}
                                             mode='unico'
                                         />
                                     </Grid>
@@ -65,7 +65,7 @@ function Ops(props) {
                                         <SelectFormItem
                                             name='operaryId'
                                             options={optionOperary}
-                                            label={'Operario'}
+                                            label={i18n('process.fields.operary')}
                                             mode='unico'
                                         />
                                     </Grid>
