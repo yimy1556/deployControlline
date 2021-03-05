@@ -1,6 +1,6 @@
 // Place the URL here with the /api suffix.
 // Ex.:`https://domain.com/api`;
-const backendUrl = `http://ns-contro-calidad-backend-ns-ce-dev.pappsn.nwsn.local/api`;
+const backendUrl = `https://newsan-qualitycontrol-test.herokuapp.com/api`;
 
 /**
  * Frontend URL.
