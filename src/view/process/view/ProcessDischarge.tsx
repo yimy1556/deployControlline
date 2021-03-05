@@ -19,7 +19,7 @@ import processListActions from 'src/modules/config/process/list/processListActio
 import { Link } from 'react-router-dom';
 import selectProcess from 'src/modules/config/process/list/processListSelectors';
 import { getHistory  } from 'src/modules/store';
-
+import viewActiond from 'src/modules/config/process/view/processViewActions';
 
 const schema = yup.object().shape({ 
   nameControlLine: yupFormSchemas.string(i18n('user.fields.firstName'), {
@@ -215,6 +215,7 @@ function ProcessDischarge(props) {
                       variant="contained"
                       color="primary"
                       fullWidth
+                      onClick={() => dispatch(viewActiond.finishEdicion())}
                       component={Link}
                       to='/process'
                     >
