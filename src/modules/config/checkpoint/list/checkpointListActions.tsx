@@ -143,7 +143,7 @@ const checkpointListActions = {
     }
     catch (error) {
       console.log(error);
-      swal("Error al crear nueva falla", "", "error");
+      swal("Error al crear un puesto de control", "", "error");
     }
 
   },

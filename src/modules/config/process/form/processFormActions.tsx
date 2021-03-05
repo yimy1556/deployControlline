@@ -13,13 +13,9 @@ const processFormActions = {
 
   LOAD_OPTION: `${prefix}_LOAD_OPTION`,
 
-
-
   DISABLED_STARTED: `${prefix}_DISABLED_STARTED`,
   DISABLED_SUCCESS: `${prefix}_DISABLED_SUCCESS`,
   DISABLED_ERROR: `${prefix}_DISABLED_ERROR`,
-
- 
 
   doAdd: (values) => async (dispatch) => {
     if(values?.checkpoints?.length === 0){
@@ -32,7 +28,7 @@ const processFormActions = {
       });
       const response =  await processService.create(values);
       if(!response){
-        return swal("Nombre repetido", "", "error");
+        return swal("Nombre o Sku repetido", "", "error");
       }
       dispatch({
         type: processFormActions.ADD_SUCCESS,

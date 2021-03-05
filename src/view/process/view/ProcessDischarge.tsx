@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import selectProcess from 'src/modules/config/process/list/processListSelectors';
 
 const schema = yup.object().shape({ 
-  nameProcess: yupFormSchemas.string(i18n('user.fields.firstName'), {
+  nameControlLine: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
   industrialPlantId: yupFormSchemas.integer(i18n('process.fields.plant'), {
@@ -39,7 +39,7 @@ const schema = yup.object().shape({
 
 const addValue = (value, checkpoints) => ({
   ...value,
-  name: value.nameProcess,
+  name: value.nameControlLine,
   checkpoints: checkpoints.reduce((acc, el) => [...acc, el.id],[]),
 })
 
@@ -56,7 +56,7 @@ function ProcessDischarge() {
     id: isEdit?  valueInitial?.id: null,
     sku: isEdit? valueInitial?.sku: null,
     status: isEdit? valueInitial?.status: null,
-    nameProcess: isEdit? valueInitial?.name: null,
+    nameControlLine: isEdit? valueInitial?.name: null,
     userId: 2,
     industrialPlantId: valueInitial?.industrialPlant.id || null,
     description: valueInitial?.description || null,
@@ -100,21 +100,18 @@ function ProcessDischarge() {
     const newValue = await addValue(values, checkpoints);
    
     if(!initialValues.id || !isEdit){
-      console.log('crea')
       dispatch(processFormActions.doAdd({
         ...initialValues,
         ...newValue,
       }));
     }
     else{
-      console.log('edit')
       dispatch(processListActions.doEdit({
         ...initialValues,
         ...newValue,
       }));
     }
   }
-  
   
 
 
@@ -144,7 +141,7 @@ function ProcessDischarge() {
                 <Grid item container justify='center' xs={10} spacing={3}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='nameProcess'
+                      name='nameControlLine'
                       label={i18n('user.fields.firstName')}
                     />
                   </Grid>
@@ -169,7 +166,7 @@ function ProcessDischarge() {
                       label='Categoria'
                       mode='unico'
                       func={resetCategory}
-                      disabled={initialValues.id}
+                      disabled={initialValues.industrialPlantId}
                       />
                   </Grid>
                   <Modal full sm={'sm'}>
