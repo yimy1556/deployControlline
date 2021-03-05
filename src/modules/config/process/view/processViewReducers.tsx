@@ -14,6 +14,7 @@ export default (state = initialData, { type, payload }) => {
   }
   if (type === processViewActions.VIEW_COPY){
     return {
+      edicionStart: false,
       edition: payload,
     };
   }

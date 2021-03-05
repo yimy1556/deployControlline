@@ -18,6 +18,8 @@ import Modal from 'src/view/shared/modals/Modal';
 import processListActions from 'src/modules/config/process/list/processListActions';
 import { Link } from 'react-router-dom';
 import selectProcess from 'src/modules/config/process/list/processListSelectors';
+import { getHistory  } from 'src/modules/store';
+
 
 const schema = yup.object().shape({ 
   nameControlLine: yupFormSchemas.string(i18n('user.fields.firstName'), {
@@ -43,7 +45,7 @@ const addValue = (value, checkpoints) => ({
   checkpoints: checkpoints.reduce((acc, el) => [...acc, el.id],[]),
 })
 
-function ProcessDischarge() { 
+function ProcessDischarge(props) { 
   const dispatch = useDispatch();
   const valueInitial = useSelector(processViewSelectors.selectEdition);  
   const isEdit = useSelector(processViewSelectors.selectIsEdit);
@@ -67,7 +69,7 @@ function ProcessDischarge() {
     dispatch(processListActions.doLoadOption());
   }, [dispatch]);
 
-
+  
 
   const editCheckpoints = valueInitial?.checkpoints?.reduce((acc, el) => 
     ([...acc,
@@ -95,11 +97,9 @@ function ProcessDischarge() {
     dispatch(actions.modalOpen());
   }
 
-  console.log(valueInitial,'sssssdsd')
   const onSubmit = async(values) => {
     const newValue = await addValue(values, checkpoints);
-   
-    if(!initialValues.id || !isEdit){
+    if(!isEdit){
       dispatch(processFormActions.doAdd({
         ...initialValues,
         ...newValue,
@@ -124,14 +124,12 @@ function ProcessDischarge() {
       }]),[])
     .filter(option => option.categoryId === category); 
     
-    console.log(options)
-
     return  options.filter(option => 
       (!doCheckpoints.find(check => 
         (check.id === option.id)
       )));
   }
-
+  
   return (
     <Grid container alignItems='stretch' justify='center' direction='column'>
       <Grid item xs={12}>
@@ -190,14 +188,13 @@ function ProcessDischarge() {
                         }}
                         variant="contained"
                         color="primary"
-                        onClick= {() => dispatch(actions.closeModal())}
+                        onClick= {() => dispatch(actions.closeModalCheckpoint())}
                         fullWidth
                       >
                         {i18n('Cerrar')}
                       </Button>
                     </Grid>
                   </Modal>
-                  {console.log(checkpoints)}
                   <Grid item xs={12}>
                     <InputFormItem
                       name='description'

@@ -142,7 +142,6 @@ const checkpointListActions = {
       }
     }
     catch (error) {
-      console.log(error);
       swal("Error al crear un puesto de control", "", "error");
     }
 
@@ -166,16 +165,13 @@ const checkpointListActions = {
   },
 
   disabled: (id) => async (dispatch) => {
-    console.log(id)
     try {
       const response = await checkpointService.doDisabled(id);
-      console.log(response)
       dispatch(
         checkpointListActions.doFetchCurrentFilter(),
       )
     }
     catch (error) {
-      console.log(error);
     }
   },
 

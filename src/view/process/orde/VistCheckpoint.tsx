@@ -29,7 +29,6 @@ export default class Example extends React.PureComponent<Props, ExampleState> {
 
 
   render() {
-    console.log(this.props)
     const items = this.props.items;
     return (
       <RLDD
