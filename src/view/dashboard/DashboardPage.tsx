@@ -4,20 +4,10 @@ import { i18n } from 'src/i18n';
 import Box from 'src/view/shared/styles/Box';
 import { getHistory } from 'src/modules/store';
 
-const useStyles = makeStyles((theme) => ({
-
-}));
 
 function DashboardPage(props) {
-  const classes = useStyles();
-  const doToUser = () => {
-    getHistory().push('/user');
-  };
-  const doToProcess = () => {
-    getHistory().push('/process');
-  };
   const doToOps = () => {
-    getHistory().push('/ops');
+    getHistory().push('/control_line_execution');
   };
   const doToSettings = () => {
     getHistory().push('/settings');
@@ -30,24 +20,10 @@ function DashboardPage(props) {
         }}
       >
         <Grid spacing={1} container>
-          <Grid onClick={doToUser} item xs={12} md={12}>
-            <Box >
-              <div >
-                <h2 >Usuarios</h2>
-              </div>
-            </Box >
-          </Grid>
-          <Grid onClick={doToProcess} item xs={12} md={12}>
-            <Box >
-              <div >
-                <h2 >Procesos</h2>
-              </div>
-            </Box >
-          </Grid>
           <Grid onClick={doToOps} item xs={12} md={12}>
             <Box >
               <div >
-                <h2 >Ops</h2>
+                <h2 >Ejecución de línea de control</h2>
               </div>
             </Box >
           </Grid>

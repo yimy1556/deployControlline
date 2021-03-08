@@ -10,19 +10,19 @@ const privateRoutes = [
     exact: true,
   },
   {
-    path: '/process',
+    path: '/control_line',
     loader: () => import('src/view/process/list/ProcessPage'),
     permissionRequired: null,
     exact: true,
   },
   {
-    path: '/process/new-process',
+    path: '/control_line/new_control_line',
     loader: () => import('src/view/process/view/ProcessViewPage'),
     permissionRequired: null,
     exact: true,
   },
   {
-    path: '/process/:id/edit-process',
+    path: '/control_line/:id/edit_control_line',
     loader: () => import('src/view/process/view/ProcessViewPage'),
     permissionRequired: null,
     exact: true,
@@ -34,7 +34,7 @@ const privateRoutes = [
     exact: true,
   },
   {
-    path: '/ops',
+    path: '/control_line_execution',
     loader: () => import('src/view/ops/list/OpsPage'),
     permissionRequired: null,
     exact: true,
@@ -49,19 +49,6 @@ const privateRoutes = [
     path: '/settings',
     loader: () => import('src/view/settings/MenuSettings'),
     permissionRequired: null,
-    exact: true,
-  },
-  {
-    path: '/user',
-    loader: () => import('src/view/user/list/UserPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  {
-    path: '/user/:id',
-    loader: () => import('src/view/user/view/UserViewPage'),
-    permissionRequired: permissions.userRead,
     exact: true,
   },
 ].filter(Boolean);

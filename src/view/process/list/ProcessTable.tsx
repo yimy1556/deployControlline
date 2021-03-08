@@ -78,7 +78,7 @@ function ProcessTable() {
               </TableCellCustom>
               <TableCellCustom
                 align='center'
-                label='Estado'
+                label={i18n('user.fields.status')}
               />
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
@@ -124,30 +124,21 @@ function ProcessTable() {
                         <IconButton
                           color="primary"
                           component={Link}
-                          to={`/process/${row.id}/edit-process`}
+                          to={`/control_line/${row.id}/edit_control_line`}
                         >
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
                       <Tooltip
-                        title={i18n('common.disable')}
+                        title={ row.status === "active"? i18n('common.disable'): "habilitar"}
                         onClick={() => setRecordIdToDisabled(row.id)}
                       >
                         <IconButton
                           color="primary"
                         >
-                          <NotInterested />
+                          {row.status === "active"? <NotInterested />: <CheckIcon/>}
                         </IconButton>
                       </Tooltip>
-                      {/*<Tooltip
-                        title={'Habilitar'}
-                      >
-                        <IconButton
-                          color="primary"
-                        >
-                          <CheckIcon />
-                        </IconButton>
-                      </Tooltip>*/}
                       <Tooltip
                         title={'Copiar'}
                         onClick={() => dispatch(actionsView.startCopy(row.id))}
@@ -155,7 +146,7 @@ function ProcessTable() {
                         <IconButton
                           color="primary"
                           component={Link}
-                          to={`/process/new-process`}
+                          to={`/control_line/new_control_line`}
                         >
                           <FileCopyIcon />
                         </IconButton>
