@@ -26,7 +26,7 @@ function ProcessViewPage(props) {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión De Línea De Control', '/process'],
+          [i18n('controlLine.title'), '/process'],
           [`${textWelcome}`],
         ]}
       />

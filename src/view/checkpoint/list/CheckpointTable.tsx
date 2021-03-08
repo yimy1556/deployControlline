@@ -38,12 +38,12 @@ function CheckpointTable() {
   const doEdition = (id) => {
     dispatch(actionsView.startEdicion(id));
   }
-  
+
   const doDisabled = (id) => {
     setRecordIdToDisabled(null);
     dispatch(actions.doDisabled(id));
   };
-   
+
   const doChangePagination = (pagination) => {
     dispatch(actions.doChangePagination(pagination));
   };
@@ -71,7 +71,7 @@ function CheckpointTable() {
                 hasRows={hasRows}
                 name={'nombre'}
                 align='center'
-                label={i18n('user.fields.firstName')}
+                label={i18n('checkpoint.fields.name')}
               />
               <TableCellCustom
                 hasRows={hasRows}
@@ -83,10 +83,10 @@ function CheckpointTable() {
                 hasRows={hasRows}
                 align='center'
                 name={'fullName'}
-                label={'Categoria'}
+                label={i18n('checkpoint.fields.category')}
               />
               <TableCellCustom align='center'>
-                Estado
+                {i18n('user.fields.status')}
               </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>

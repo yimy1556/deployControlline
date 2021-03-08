@@ -25,12 +25,12 @@ function ProcessPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión De Línea De Control'],
+          [i18n('controlLine.title')],
         ]}
       />
       <ContentWrapper>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <PageTitle> Gestión De Línea De Control</PageTitle>
+          <PageTitle>{i18n('controlLine.title')}</PageTitle>
           <Tooltip
             title={i18n('process.newControlLine')}
             onClick= {() => dispatch(viewActions.finishEdicion())}
@@ -39,7 +39,7 @@ function ProcessPage() {
               size="small"
               color="primary"
               component={Link}
-              to={`/process/new-process`}
+              to={`/control_line/new_control_line`}
             >
               <AddIcon />
             </Fab>

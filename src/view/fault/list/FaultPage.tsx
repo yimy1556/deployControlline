@@ -23,13 +23,13 @@ function FaultPage() {
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión de Fallas'],
+          [i18n('faults.title')],
         ]}
       />
       <ContentWrapper>
 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <PageTitle>Gestión de Falla</PageTitle>
+          <PageTitle> {i18n('faults.title')}</PageTitle>
           <Tooltip
             title={i18n('faults.newfaults')}
           >

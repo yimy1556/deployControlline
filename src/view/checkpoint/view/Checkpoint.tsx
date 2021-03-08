@@ -29,7 +29,7 @@ const schema = yup.object().shape({
   categoryId: yupFormSchemas.integer('Categoria', {
     required: true,
   }),
-  faults: yupFormSchemas.stringArray(i18n('checkpoint.fields.failure'),{
+  faults: yupFormSchemas.stringArray(i18n('checkpoint.fields.failure'), {
     required: true,
   }),
   operators: yupFormSchemas.stringArray('Opérarios', {
@@ -55,7 +55,7 @@ function Checkpoint() {
     faults: valuesInitial?.checkpointDetails?.reduce((acc, el) => ([...acc, el.fault.id]), []) || [],
     operators: valuesInitial?.operatorsCheckpoint?.reduce((acc, el) => ([...acc, el.user.id]), []) || [],
   });
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -76,24 +76,24 @@ function Checkpoint() {
   const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
   const optionControlType = useSelector(selectorsCheckpoint.selectOptionControlType);
   const defindFaults = useSelector(selectorFaults.selectOptionFaultActive);
-  const [faults, setFaults] = useState(valuesInitial? valuesInitial?.category?.id: null);
+  const [faults, setFaults] = useState(valuesInitial ? valuesInitial?.category?.id : null);
   const optionOperary = useSelector(selectorsCheckpoint.selectOptionOperary);
 
   const onSubmit = (values) => {
-    if(!valuesInitial?.id){
+    if (!valuesInitial?.id) {
       dispatch(actionsCheckpoint.doCreate({
         ...initialValues,
         ...addName(values),
       }));
     }
-    else{
+    else {
       dispatch(actionsCheckpoint.doEdit({
         ...initialValues,
         ...addName(values),
       }));
     }
   }
-  
+
   const aux = () => {
     return defindFaults.filter(fault => fault.categoryId === faults)
   }
@@ -103,9 +103,9 @@ function Checkpoint() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Grid container direction='column' alignItems='center'>
           <Grid item xs={12}>
-            <h1>{!valuesInitial?
+            <h1>{!valuesInitial ?
               i18n('checkpoint.title')
-              : 'Edicion De Puesto de control'}
+              : i18n('checkpoint.edit')}
             </h1>
           </Grid>
           <Grid item container justify='center' xs={11} spacing={2}>
@@ -114,49 +114,49 @@ function Checkpoint() {
                 name='nameCheckpoint'
                 label={i18n('user.fields.firstName')}
               />
-          </Grid>
-          <Grid item xs={6}>
-            <SelectFormItem
-              name='controlTypeId'
-              options={optionControlType}
-              label={i18n('checkpoint.fields.controlType')}
-              mode='unico'
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SelectFormItem
-              name='categoryId'
-              options={optionCategory}
-              label='Categoria'
-              func= {setFaults}
-              disabled= {Boolean(valuesInitial)}  
-              mode='unico'
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SelectFormItem
-              name='faults'
-              options={aux()}
-              label={i18n('checkpoint.fields.failure')}
-              mode='multiple'
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <SelectFormItem
-              name='operators'
-              options={optionOperary}
-              label={'Operario'}
-              mode='multiple'
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <InputFormItem
-              name='description'
-              label={i18n('process.fields.description')}
-              multiline
-              rows={6}
-            />
-          </Grid>
+            </Grid>
+            <Grid item xs={6}>
+              <SelectFormItem
+                name='controlTypeId'
+                options={optionControlType}
+                label={i18n('checkpoint.fields.controlType')}
+                mode='unico'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SelectFormItem
+                name='categoryId'
+                options={optionCategory}
+                label={i18n('checkpoint.fields.category')}
+                func={setFaults}
+                disabled={Boolean(valuesInitial)}
+                mode='unico'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SelectFormItem
+                name='faults'
+                options={aux()}
+                label={i18n('checkpoint.fields.failure')}
+                mode='multiple'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <SelectFormItem
+                name='operators'
+                options={optionOperary}
+                label={i18n('checkpoint.fields.operary')}
+                mode='multiple'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputFormItem
+                name='description'
+                label={i18n('process.fields.description')}
+                multiline
+                rows={6}
+              />
+            </Grid>
           </Grid>
           <Grid
             style={{ marginBottom: '10px' }}
@@ -165,15 +165,15 @@ function Checkpoint() {
             spacing={2}
             xs={8}>
             <Grid item xs={6}>
-            <Button
-              style={{ marginTop: '8px' }}
-              variant="contained"
-              color="primary"
-              onClick={() => closeModal()}
-              fullWidth
-            >
-              {i18n('common.cancel')}
-            </Button>
+              <Button
+                style={{ marginTop: '8px' }}
+                variant="contained"
+                color="primary"
+                onClick={() => closeModal()}
+                fullWidth
+              >
+                {i18n('common.cancel')}
+              </Button>
             </Grid>
             <Grid item xs={6}>
               <Button
@@ -183,7 +183,7 @@ function Checkpoint() {
                 type="submit"
                 fullWidth
                 disabled={false}
-            >
+              >
                 {i18n('common.save')}
               </Button>
             </Grid>

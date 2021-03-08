@@ -101,14 +101,14 @@ function FaultNew() {
                     <SelectFormItem
                       name='categoryId'
                       options={optionCategory}
-                      label='Categoria'
+                      label={i18n('faults.fields.category')}
                       mode='unico'
                     />
                   </Grid>
                   <Grid item lg={12} xs={12}>
                     <SelectFormItem
                       name={'typeFallaId'}
-                      label={'Tipo de Falla'}
+                      label={i18n('faults.fields.type')}
                       options={optionsTypeFalla}
                       mode='unico'
                     />

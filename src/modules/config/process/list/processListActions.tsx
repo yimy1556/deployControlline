@@ -88,7 +88,7 @@ const processListActions = {
 
       dispatch(modalActions.closeModal());
         dispatch(processListActions.doFetchCurrentFilter());
-        getHistory().push('/process');
+        getHistory().push('/control_line');
     }catch (error) {
       swal("Error al modificar la linea de control", "", "error");
     }

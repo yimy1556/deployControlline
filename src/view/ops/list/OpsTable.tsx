@@ -46,29 +46,29 @@ function OpsTable() {
                                 hasRows={hasRows}
                                 name={'id'}
                                 align='center'
-                                label={'Id'}
+                                label={i18n('process.fields.id')}
                             />
                             <TableCellCustom
                                 hasRows={hasRows}
                                 align='center'
                                 name={'process'}
-                                label={'Línea de control'}
+                                label={i18n('process.fields.controlLine')}
                             />
                             <TableCellCustom
                                 hasRows={hasRows}
                                 align='center'
                                 name={'fechaDeAlta'}
-                                label={'Fecha de alta'}
+                                label={i18n('process.fields.date')}
                             />
                             <TableCellCustom
                                 hasRows={hasRows}
                                 align='center'
                                 name={'usuario'}
-                                label={'Ejecutor'}
+                                label={i18n('process.fields.user')}
                             />
                             <TableCellCustom align='center'>
-                                Estado
-                              </TableCellCustom>
+                                {i18n('user.fields.status')}
+                            </TableCellCustom>
                             <TableCellCustom size="md"></TableCellCustom>
                         </TableRow>
                     </TableHead>

@@ -33,7 +33,7 @@ const processFormActions = {
       if(status === "error"){return;}
       
       dispatch({type: processFormActions.ADD_SUCCESS}); 
-      getHistory().push('/process');
+      getHistory().push('/control_line');
     } catch (error) {
       dispatch({
         type: processFormActions.ADD_ERROR,

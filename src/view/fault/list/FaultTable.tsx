@@ -70,17 +70,17 @@ function FaultTable() {
               <TableCellCustom
                 align='center'
                 name={'fullName'}
-                label={'Nombre'}
+                label={i18n('faults.fields.name')}
               />
               <TableCellCustom align='center'>
-                Tipo de falla
+                {i18n('faults.fields.type')}
               </TableCellCustom>
               <TableCellCustom align='center'>
-                Categoria
+                {i18n('faults.fields.category')}
               </TableCellCustom>
               <TableCellCustom align='center'>
-                Estado
-                </TableCellCustom>
+                {i18n('user.fields.status')}
+              </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
           </TableHead>
