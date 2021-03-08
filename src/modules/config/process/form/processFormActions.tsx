@@ -3,6 +3,7 @@ import modalActions from 'src/modules/modal/modalActions';
 import processListActions from 'src/modules/config/process/list/processListActions';
 import swal from 'sweetalert';
 import { getHistory  } from 'src/modules/store';
+import {i18n} from 'src/i18n';
 
 const prefix = 'PROCESS_FORM';
 
@@ -26,15 +27,13 @@ const processFormActions = {
       dispatch({
         type: processFormActions.ADD_STARTED,
       });
-      const response =  await processService.create(values);
-      if(!response){
-        return swal("Nombre o Sku repetido", "", "error");
-      }
-      dispatch({
-        type: processFormActions.ADD_SUCCESS,
-      }); 
+      const { status, message } =  await processService.create(values);
+      swal(i18n(`controlLineCreate.${message}.${status}`), "", i18n(status.toLowerCase()));
+      
+      if(status === "error"){return;}
+      
+      dispatch({type: processFormActions.ADD_SUCCESS}); 
       getHistory().push('/process');
-      swal("Linea de control creado correctamente", "", "success");
     } catch (error) {
       dispatch({
         type: processFormActions.ADD_ERROR,

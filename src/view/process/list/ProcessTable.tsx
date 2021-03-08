@@ -130,24 +130,15 @@ function ProcessTable() {
                         </IconButton>
                       </Tooltip>
                       <Tooltip
-                        title={i18n('common.disable')}
+                        title={ row.status === "active"? i18n('common.disable'): "habilitar"}
                         onClick={() => setRecordIdToDisabled(row.id)}
                       >
                         <IconButton
                           color="primary"
                         >
-                          <NotInterested />
+                          {row.status === "active"? <NotInterested />: <CheckIcon/>}
                         </IconButton>
                       </Tooltip>
-                      {/*<Tooltip
-                        title={'Habilitar'}
-                      >
-                        <IconButton
-                          color="primary"
-                        >
-                          <CheckIcon />
-                        </IconButton>
-                      </Tooltip>*/}
                       <Tooltip
                         title={'Copiar'}
                         onClick={() => dispatch(actionsView.startCopy(row.id))}

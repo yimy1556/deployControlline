@@ -6,6 +6,7 @@ import { getHistory  } from 'src/modules/store';
 import IndustrialPlantService from '../../service/IndustrialPlantService';
 import checkpointListActions from '../../checkpoint/list/checkpointListActions';
 import CheckponitService from '../../checkpoint/checkpointService';
+import {i18n} from 'src/i18n';
 
 const prefix = 'PROCESS_LIST';
 
@@ -79,18 +80,15 @@ const processListActions = {
       swal("Tadavia no asignaste puestos", "", "error");
       return;
     }
-  try {
-    const response = await processService.edit(value);
-      if (response) {
-        dispatch(modalActions.closeModal());
-        swal("Se Pudo modificar correctamente la linea de Control", "", "success");
-        dispatch(
-          processListActions.doFetchCurrentFilter(),
-        );
+    try {
+      const {status, message} = await processService.edit(value);
+      swal(i18n(`controlLineUpdate.${message}.${status}`),"",status);
+
+      if(status === "error"){return;}
+
+      dispatch(modalActions.closeModal());
+        dispatch(processListActions.doFetchCurrentFilter());
         getHistory().push('/process');
-      } else {
-        swal("Nombre o Sku de linea de control repetido", "", "error");
-      }
     }catch (error) {
       swal("Error al modificar la linea de control", "", "error");
     }

@@ -53,6 +53,8 @@ const es = {
       success: 'Contraseña cambiada correctamente',
       mustMatch: 'Las contraseñas deben coincidir',
     },
+    active: "Estas seguro de inhabilitar",
+    inactive: "Estas seguro de habilitar",
     emailUnverified: {
       message:
         'Confirme su correo electrónico en <strong>{0}</strong> para continuar.',
@@ -110,6 +112,36 @@ const es = {
     fields: {
       name: 'Nombre',
       category: 'Categoria',
+    }
+  },
+  controlLineCreate: {
+    name: {
+      error: 'Nombre de linea de control repetido',
+    },
+    sku:{
+      error: 'Sku de linea de control repetido',
+    },
+    namesku: {
+      error : 'Nombre y sku de linea de control repetido',
+    },
+    validations:{
+      error: 'Error al crear una linea de control',
+      success: 'Se creo correctamente la linea de control',
+    }
+  },
+  controlLineUpdate:{
+    name: {
+      error: 'Nombre de linea de control repetido',
+    },
+    sku:{
+      error: 'Sku de linea de control repetido',
+    },
+    namesku: {
+      error : 'Nombre y sku de linea de control repetido',
+    },
+    validations:{
+      error: 'Error al Editar una linea de control',
+      success: 'Se Edito correctamente la linea de control',
     }
   },
   process: {
