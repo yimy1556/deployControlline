@@ -217,7 +217,7 @@ function ProcessDischarge(props) {
                       fullWidth
                       onClick={() => dispatch(viewActiond.finishEdicion())}
                       component={Link}
-                      to='/process'
+                      to='/control_line'
                     >
                       {i18n('common.cancel')}
                     </Button>
