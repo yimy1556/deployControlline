@@ -20,7 +20,19 @@ const addName = (value) => ({
   name: value.nameFault,
 })
 
-const schema = yup.object().shape({
+const statusFault = [
+  {
+    value:'inactive',
+    label:'Inactivo'
+  },
+  {
+    value:'active',
+    label:'Activo'
+  },
+]
+
+
+const schema = (doActive) => yup.object().shape({
   nameFault: yupFormSchemas.string('Nombre', {
     required: true,
   }),
@@ -33,14 +45,17 @@ const schema = yup.object().shape({
   typeFallaId: yupFormSchemas.integer('Tipo de falla', {
     required: true,
   }),
+  status: yup.string(i18n('Stado'),{
+    required: doActive,
+  })
 });
 
 
 function FaultNew() {
   const valuesInitial = useSelector(faultViewSelectors.selectEdition)
-
+   
   const [initialValues] = useState({
-    status: valuesInitial?.status || null,
+    status: valuesInitial?.status || "",
     id: valuesInitial?.id || null,
     nameFault: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
@@ -48,13 +63,14 @@ function FaultNew() {
     typeFallaId: valuesInitial?.typeFalla?.id || null,
   });
 
+  const doActive = (valuesInitial && initialValues.status !== 'active');
+  
   const form = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(!doActive)),
     mode: 'all',
     defaultValues: initialValues
   });
 
-  const faultView = useSelector(faultViewSelectors.selectViewsActive);
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
   const optionsTypeFalla = useSelector(selectorsList.selectOptionTypeFalla);
 
@@ -62,6 +78,7 @@ function FaultNew() {
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
+  
   const onSubmit = (values) => {
     if (!valuesInitial) {
       dispatch(actionsFault.doCreate({
@@ -76,7 +93,6 @@ function FaultNew() {
       }));
     }
   }
-  console.log(valuesInitial)
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
@@ -104,7 +120,7 @@ function FaultNew() {
                       label={i18n('faults.fields.category')}
                     />
                   </Grid>
-                  <Grid item lg={12} xs={12}>
+                  <Grid item lg={doActive? 6:12} xs={doActive? 6:12}>
                     <SelectFormItem
                       name={'typeFallaId'}
                       label={i18n('faults.fields.type')}
@@ -112,6 +128,16 @@ function FaultNew() {
                       mode='unico'
                     />
                   </Grid>
+                  {doActive &&
+                    <Grid item lg={6} xs={6}>
+                      <SelectFormItem
+                        name={'status'}
+                        label={i18n('Estado')}
+                        options={statusFault}
+                        mode='unico'
+                      />
+                    </Grid>
+                  }
                   <Grid item xs={12}>
                     <InputFormItem
                       name='description'
@@ -136,23 +162,21 @@ function FaultNew() {
                       onClick={() => closeModal()}
                       fullWidth
                     >
-                      {faultView? i18n('cerrar'):i18n('common.cancel')}
+                      {i18n('common.cancel')}
                     </Button>
                   </Grid>
-                  {faultView ||
-                    <Grid item xs={6}>
-                      <Button
-                        style={{ marginTop: '8px' }}
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        fullWidth
-                        disabled={false}
-                      >
-                        {i18n('common.save')}
-                      </Button>
-                    </Grid>
-                  }
+                  <Grid item xs={6}>
+                    <Button
+                      style={{ marginTop: '8px' }}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      fullWidth
+                      disabled={false}
+                    >
+                      {i18n('common.save')}
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
             </form>

@@ -31,9 +31,9 @@ const processFormActions = {
       swal(i18n(`controlLineCreate.${message}.${status}`), "", i18n(status.toLowerCase()));
       
       if(status === "error"){return;}
-      
-      dispatch({type: processFormActions.ADD_SUCCESS}); 
+       
       getHistory().push('/control_line');
+      dispatch({type: processFormActions.ADD_SUCCESS}); 
     } catch (error) {
       dispatch({
         type: processFormActions.ADD_ERROR,

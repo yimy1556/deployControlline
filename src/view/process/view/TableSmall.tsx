@@ -14,36 +14,13 @@ import { i18n } from 'src/i18n';
 import UserStatusView from 'src/view/user/view/UserStatusView';
 
 const RowTableSmall = ({ value }) => {
-  const [open, setOpen] = React.useState(false);
-  return(<>
+  return(
     <TableRow>
-      <TableCell>
-        <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-        </IconButton>
-      </TableCell>
-      <TableCell align='center'>{value.name}</TableCell>
-      <TableCell align='center'>{value.category.name}</TableCell>
-      <TableCell align='center'>{value.typeFalla.name}</TableCell>
-      <TableCell align='center'><UserStatusView value={value.status}/></TableCell>
+      <TableCell align='left'>Nombre : {value.name}</TableCell>
+      <TableCell align='left'>Tipo de Falla : {value.typeFalla.name}</TableCell>
+      <TableCell align='left'>Descripcion : {value.description}</TableCell>
     </TableRow>
-    <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0  }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={1}>
-              <Typography variant="h5" align='center' gutterBottom component="div">
-                Descripcion
-              </Typography>
-              <Typography variant="h6" align='center'>
-                {value.description}
-              </Typography>
-
-           </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-
-  </>)
+  )
 };
 
 
@@ -52,15 +29,6 @@ export default function TableSmall({ values }){
   return(
     <>
       <Table size="small" aria-label="purchases">
-        <TableHead>
-          <TableRow>
-            <TableCell/>
-            <TableCell align='center'>Nombre</TableCell>
-            <TableCell align='center'>Correo</TableCell>
-            <TableCell align='center'>Stado</TableCell>
-            <TableCell align='center'>Rol</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           {values.map((value,index) => (
             <RowTableSmall

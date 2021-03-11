@@ -95,21 +95,11 @@ export default function RowCheckpoint(props) {
                 </ListItem>
                 <Collapse in={openInfo.openOperary} timeout="auto" unmountOnExit>
                   <Table size="small" aria-label="purchases">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align='center'>Nombre</TableCell>
-                        <TableCell align='center'>Correo</TableCell>
-                        <TableCell align='center'>Stado</TableCell>
-                        <TableCell align='center'>Rol</TableCell>
-                      </TableRow>
-                    </TableHead>
                     <TableBody>
                       {row.operatorsCheckpoint.map((user,index) => (
                         <TableRow key={index}>
-                          <TableCell align='center'>{user.user.fullName}</TableCell>
-                          <TableCell align='center'>{user.user.email}</TableCell>
-                          <TableCell align='center'><UserStatusView value={user.user.status}/></TableCell>
-                          <TableCell align='center'>Operario</TableCell>
+                          <TableCell align='left'>Nombre : {user.user.fullName}</TableCell>
+                          <TableCell align='left'> Email : {user.user.email}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

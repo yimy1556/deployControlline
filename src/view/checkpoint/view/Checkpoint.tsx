@@ -16,7 +16,19 @@ import selectorFaults from 'src/modules/config/fault/list/faultListSelectors';
 import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
-const schema = yup.object().shape({
+const statusCheckpoint = [
+  {
+    value:'inactive',
+    label:'Inactivo'
+  },
+  {
+    value:'active',
+    label:'Activo'
+  },
+]
+
+
+const schema = (doActive) => yup.object().shape({
   nameCheckpoint: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
@@ -34,7 +46,10 @@ const schema = yup.object().shape({
   }),
   operators: yupFormSchemas.stringArray('Opérarios', {
     required: true,
-  })
+  }),
+  status: yupFormSchemas.string(i18n('Estado'), {
+    required: doActive,
+  }),
 });
 
 const addName = (value) => ({
@@ -61,9 +76,12 @@ function Checkpoint() {
   useEffect(() => {
     dispatch(actionsFaults.doFetch({}))
   }, [dispatch]);
+  
+
+  const doActive = (valuesInitial && initialValues.status !== 'active');
 
   const form = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema(doActive)),
     mode: 'all',
     defaultValues: initialValues
   });
@@ -80,6 +98,7 @@ function Checkpoint() {
   const optionOperary = useSelector(selectorsCheckpoint.selectOptionOperary);
 
   const onSubmit = (values) => {
+    console.log(values)
     if (!valuesInitial?.id) {
       dispatch(actionsCheckpoint.doCreate({
         ...initialValues,
@@ -123,7 +142,7 @@ function Checkpoint() {
                 mode='unico'
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={doActive? 6:12}>
               <SelectFormItem
                 name='categoryId'
                 options={optionCategory}
@@ -133,6 +152,16 @@ function Checkpoint() {
                 mode='unico'
               />
             </Grid>
+            {doActive &&
+              <Grid item lg={6} xs={6}>
+                <SelectFormItem
+                  name={'status'}
+                  label={i18n('Estado')}
+                  options={statusCheckpoint}
+                  mode='unico'
+                />
+              </Grid>
+            }
             <Grid item xs={12}>
               <SelectFormItem
                 name='faults'
