@@ -30,7 +30,7 @@ import AddIcon from '@material-ui/icons/Add';
 import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import processListActions from 'src/modules/config/process/list/processListActions';
 import processSelectList from 'src/modules/config/process/list/processListSelectors';
-
+import viewActions from 'src/modules/config/process/view/processViewActions';
 const schema = yup.object().shape({
   nameControlLine: yupFilterSchemas.string(i18n('Nombre')),
   industrialPlant: yupFilterSchemas.string(i18n('process.fields.plant')),
@@ -81,6 +81,7 @@ function ProcessFilter(props) {
   useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
+    dispatch(viewActions.finishEdicion());
     dispatch(checkpointListActions.doLoadOption());
     dispatch(processListActions.doLoadOption());
   }, [dispatch]);

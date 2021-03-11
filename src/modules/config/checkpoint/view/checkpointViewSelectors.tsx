@@ -7,9 +7,16 @@ const selectEdition = createSelector(
   (view) => view.edition,
 );
 
+const selectViewCheckpoint = createSelector(
+  [selectView],
+  (view) => view.viewCheckpoint,
+)
+
 const viewSelectors = {
   selectEdition,
   selectView,
+  selectViewCheckpoint,
 };
+
 
 export default viewSelectors;

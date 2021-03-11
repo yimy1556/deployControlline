@@ -11,13 +11,19 @@ import AddIcon from '@material-ui/icons/Add';
 import { Fab } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import actionsModal from 'src/modules/modal/modalActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
+import selectors from 'src/modules/config/checkpoint/view/checkpointViewSelectors';
+import viewActions from 'src/modules/config/checkpoint/view/checkpointViewActions';
 
 function CheckpointPage() {
   const dispatch = useDispatch();
   const openModel = () => {
+    dispatch(viewActions.finishEdicion());
     dispatch(actionsModal.modalOpen());
   };
+
+  const viewCheckpoint = useSelector(selectors.selectViewCheckpoint);
+
   return (
     <>
       <Breadcrumb
@@ -43,7 +49,9 @@ function CheckpointPage() {
         </div>
         <CheckpointFilter />
         <CheckpointTable />
-        <Modal><Checkpoint /></Modal>
+        <Modal sm={viewCheckpoint? 'sm':'md' }>
+            <Checkpoint/>
+        </Modal>
       </ContentWrapper>
     </>
   );

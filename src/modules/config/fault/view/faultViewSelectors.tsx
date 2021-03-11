@@ -7,9 +7,15 @@ const selectEdition = createSelector(
   (view) => view.edition,
 );
 
+const selectViewsActive = createSelector(
+  [selectView],
+  (view) => view.viewFault,
+);
+
 const viewSelectors = {
   selectEdition,
   selectView,
+  selectViewsActive,
 };
 
 export default viewSelectors;

@@ -10,13 +10,18 @@ const selectEdition = createSelector(
 const selectIsEdit = createSelector(
   [selectView],
   (view) => view.edicionStart,
-)
+);
 
+const selectViewControlLine = createSelector(
+  [selectView],
+  (view) => view.viewControlLine,
+);
 
 const viewSelectors = {
   selectEdition,
   selectView,
   selectIsEdit,
+  selectViewControlLine,
 };
 
 export default viewSelectors;

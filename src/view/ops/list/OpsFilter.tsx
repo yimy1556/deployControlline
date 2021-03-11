@@ -30,38 +30,33 @@ import Tooltip from '@material-ui/core/Tooltip';
 import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
 
 const schema = yup.object().shape({
-    name: yupFilterSchemas.string(i18n('user.fields.firstName')),
-    controlType: yupFilterSchemas.string(i18n('checkpoint.fields.controlType')),
-    typeOfVerification: yupFilterSchemas.string(i18n('checkpoint.typeOfVerification')),
+    nameControlLine: yupFilterSchemas.string(i18n('user.fields.firstName')),
+    fecha: yupFilterSchemas.string(i18n('checkpoint.fields.controlType')),
 });
 const previewRenders = {
-    name: {
-        label: 'Nombre',
+    nameControlLine: {
+        label: 'Nombre de linea de control',
         render: filterRenders.generic(),
     },
-    controlType: {
-        label: 'Tipo de control',
-        render: filterRenders.generic(),
-    },
-    category: {
-        label: 'Categoria',
+    fecha: {
+        label: 'fecha',
         render: filterRenders.generic(),
     },
 };
 const emptyValues = {
-    name: null,
-    verificationType: null,
-    controlType: null,
-    category: null,
+    nameControlLine: null,
+    fecha: null,
 }
 function OpsFilter(props) {
     const rawFilter = useSelector(selectors.selectRawFilter);
     const [expanded, setExpanded] = useState(false);
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
         dispatch(actions.doLoadOption());
     }, [dispatch]);
+    
     const [initialValues] = useState(() => {
         return {
             ...emptyValues,
@@ -112,29 +107,15 @@ function OpsFilter(props) {
                                 <Grid container spacing={2}>
                                     <Grid item lg={6} xs={12}>
                                         <InputFormItem
-                                            name={'id'}
-                                            label={'Id'}
+                                            name={'nameControlLine'}
+                                            label={'Nombre de linea de control'}
                                         />
                                     </Grid>
-
                                     <Grid item lg={6} xs={12}>
                                         <InputFormItem
-                                            name={'usuario'}
-                                            label={'Usuario'}
-                                        />
-                                    </Grid>
-                                    <Grid item lg={6} xs={12}>
-                                        <SelectFormItem
-                                            name='process'
-                                            label='Linea de control'
-                                            options={[]}
-                                        />
-                                    </Grid>
-                                    <Grid item lg={6} xs={12}>
-                                        <SelectFormItem
                                             name='date'
                                             label='Fecha'
-                                            options={[]}
+                                            type='date'
                                         />
                                     </Grid>
                                 </Grid>

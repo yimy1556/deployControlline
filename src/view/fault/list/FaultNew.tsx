@@ -54,7 +54,7 @@ function FaultNew() {
     defaultValues: initialValues
   });
 
-
+  const faultView = useSelector(faultViewSelectors.selectViewsActive);
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
   const optionsTypeFalla = useSelector(selectorsList.selectOptionTypeFalla);
 
@@ -63,7 +63,7 @@ function FaultNew() {
     dispatch(actions.closeModal());
   }
   const onSubmit = (values) => {
-    if (!valuesInitial.id) {
+    if (!valuesInitial) {
       dispatch(actionsFault.doCreate({
         ...initialValues,
         ...addName(values),
@@ -76,11 +76,11 @@ function FaultNew() {
       }));
     }
   }
-
+  console.log(valuesInitial)
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1> {valuesInitial.id ?
+        <h1> {valuesInitial ?
           'Edicion de Falla'
           : 'Configuracion de Falla'}
         </h1>
@@ -90,7 +90,7 @@ function FaultNew() {
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <Grid container direction='column' alignItems='center'>
-                <Grid item container justify='center' xs={12} spacing={2}>
+                <Grid onClick={undefined} item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
                       name='nameFault'
@@ -102,7 +102,6 @@ function FaultNew() {
                       name='categoryId'
                       options={optionCategory}
                       label={i18n('faults.fields.category')}
-                      mode='unico'
                     />
                   </Grid>
                   <Grid item lg={12} xs={12}>
@@ -126,6 +125,7 @@ function FaultNew() {
                   style={{ marginBottom: '5px' }}
                   container
                   item
+                  justify='center'
                   spacing={2}
                   xs={8}>
                   <Grid item xs={6}>
@@ -136,22 +136,23 @@ function FaultNew() {
                       onClick={() => closeModal()}
                       fullWidth
                     >
-                      {i18n('common.cancel')}
+                      {faultView? i18n('cerrar'):i18n('common.cancel')}
                     </Button>
                   </Grid>
-                  <Grid item xs={6}>
-                    <Button
-                      style={{ marginTop: '8px' }}
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      fullWidth
-                      disabled={false}
-                    >
-                      {i18n('common.save')}
-                    </Button>
-                  </Grid>
-
+                  {faultView ||
+                    <Grid item xs={6}>
+                      <Button
+                        style={{ marginTop: '8px' }}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        fullWidth
+                        disabled={false}
+                      >
+                        {i18n('common.save')}
+                      </Button>
+                    </Grid>
+                  }
                 </Grid>
               </Grid>
             </form>
