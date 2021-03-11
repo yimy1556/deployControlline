@@ -13,7 +13,7 @@ import { Box } from '@material-ui/core';
 import { i18n } from 'src/i18n';
 import UserStatusView from 'src/view/user/view/UserStatusView';
 
-const RowTableSmall = ({ value }) => {
+const RowTableSmall = ({ value, index }) => {
   const [open, setOpen] = React.useState(false);
   return(<>
     <TableRow>
@@ -21,7 +21,8 @@ const RowTableSmall = ({ value }) => {
         <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
           {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>
-      </TableCell>
+      </TableCell> 
+      <TableCell align='center'>{index}</TableCell>
       <TableCell align='center'>{value.name}</TableCell>
       <TableCell align='center'>{value.controlType.name}</TableCell>
       <TableCell align='center'>{value.category.name}</TableCell>
@@ -56,6 +57,8 @@ export default function TableSmallCheckpoint({ values }){
         <TableHead>
           <TableRow>
             <TableCell/>
+
+            <TableCell align='center'>Puesto</TableCell>
             <TableCell align='center'>Nombre</TableCell>
             <TableCell align='center'>Tipo de control</TableCell>
             <TableCell align='center'>Categoria</TableCell>
@@ -67,6 +70,7 @@ export default function TableSmallCheckpoint({ values }){
           {values.map((value,index) => (
             <RowTableSmall
               key={index}
+              index={++index}
               value={value.checkpoint}
             />
          ))}
