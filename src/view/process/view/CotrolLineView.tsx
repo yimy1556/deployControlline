@@ -12,9 +12,6 @@ import { Box, Tooltip } from '@material-ui/core';
 import { i18n } from 'src/i18n';
 import UserStatusView from 'src/view/user/view/UserStatusView';
 import TableSmall from 'src/view/process/view/TableSmallCheckpoint'; 
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import { Link } from 'react-router-dom';
 import CheckIcon from '@material-ui/icons/Check';
 
@@ -35,7 +32,6 @@ export default function Row(props) {
   const { row, doEdition, doDisabled } = props;
   const [open, setOpen] = useState(false);
   
-  const [openCheckpoint, setOpenCheckpoint] = useState(false); 
   const classes = useRowStyles();
 
   return (
@@ -86,15 +82,7 @@ export default function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0  }} colSpan={12}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <List>
-                <ListItem button onClick={() => setOpenCheckpoint(!openCheckpoint)}>
-                  <ListItemText primary="Puestos de control" />
-                    {openCheckpoint? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                </ListItem>
-                <Collapse in={openCheckpoint} timeout="auto" unmountOnExit>
-                  <TableSmall values={row.checkpoints} />
-                </Collapse>
-              </List>
+              <TableSmall values={row.checkpoints} />
             </Box>
           </Collapse>
         </TableCell>
