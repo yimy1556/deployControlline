@@ -14,6 +14,7 @@ import UserStatusView from 'src/view/user/view/UserStatusView';
 import TableSmall from 'src/view/process/view/TableSmallCheckpoint'; 
 import { Link } from 'react-router-dom';
 import CheckIcon from '@material-ui/icons/Check';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 
 const useRowStyles = makeStyles({
   root: {
@@ -29,7 +30,7 @@ const useRowStyles = makeStyles({
 
 export default function Row(props) {
 
-  const { row, doEdition, doDisabled } = props;
+  const { row, doEdition,doCopy, doDisabled } = props;
   const [open, setOpen] = useState(false);
   
   const classes = useRowStyles();
@@ -73,6 +74,18 @@ export default function Row(props) {
                 color="primary"
               >
                 {row.status === "active"? <NotInterested />: <CheckIcon/>}
+              </IconButton>
+            </Tooltip>
+              <Tooltip
+                title={'Copiar'}
+                onClick={() => doCopy(row.id)}
+              >
+                <IconButton
+                  color="primary"
+                  component={Link}
+                  to={`/control_line/new_control_line`}
+                >
+                  <FileCopyIcon />
               </IconButton>
             </Tooltip>
           </Box>

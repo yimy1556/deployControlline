@@ -118,6 +118,7 @@ function ProcessTable() {
                   row={row}
                   doEdition={(id) => dispatch(actionsView.startEdicion(id))}
                   doDisabled={setRecordIdToDisabled}
+                  doCopy={(id) => dispatch(actionsView.startCopy(id))}
                 />
             ))}
           </TableBody>
