@@ -22,6 +22,7 @@ import UserStatusView from 'src/view/user/view/UserStatusView';
 import { Link } from 'react-router-dom';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import CheckIcon from '@material-ui/icons/Check';
+import Row from 'src/view/process/view/CotrolLineView';
 
 function ProcessTable() {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ function ProcessTable() {
         >
           <TableHead>
             <TableRow>
+              <TableCellCustom/>
               <TableCellCustom
                 align='center'
                 label={i18n('user.fields.firstName')}
@@ -73,6 +75,10 @@ function ProcessTable() {
                 align='center'
                 label={i18n('process.fields.sku')}
               />
+              <TableCellCustom
+                align='center'
+                label={i18n('Categoria')}
+              />
               <TableCellCustom align='center'>
                 {i18n('process.fields.plant')}
               </TableCellCustom>
@@ -80,7 +86,7 @@ function ProcessTable() {
                 align='center'
                 label={i18n('user.fields.status')}
               />
-              <TableCellCustom size="md"></TableCellCustom>
+              <TableCellCustom size="md"/>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,55 +113,13 @@ function ProcessTable() {
             )}
             {!loading &&
               rows.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell align='center'>{row?.name || 'none'}</TableCell>
-                  <TableCell align='center'>{row?.sku || 'none'}</TableCell>
-                  <TableCell align='center'>{row?.industrialPlant?.name || 'none'}</TableCell>
-                  <TableCell align='center'><UserStatusView value={row.status} /></TableCell>
-                  <TableCell>
-                    <Box
-                      display="flex"
-                      justifyContent="flex-end"
-                    >
-                      <Tooltip
-                        title={i18n('common.edit')}
-                        onClick={() => dispatch(actionsView.startEdicion(row.id))}
-                      >
-                        <IconButton
-                          color="primary"
-                          component={Link}
-                          to={`/control_line/${row.id}/edit_control_line`}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={ row.status === "active"? i18n('common.disable'): "habilitar"}
-                        onClick={() => setRecordIdToDisabled(row.id)}
-                      >
-                        <IconButton
-                          color="primary"
-                        >
-                          {row.status === "active"? <NotInterested />: <CheckIcon/>}
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={'Copiar'}
-                        onClick={() => dispatch(actionsView.startCopy(row.id))}
-                      >
-                        <IconButton
-                          color="primary"
-                          component={Link}
-                          to={`/control_line/new_control_line`}
-                        >
-                          <FileCopyIcon />
-                        </IconButton>
-                      </Tooltip>
-
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              ))}
+                <Row
+                  key={index}
+                  row={row}
+                  doEdition={(id) => dispatch(actionsView.startEdicion(id))}
+                  doDisabled={setRecordIdToDisabled}
+                />
+            ))}
           </TableBody>
         </Table>
       </Box>

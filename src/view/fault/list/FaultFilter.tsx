@@ -30,6 +30,7 @@ import AddIcon from '@material-ui/icons/Add';
 import actionsModal from 'src/modules/modal/modalActions';
 import selectorsListCheckponint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import viewActions from 'src/modules/config/fault/view/faultViewActions';
 
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -84,7 +85,7 @@ function UserFilter(props) {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
     dispatch(actions.doLoadOption());
-    dispatch(checkpointListActions.doLoadOption())
+    dispatch(checkpointListActions.doLoadOption());
   }, [dispatch]);
 
   const onSubmit = (values) => {

@@ -33,7 +33,7 @@ function FaultTable() {
     selectors.selectPagination,
   );
   const hasRows = useSelector(selectors.selectHasRows);
-
+  
   const doDisabled = (id) => {
     setRecordIdToDisabled(null);
     dispatch(actions.disabled(id));
@@ -109,7 +109,8 @@ function FaultTable() {
             {!loading &&
               rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align='center'>{row?.name || 'none'}</TableCell>
+                  <TableCell align='center'>{row?.name}
+                  </TableCell>
                   <TableCell align='center'>{row.typeFalla.name}</TableCell>
                   <TableCell align='center'>{row.category.name}</TableCell>
                   <TableCell align='center'><UserStatusView value={row.status || 'none'} /></TableCell>
@@ -118,31 +119,26 @@ function FaultTable() {
                       display="flex"
                       justifyContent="flex-end"
                     >
-                      {true && (
-                        <Tooltip
-                          title={i18n('common.edit')}
+                      <Tooltip
+                        title={i18n('common.edit')}
+                      >
+                        <IconButton
+                          color="primary"
+                          onClick={() => doEdition(row?.id)}
                         >
-                          <IconButton
-                            color="primary"
-                            onClick={() => doEdition(row?.id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {true && (
-                        <Tooltip
-                          title={i18n('common.disable')}
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={i18n('common.disable')}
+                      >
+                        <IconButton
+                          color="primary"
+                          onClick={() => setRecordIdToDisabled(row.id)}
                         >
-                          <IconButton
-                            color="primary"
-                            onClick={() => setRecordIdToDisabled(row.id)}
-                          >
-                            <NotInterested />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-
+                          <NotInterested />
+                        </IconButton>
+                      </Tooltip>
 
                     </Box>
                   </TableCell>

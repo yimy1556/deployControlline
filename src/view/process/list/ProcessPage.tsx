@@ -14,12 +14,10 @@ import actionsModal from 'src/modules/modal/modalActions';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import viewActions from 'src/modules/config/process/view/processViewActions';
+import ViewControlLine from 'src/view/process/view/CotrolLineView';
 
 function ProcessPage() {
   const dispatch = useDispatch();
-  const openModel = () => {
-    dispatch(actionsModal.modalOpen());
-  };
   return (
     <>
       <Breadcrumb
@@ -47,7 +45,7 @@ function ProcessPage() {
         </div>
         <ProcessFilter />
         <ProcessTable />
-        <Modal><ProcessDischarge /></Modal>
+        <Modal sm='sm'><ViewControlLine /></Modal>
       </ContentWrapper>
     </>
   );

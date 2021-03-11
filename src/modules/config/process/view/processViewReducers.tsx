@@ -3,6 +3,7 @@ import processViewActions from 'src/modules/config/process/view/processViewActio
 const initialData = {
   edicionStart : false,
   edition: null,
+  viewControlLine: false
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -18,11 +19,17 @@ export default (state = initialData, { type, payload }) => {
       edition: payload,
     };
   }
+  
+  if(type === processViewActions.PROCESS_VIEW_START){
+    return{
+      viewControlLine: true,
+      edition:payload,
+    }
+  }
 
   if (type === processViewActions.VIEW_EDICION_FINISH) {
     return {
-      edicionStart: false,
-      edition: null,
+      ...initialData,
     };
   }
   
