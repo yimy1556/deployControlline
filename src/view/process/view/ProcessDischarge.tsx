@@ -168,7 +168,7 @@ function ProcessDischarge(props) {
                       />
                   </Grid>
                   <Modal full sm={'sm'}>
-                    <h2 style={{textAlign:'center'}}>Asignacion de puesto de control</h2>
+                    <h2 style={{textAlign:'center'}}>Asignación de Puestos de Control</h2>
                     <Grid item xs={12}>
                       <SelectFormItem 
                         name='checkpoints'
@@ -231,7 +231,7 @@ function ProcessDischarge(props) {
                       disabled={false}
                       onClick={configCheckpoint}
                     >
-                      {i18n('Asignación de Puestos de Control')}
+                      {i18n('Asignar puestos de control')}
                     </Button>
                   </Grid>
                   <Grid item xs={4}>

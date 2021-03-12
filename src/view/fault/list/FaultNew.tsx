@@ -92,8 +92,8 @@ function FaultNew() {
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
         <h1> {valuesInitial ?
-          'Edicion de Falla'
-          : 'Configuracion de Falla'}
+          'Edición de Falla'
+          : 'Configuración de Falla'}
         </h1>
       </Grid>
       <Grid item xs={12}>

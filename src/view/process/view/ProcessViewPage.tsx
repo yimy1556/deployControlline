@@ -12,7 +12,7 @@ import actionsView from 'src/modules/config/process/view/processViewActions';
 
 const textTheWelcome = (typeWindows) => {
   return typeWindows ?
-    'Edicion de línea de control' :
+    'Edición de línea de control' :
     'Configuración de línea de control';
 }
 
