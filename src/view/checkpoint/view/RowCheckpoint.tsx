@@ -18,6 +18,7 @@ import TableSmall from 'src/view/process/view/TableSmall';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import CheckIcon from "@material-ui/icons/Check";
 
 const useRowStyles = makeStyles({
   root: {
@@ -72,13 +73,13 @@ export default function RowCheckpoint(props) {
               </IconButton>
             </Tooltip>
             <Tooltip
-              title={i18n('common.disable')}
+              title={ row.status === "active"? i18n('common.disable'): "habilitar" }
               onClick={() => doDisabled(row.id)}
             >
               <IconButton
                 color="primary"
               >
-                <NotInterested />
+                {row.status === "active"? <NotInterested />: <CheckIcon/>}
               </IconButton>
             </Tooltip>
           </Box>

@@ -28,7 +28,7 @@ const statusCheckpoint = [
 ]
 
 
-const schema = (doActive) => yup.object().shape({
+const schema = yup.object().shape({
   nameCheckpoint: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
@@ -46,9 +46,6 @@ const schema = (doActive) => yup.object().shape({
   }),
   operators: yupFormSchemas.stringArray('Opérarios', {
     required: true,
-  }),
-  status: yupFormSchemas.string(i18n('Estado'), {
-    required: doActive,
   }),
 });
 
@@ -78,10 +75,8 @@ function Checkpoint() {
   }, [dispatch]);
   
 
-  const doActive = (valuesInitial && initialValues.status !== 'active');
-
   const form = useForm({
-    resolver: yupResolver(schema(doActive)),
+    resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: initialValues
   });
@@ -142,7 +137,7 @@ function Checkpoint() {
                 mode='unico'
               />
             </Grid>
-            <Grid item xs={doActive? 6:12}>
+            <Grid item xs={12}>
               <SelectFormItem
                 name='categoryId'
                 options={optionCategory}
@@ -152,16 +147,6 @@ function Checkpoint() {
                 mode='unico'
               />
             </Grid>
-            {doActive &&
-              <Grid item lg={6} xs={6}>
-                <SelectFormItem
-                  name={'status'}
-                  label={i18n('Estado')}
-                  options={statusCheckpoint}
-                  mode='unico'
-                />
-              </Grid>
-            }
             <Grid item xs={12}>
               <SelectFormItem
                 name='faults'
