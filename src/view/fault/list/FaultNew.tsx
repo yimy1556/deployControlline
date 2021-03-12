@@ -32,7 +32,7 @@ const statusFault = [
 ]
 
 
-const schema = (doActive) => yup.object().shape({
+const schema = yup.object().shape({
   nameFault: yupFormSchemas.string('Nombre', {
     required: true,
   }),
@@ -45,9 +45,6 @@ const schema = (doActive) => yup.object().shape({
   typeFallaId: yupFormSchemas.integer('Tipo de falla', {
     required: true,
   }),
-  status: yup.string(i18n('Stado'),{
-    required: doActive,
-  })
 });
 
 
@@ -62,11 +59,9 @@ function FaultNew() {
     categoryId: valuesInitial?.category?.id || null,
     typeFallaId: valuesInitial?.typeFalla?.id || null,
   });
-
-  const doActive = (valuesInitial && initialValues.status !== 'active');
-  
+ 
   const form = useForm({
-    resolver: yupResolver(schema(!doActive)),
+    resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: initialValues
   });
@@ -120,7 +115,7 @@ function FaultNew() {
                       label={i18n('faults.fields.category')}
                     />
                   </Grid>
-                  <Grid item lg={doActive? 6:12} xs={doActive? 6:12}>
+                  <Grid item lg={12} xs={12}>
                     <SelectFormItem
                       name={'typeFallaId'}
                       label={i18n('faults.fields.type')}
@@ -128,16 +123,6 @@ function FaultNew() {
                       mode='unico'
                     />
                   </Grid>
-                  {doActive &&
-                    <Grid item lg={6} xs={6}>
-                      <SelectFormItem
-                        name={'status'}
-                        label={i18n('Estado')}
-                        options={statusFault}
-                        mode='unico'
-                      />
-                    </Grid>
-                  }
                   <Grid item xs={12}>
                     <InputFormItem
                       name='description'

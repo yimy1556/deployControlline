@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 import NotInterested from '@material-ui/icons/NotInterested';
+import CheckIcon from '@material-ui/icons/Check';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/fault/view/faultViewActions';
@@ -130,16 +131,15 @@ function FaultTable() {
                         </IconButton>
                       </Tooltip>
                       <Tooltip
-                        title={i18n('common.disable')}
+                        title={ row.status === "active"? i18n('common.disable'): "habilitar" }
+                        onClick={() => doDisabled(row.id)}
                       >
                         <IconButton
                           color="primary"
-                          onClick={() => setRecordIdToDisabled(row.id)}
                         >
-                          <NotInterested />
+                          {row.status === "active"? <NotInterested />: <CheckIcon/>}
                         </IconButton>
                       </Tooltip>
-
                     </Box>
                   </TableCell>
                 </TableRow>
