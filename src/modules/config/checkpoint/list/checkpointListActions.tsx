@@ -133,12 +133,12 @@ const checkpointListActions = {
         dispatch(
           modalActions.closeModal()
         )
-        swal("Nuevo puesto de control creado!", "", "success");
+        swal("Se ha creado el puesto de control correctamente", "", "success");
         dispatch(
           checkpointListActions.doFetchCurrentFilter(),
         )
       } else {
-        swal("Nombre puesto de control repetido", "", "error");
+        swal("Existe un puesto de control con el mismo nombre para esta categoría", "", "error");
       }
     }
     catch (error) {
@@ -152,12 +152,12 @@ const checkpointListActions = {
       const response = await checkpointService.edit(value);
       if (response) {
         dispatch(modalActions.closeModal());
-        swal("Se Pudo modificar correctamente el Puesto de Control", "", "success");
+        swal("Se ha modificado el puesto de control correctamente", "", "success");
         dispatch(
           checkpointListActions.doFetchCurrentFilter(),
         );
       } else {
-        swal("Nombre puesto de control repetido", "", "error");
+        swal("Existe un puesto de control con el mismo nombre para esta categoría", "", "error");
       }
     }catch (error) {
       swal("Error al modificar el Puesto de control", "", "error");
