@@ -118,7 +118,7 @@ function Checkpoint() {
         <Grid container direction='column' alignItems='center'>
           <Grid item xs={12}>
             <h1>{!valuesInitial ?
-              i18n('checkpoint.title')
+              i18n('Configuración de Puestos de Control')
               : i18n('checkpoint.edit')}
             </h1>
           </Grid>
