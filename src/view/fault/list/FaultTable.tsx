@@ -132,7 +132,7 @@ function FaultTable() {
                       </Tooltip>
                       <Tooltip
                         title={ row.status === "active"? i18n('common.disable'): "habilitar" }
-                        onClick={() => doDisabled(row.id)}
+                        onClick={() => setRecordIdToDisabled(row.id)}
                       >
                         <IconButton
                           color="primary"
