@@ -38,12 +38,12 @@ const faultListActions = {
       const response = await faultService.edit(value);
       if (response) {
         dispatch(modalActions.closeModal());
-        swal("Se Pudo modificar correctamente Falla", "", "success");
+        swal("Se ha modificado la falla correctamente", "", "success");
         dispatch(
           faultListActions.doFetchCurrentFilter(),
         )
       } else {
-        swal("Nombre de falla repetido", "", "error");
+        swal("Ya existe una falla con el mismo nombre para esta categoría", "", "error");
       }
     } catch (error) {
       swal("Error al modificar Falla", "", "error");
@@ -57,12 +57,12 @@ const faultListActions = {
       
       if (response) {
         dispatch(modalActions.closeModal());
-        swal("Nueva falla creada!", "", "success");
+        swal("Se ha creado la falla correctamente", "", "success");
         dispatch(
           faultListActions.doFetchCurrentFilter(),
         )
       } else {
-        swal("Nombre de falla repetido", "", "error");
+        swal("Ya existe una falla con el mismo nombre para esta categoría", "", "error");
       }
     } catch (error) {
       swal("Error al crear falla", "", "error");

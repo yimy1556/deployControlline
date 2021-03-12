@@ -100,7 +100,7 @@ const es = {
     },
   },
   checkpoint: {
-    title: 'Gestión de puesto de control',
+    title: 'Gestión de Puestos de Control',
     edit: 'Edición de puesto de control',
     new: 'Nuevo puesto de control',
     fields: {
@@ -113,7 +113,7 @@ const es = {
     },
   },
   faults: {
-    title: 'Gestión de fallas',
+    title: 'Gestión de Fallas',
     newfaults: 'Nueva falla',
     fields: {
       name: 'Nombre',
@@ -122,7 +122,7 @@ const es = {
     }
   },
   controlLine: {
-    title: 'Gestión de línea de control',
+    title: 'Gestión de Líneas de Control',
     newControlLine: 'Nueva línea de control',
     newfaults: 'Nueva falla',
     fields: {
@@ -132,32 +132,32 @@ const es = {
   },
   controlLineCreate: {
     name: {
-      error: 'Nombre de linea de control repetido',
+      error: 'Ya existe una línea de control con ese nombre',
     },
     sku:{
-      error: 'Sku de linea de control repetido',
+      error: 'Ya existe una línea de control para el SKU ingresado',
     },
     namesku: {
-      error : 'Nombre y sku de linea de control repetido',
+      error : 'Ya existe una línea de control con el nombre y SKU ingresados',
     },
     validations:{
       error: 'Error al crear una linea de control',
-      success: 'Se creo correctamente la linea de control',
+      success: 'Se ha creado la línea de control correctamente',
     }
   },
   controlLineUpdate:{
     name: {
-      error: 'Nombre de linea de control repetido',
+      error: 'Ya existe una línea de control con ese nombre',
     },
     sku:{
-      error: 'Sku de linea de control repetido',
+      error: 'Ya existe una línea de control para el SKU ingresado',
     },
     namesku: {
-      error : 'Nombre y sku de linea de control repetido',
+      error : 'Ya existe una línea de control con el nombre y SKU ingresados',
     },
     validations:{
       error: 'Error al Editar una linea de control',
-      success: 'Se Edito correctamente la linea de control',
+      success: 'Se ha modificado la línea de control correctamente',
     }
   },
   process: {

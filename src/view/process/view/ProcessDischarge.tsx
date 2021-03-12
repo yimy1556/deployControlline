@@ -231,7 +231,7 @@ function ProcessDischarge(props) {
                       disabled={false}
                       onClick={configCheckpoint}
                     >
-                      {i18n('Asignar puestos de control')}
+                      {i18n('Asignación de Puestos de Control')}
                     </Button>
                   </Grid>
                   <Grid item xs={4}>

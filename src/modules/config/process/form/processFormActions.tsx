@@ -20,7 +20,7 @@ const processFormActions = {
 
   doAdd: (values) => async (dispatch) => {
     if(values?.checkpoints?.length === 0){
-      swal("Tadavia no asignaste puestos", "", "error");
+      swal("Debes asignar puestos de control para poder crear la línea", "", "error");
       return;
     }
     try {
