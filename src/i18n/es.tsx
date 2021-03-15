@@ -171,6 +171,7 @@ const es = {
       sku: 'SKU',
       controlLine: 'Línea de Control',
       date: 'Fecha de alta',
+      dateModification: 'Fecha de modificación',
       user: 'Usuario',
       operary: 'Operario',
       description: 'Descripción',

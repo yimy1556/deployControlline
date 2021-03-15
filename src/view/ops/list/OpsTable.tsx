@@ -19,13 +19,20 @@ import IconButton from '@material-ui/core/IconButton';
 import { i18n } from 'src/i18n';
 import Status from 'src/view/ops/view/ButtonState';
 import ModalStatus from 'src/view/shared/modals/ModalStatus';
-
+import Row from '../view/OpsView'
 function OpsTable() {
     const hasRows = useSelector(selectors.selectHasRows);
     const loading = useSelector(selectors.selectLoading);
     const rows = [1, 2, 3, 4]
-    const [selectedIndex, setSelectedIndex] = useState(null);
-    const [status, setStatus] = useState(null);
+    const [
+        recordIdToDisabled,
+        setRecordIdToDisabled,
+    ] = useState(null);
+
+    const [
+        description,
+        setDescription,
+    ] = useState(null);
 
 
     return (
@@ -47,6 +54,7 @@ function OpsTable() {
                 >
                     <TableHead>
                         <TableRow>
+                            <TableCellCustom />
                             <TableCellCustom
                                 hasRows={hasRows}
                                 name={'id'}
@@ -68,13 +76,13 @@ function OpsTable() {
                             <TableCellCustom
                                 hasRows={hasRows}
                                 align='center'
-                                name={'usuario'}
-                                label={i18n('process.fields.user')}
+                                name={'dateModification'}
+                                label={i18n('process.fields.dateModification')}
                             />
                             <TableCellCustom align='center'>
                                 {i18n('user.fields.status')}
                             </TableCellCustom>
-                            <TableCellCustom size="md"></TableCellCustom>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -85,66 +93,32 @@ function OpsTable() {
                                 </TableCell>
                             </TableRow>
                         )}
-
+                        {!loading && !hasRows && (
+                            <TableRow>
+                                <TableCell colSpan={100}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {i18n('table.noData')}
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        )}
                         {!loading &&
                             rows.map((row, index) => (
-                                <TableRow key={index}>
-                                    <TableCell align='center'>{index}</TableCell>
-                                    <TableCell align='center'>Heladeras</TableCell>
-                                    <TableCell align='center'>2021-03-01</TableCell>
-                                    <TableCell align='center'>usuario{index}</TableCell>
-                                    <TableCell align='center'>
-                                        <Status
-                                            setSelectedIndex={setSelectedIndex}
-                                            selectedIndex={selectedIndex}
-                                            values={{
-                                                status:'Activa',
-                                            }}
-                                            setValues={setStatus}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Box
-                                            display="flex"
-                                            justifyContent="flex-end"
-                                        >
-
-                                            <Tooltip
-                                                title={i18n('common.edit')}
-                                            >
-                                                <IconButton
-                                                    color="primary"
-
-                                                >
-                                                    <EditIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip
-                                                title={i18n('common.disable')}
-                                            >
-                                                <IconButton
-                                                    color="primary"
-                                                >
-                                                    <NotInterested />
-                                                </IconButton>
-                                            </Tooltip>
-
-                                        </Box>
-                                    </TableCell>
-                                </TableRow>
+                                <Row
+                                    setDescription={setDescription}
+                                    key={index}
+                                    row={row}
+                                    doDisabled={setRecordIdToDisabled}
+                                />
                             ))}
                     </TableBody>
                 </Table>
             </Box>
-            {status && (
-                <ModalStatus
-                    title={i18n('common.areYouSure')}
-                    content = {status}
-                    onClose={() => setStatus(null)}
-                    okText={i18n('common.yes')}
-                    cancelText={i18n('common.no')}
-                />
-            )}
         </>
     );
 }

@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-import {set} from "date-fns";
+import { set } from "date-fns";
 
 const options = [
   "Cancelado",
@@ -18,7 +18,7 @@ const options = [
   "Pausada",
 ];
 
-const colors= {
+const colors = {
   Activa: '#0AC11B',
   Cancelado: '#D4224A',
   Finalizada: '#8A2432',
@@ -26,8 +26,8 @@ const colors= {
 }
 
 export default function SplitButton(props) {
-  const { 
-    setValues, 
+  const {
+    setValues,
     values,
   } = props;
   const [open, setOpen] = useState(false);
@@ -68,8 +68,8 @@ export default function SplitButton(props) {
         ref={anchorRef}
         aria-label="split button"
       >
-        <Button 
-          style={{ background: colors[options[selectedIndex]]}}
+        <Button
+          style={{ background: colors[options[selectedIndex]] }}
         >
           {options[selectedIndex]}
         </Button>
@@ -96,7 +96,7 @@ export default function SplitButton(props) {
             {...TransitionProps}
             style={{
               transformOrigin:
-              placement === "bottom" ? "center top" : "center bottom"
+                placement === "bottom" ? "center top" : "center bottom"
             }}
           >
             <Paper>
@@ -110,7 +110,7 @@ export default function SplitButton(props) {
                       >
                         {option}
                       </MenuItem>
-                  ))}
+                    ))}
                 </MenuList>
               </ClickAwayListener>
             </Paper>
