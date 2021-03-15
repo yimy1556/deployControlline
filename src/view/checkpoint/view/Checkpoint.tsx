@@ -16,6 +16,18 @@ import selectorFaults from 'src/modules/config/fault/list/faultListSelectors';
 import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
+const statusCheckpoint = [
+  {
+    value:'inactive',
+    label:'Inactivo'
+  },
+  {
+    value:'active',
+    label:'Activo'
+  },
+]
+
+
 const schema = yup.object().shape({
   nameCheckpoint: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
@@ -34,7 +46,7 @@ const schema = yup.object().shape({
   }),
   operators: yupFormSchemas.stringArray('Opérarios', {
     required: true,
-  })
+  }),
 });
 
 const addName = (value) => ({
@@ -61,6 +73,7 @@ function Checkpoint() {
   useEffect(() => {
     dispatch(actionsFaults.doFetch({}))
   }, [dispatch]);
+  
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -80,6 +93,7 @@ function Checkpoint() {
   const optionOperary = useSelector(selectorsCheckpoint.selectOptionOperary);
 
   const onSubmit = (values) => {
+    console.log(values)
     if (!valuesInitial?.id) {
       dispatch(actionsCheckpoint.doCreate({
         ...initialValues,
@@ -104,7 +118,7 @@ function Checkpoint() {
         <Grid container direction='column' alignItems='center'>
           <Grid item xs={12}>
             <h1>{!valuesInitial ?
-              i18n('checkpoint.title')
+              i18n('Configuración de Puestos de Control')
               : i18n('checkpoint.edit')}
             </h1>
           </Grid>

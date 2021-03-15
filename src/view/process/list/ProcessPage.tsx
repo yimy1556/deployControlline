@@ -14,12 +14,10 @@ import actionsModal from 'src/modules/modal/modalActions';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import viewActions from 'src/modules/config/process/view/processViewActions';
+import ViewControlLine from 'src/view/process/view/CotrolLineView';
 
 function ProcessPage() {
   const dispatch = useDispatch();
-  const openModel = () => {
-    dispatch(actionsModal.modalOpen());
-  };
   return (
     <>
       <Breadcrumb
@@ -32,15 +30,14 @@ function ProcessPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <PageTitle>{i18n('controlLine.title')}</PageTitle>
           <Tooltip
-            title={i18n('controlLine.newControlLine')}
-
+            title={i18n('process.newControlLine')}
             onClick={() => dispatch(viewActions.finishEdicion())}
           >
             <Fab
               size="small"
               color="primary"
               component={Link}
-              to={`/process/new-process`}
+              to={`/control_line/new_control_line`}
             >
               <AddIcon />
             </Fab>
@@ -48,7 +45,7 @@ function ProcessPage() {
         </div>
         <ProcessFilter />
         <ProcessTable />
-        <Modal><ProcessDischarge /></Modal>
+        <Modal sm='sm'><ViewControlLine /></Modal>
       </ContentWrapper>
     </>
   );

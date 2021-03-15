@@ -2,13 +2,12 @@ import { Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
 import Box from '../shared/styles/Box';
 import { getHistory } from 'src/modules/store';
-
-const useStyles = makeStyles((theme) => ({
-
-}));
+import { i18n } from 'src/i18n';
 
 function MenuSettings(props) {
-    const classes = useStyles();
+    const doToControlLine = () => {
+        getHistory().push('/control_line');
+    };
     const doToFaults = () => {
         getHistory().push('/faults');
     };
@@ -24,27 +23,26 @@ function MenuSettings(props) {
             >
                 <Grid spacing={1} container>
                     <Grid item xs={12} md={12}>
-                        <Box >
+                        <Box onClick={doToFaults}>
                             <div >
-                                <h2>Gestion linea de control</h2>
+                                <h2>{i18n('faults.title')}</h2>
                             </div>
                         </Box >
                     </Grid>
                     <Grid item xs={12} md={12}>
                         <Box onClick={doToCheckpoint} >
                             <div >
-                                <h2>Gestion puesto de control</h2>
+                                <h2>{i18n('checkpoint.title')}</h2>
                             </div>
                         </Box >
                     </Grid>
                     <Grid item xs={12} md={12}>
-                        <Box onClick={doToFaults}>
+                        <Box onClick={doToControlLine} >
                             <div >
-                                <h2>Gestion fallas</h2>
+                                <h2>{i18n('controlLine.title')}</h2>
                             </div>
                         </Box >
                     </Grid>
-
                 </Grid>
             </div>
         </>

@@ -6,15 +6,21 @@ import { useSelector } from 'react-redux';
 
 function Modal(props) {
   
-  const {children,full,sm, onClose} = props;
+  const {
+    children,
+    full,
+    sm,
+    onClose,
+    open
+  } = props;
   
-  const open = useSelector(
+  const openGlobal = useSelector(
     modalSelectors.selectModalOpen,
   );
   
   return ReactDOM.createPortal(
     <Dialog
-      open={open}
+      open={open || openGlobal}
       onClose={onClose || undefined}
       fullWidth={true}
       maxWidth= {sm || 'md'}

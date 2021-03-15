@@ -55,6 +55,8 @@ const es = {
       success: 'Contraseña cambiada correctamente',
       mustMatch: 'Las contraseñas deben coincidir',
     },
+    active: "Estas seguro de inhabilitar",
+    inactive: "Estas seguro de habilitar",
     emailUnverified: {
       message:
         'Confirme su correo electrónico en <strong>{0}</strong> para continuar.',
@@ -98,9 +100,9 @@ const es = {
     },
   },
   checkpoint: {
-    title: 'Gestión de Puesto de Control',
-    edit: 'Edición de Puesto de Control',
-    new: 'Nuevo Puesto de Control',
+    title: 'Gestión de Puestos de Control',
+    edit: 'Edición de puesto de control',
+    new: 'Nuevo puesto de control',
     fields: {
       name: 'Nombre',
       controlType: 'Tipo de  control',
@@ -111,8 +113,8 @@ const es = {
     },
   },
   faults: {
-    title: 'Gestión de Falla',
-    newfaults: 'Nueva Falla',
+    title: 'Gestión de Fallas',
+    newfaults: 'Nueva falla',
     fields: {
       name: 'Nombre',
       category: 'Categoría',
@@ -120,12 +122,42 @@ const es = {
     }
   },
   controlLine: {
-    title: 'Gestión de Línea de Control',
-    newControlLine: 'Nueva Línea de Control',
-    newfaults: 'Nueva Falla',
+    title: 'Gestión de Líneas de Control',
+    newControlLine: 'Nueva línea de control',
+    newfaults: 'Nueva falla',
     fields: {
       name: 'Nombre',
       category: 'Categoría',
+    }
+  },
+  controlLineCreate: {
+    name: {
+      error: 'Ya existe una línea de control con ese nombre',
+    },
+    sku: {
+      error: 'Ya existe una línea de control para el SKU ingresado',
+    },
+    namesku: {
+      error: 'Ya existe una línea de control con el nombre y SKU ingresados',
+    },
+    validations: {
+      error: 'Error al crear una linea de control',
+      success: 'Se ha creado la línea de control correctamente',
+    }
+  },
+  controlLineUpdate: {
+    name: {
+      error: 'Ya existe una línea de control con ese nombre',
+    },
+    sku: {
+      error: 'Ya existe una línea de control para el SKU ingresado',
+    },
+    namesku: {
+      error: 'Ya existe una línea de control con el nombre y SKU ingresados',
+    },
+    validations: {
+      error: 'Error al Editar una linea de control',
+      success: 'Se ha modificado la línea de control correctamente',
     }
   },
   process: {

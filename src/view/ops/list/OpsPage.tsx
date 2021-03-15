@@ -44,7 +44,7 @@ function OpsPage() {
                 </div>
                 <OpsFilter />
                 <OpsTable />
-                <Modal><Ops></Ops></Modal>
+                <Modal sm={'sm'}><Ops></Ops></Modal>
             </ContentWrapper>
         </>
     );

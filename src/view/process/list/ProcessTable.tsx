@@ -22,6 +22,7 @@ import UserStatusView from 'src/view/user/view/UserStatusView';
 import { Link } from 'react-router-dom';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import CheckIcon from '@material-ui/icons/Check';
+import Row from 'src/view/process/view/CotrolLineView';
 
 function ProcessTable() {
   const dispatch = useDispatch();
@@ -29,6 +30,11 @@ function ProcessTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
+  
+  const [
+    description,
+    setDescription,
+  ] =  useState(null);
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRows);
@@ -65,6 +71,7 @@ function ProcessTable() {
         >
           <TableHead>
             <TableRow>
+              <TableCellCustom/>
               <TableCellCustom
                 align='center'
                 label={i18n('user.fields.firstName')}
@@ -73,14 +80,24 @@ function ProcessTable() {
                 align='center'
                 label={i18n('process.fields.sku')}
               />
+              <TableCellCustom
+                align='center'
+                label={i18n('Categoria')}
+              />
               <TableCellCustom align='center'>
                 {i18n('process.fields.plant')}
+              </TableCellCustom>
+              <TableCellCustom
+                size='sm'
+                align='center'
+              >
+                {i18n('Descripción')}
               </TableCellCustom>
               <TableCellCustom
                 align='center'
                 label={i18n('user.fields.status')}
               />
-              <TableCellCustom size="md"></TableCellCustom>
+              <TableCellCustom size="md"/>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,64 +124,15 @@ function ProcessTable() {
             )}
             {!loading &&
               rows.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell align='center'>{row?.name || 'none'}</TableCell>
-                  <TableCell align='center'>{row?.sku || 'none'}</TableCell>
-                  <TableCell align='center'>{row?.industrialPlant?.name || 'none'}</TableCell>
-                  <TableCell align='center'><UserStatusView value={row.status} /></TableCell>
-                  <TableCell>
-                    <Box
-                      display="flex"
-                      justifyContent="flex-end"
-                    >
-                      <Tooltip
-                        title={i18n('common.edit')}
-                        onClick={() => dispatch(actionsView.startEdicion(row.id))}
-                      >
-                        <IconButton
-                          color="primary"
-                          component={Link}
-                          to={`/process/${row.id}/edit-process`}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={i18n('common.disable')}
-                        onClick={() => setRecordIdToDisabled(row.id)}
-                      >
-                        <IconButton
-                          color="primary"
-                        >
-                          <NotInterested />
-                        </IconButton>
-                      </Tooltip>
-                      {/*<Tooltip
-                        title={'Habilitar'}
-                      >
-                        <IconButton
-                          color="primary"
-                        >
-                          <CheckIcon />
-                        </IconButton>
-                      </Tooltip>*/}
-                      <Tooltip
-                        title={'Copiar'}
-                        onClick={() => dispatch(actionsView.startCopy(row.id))}
-                      >
-                        <IconButton
-                          color="primary"
-                          component={Link}
-                          to={`/process/new-process`}
-                        >
-                          <FileCopyIcon />
-                        </IconButton>
-                      </Tooltip>
-
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              ))}
+                <Row
+                  setDescription={setDescription}
+                  key={index}
+                  row={row}
+                  doEdition={(id) => dispatch(actionsView.startEdicion(id))}
+                  doDisabled={setRecordIdToDisabled}
+                  doCopy={(id) => dispatch(actionsView.startCopy(id))}
+                />
+            ))}
           </TableBody>
         </Table>
       </Box>
@@ -174,7 +142,15 @@ function ProcessTable() {
         disabled={loading}
         pagination={pagination}
       />
-
+     {description && (
+        <ConfirmModal
+          content={description}
+          title={i18n('Descripcion')}
+          onClose={() => setDescription(null)}
+          onConfirm={() => setDescription(null)}
+          okText={i18n('Cerrar')}
+        />
+      )}
       {recordIdToDisabled && (
         <ConfirmModal
           title={i18n('common.areYouSure')}

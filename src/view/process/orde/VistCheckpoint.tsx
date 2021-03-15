@@ -52,16 +52,12 @@ export default class Example extends React.PureComponent<Props, ExampleState> {
           >
             <IconButton
               color="primary"
-
             >
               <CancelIcon />
             </IconButton>
           </Tooltip>
         </div>
-        <p className="body">{item.label}</p>
-        <div className="small">
-          Posicion: {index + 1}
-        </div>
+        <p className="body">{`Puesto ${index + 1}`}</p>
       </div>
     );
   }

@@ -18,14 +18,7 @@ export default [
     subMenu: null,
   },
   {
-    path: '/user',
-    label: i18n('user.menu'),
-    permissionRequired: null,
-    icon: <PersonIcon />,
-    subMenu: null,
-  },
-  {
-    path: '/ops',
+    path: '/control_line_execution',
     exact: true,
     icon: <AssignmentIcon />,
     label: i18n('process.title'),
@@ -54,7 +47,7 @@ export default [
         permissionRequired: null,
       },
       {
-        path: '/process',
+        path: '/control_line',
         exact: true,
         icon: <DashboardIcon />,
         label: i18n('controlLine.title'),

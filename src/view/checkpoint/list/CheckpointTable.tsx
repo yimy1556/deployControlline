@@ -6,25 +6,26 @@ import actionsView from 'src/modules/config/checkpoint/view/checkpointViewAction
 import { i18n } from 'src/i18n';
 import Pagination from 'src/view/shared/table/Pagination';
 import Spinner from 'src/view/shared/Spinner';
-import { Box } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
-import EditIcon from '@material-ui/icons/Edit';
-import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
-import UserStatusView from 'src/view/user/view/UserStatusView';
+import Row from 'src/view/checkpoint/view/RowCheckpoint';
+import { Box } from '@material-ui/core';
 
 function CheckpointTable() {
   const dispatch = useDispatch();
   const [
     recordIdToDisabled,
     setRecordIdToDisabled,
+  ] = useState(null);
+  
+  const [
+    description,
+    setDescription,
   ] = useState(null);
 
   const loading = useSelector(selectors.selectLoading);
@@ -67,31 +68,16 @@ function CheckpointTable() {
         >
           <TableHead>
             <TableRow>
-              <TableCellCustom
-                hasRows={hasRows}
-                name={'nombre'}
-                align='center'
-                label={i18n('checkpoint.fields.name')}
-              />
-              <TableCellCustom
-                hasRows={hasRows}
-                align='center'
-                name={'fullName'}
-                label={i18n('checkpoint.fields.controlType')}
-              />
-              <TableCellCustom
-                hasRows={hasRows}
-                align='center'
-                name={'fullName'}
-                label={i18n('checkpoint.fields.category')}
-              />
-              <TableCellCustom align='center'>
-                {i18n('user.fields.status')}
-              </TableCellCustom>
-              <TableCellCustom size="md"></TableCellCustom>
+              <TableCellCustom />
+              <TableCellCustom  align="center">Nombre</TableCellCustom>
+              <TableCellCustom  align="center">Tipo de control</TableCellCustom>
+              <TableCellCustom  align="center">Categoria</TableCellCustom>
+              <TableCellCustom size='md'  align="center">Descripcion</TableCellCustom>
+              <TableCellCustom align="center">Stado</TableCellCustom>
+              <TableCellCustom/>
             </TableRow>
           </TableHead>
-          <TableBody>
+         <TableBody>
             {loading && (
               <TableRow>
                 <TableCell colSpan={100}>
@@ -115,41 +101,13 @@ function CheckpointTable() {
             )}
             {!loading &&
               rows.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell align='center'>{row?.name}</TableCell>
-                  <TableCell align='center'>{row?.controlType?.name}</TableCell>
-                  <TableCell align='center'>{row?.category?.name}</TableCell>
-                  <TableCell align='center'> <UserStatusView value={row.status} /></TableCell>
-                  <TableCell>
-                    <Box
-                      display="flex"
-                      justifyContent="flex-end"
-                    >
-
-                      <Tooltip
-                        title={i18n('common.edit')}
-                      >
-                        <IconButton
-                          color="primary"
-                          onClick={() => doEdition(row.id)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip
-                        title={i18n('common.disable')}
-                        onClick={() => setRecordIdToDisabled(row.id)}
-                      >
-                        <IconButton
-                          color="primary"
-                        >
-                          <NotInterested />
-                        </IconButton>
-                      </Tooltip>
-
-                    </Box>
-                  </TableCell>
-                </TableRow>
+                <Row
+                  setDescription={setDescription}
+                  key={index}
+                  row={row}
+                  doEdition={doEdition}
+                  doDisabled={setRecordIdToDisabled}
+                />
               ))}
           </TableBody>
         </Table>
@@ -160,7 +118,15 @@ function CheckpointTable() {
         disabled={loading}
         pagination={pagination}
       />
-
+      {description && (
+        <ConfirmModal
+          content={description}
+          title={i18n('Descripcion')}
+          onClose={() => setDescription(null)}
+          onConfirm={() => setDescription(null)}
+          okText={i18n('Cerrar')}
+        />
+      )}
       {recordIdToDisabled && (
         <ConfirmModal
           title={i18n('common.areYouSure')}

@@ -168,7 +168,7 @@ function ProcessDischarge(props) {
                       />
                   </Grid>
                   <Modal full sm={'sm'}>
-                    <h2 style={{textAlign:'center'}}>Asignacion de puesto de control</h2>
+                    <h2 style={{textAlign:'center'}}>Asignación de Puestos de Control</h2>
                     <Grid item xs={12}>
                       <SelectFormItem 
                         name='checkpoints'
@@ -217,7 +217,7 @@ function ProcessDischarge(props) {
                       fullWidth
                       onClick={() => dispatch(viewActiond.finishEdicion())}
                       component={Link}
-                      to='/process'
+                      to='/control_line'
                     >
                       {i18n('common.cancel')}
                     </Button>

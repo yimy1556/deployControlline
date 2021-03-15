@@ -12,12 +12,15 @@ import { Fab } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import actionsModal from 'src/modules/modal/modalActions';
 import { useDispatch } from 'react-redux';
+import viewActions from 'src/modules/config/fault/view/faultViewActions';
 
 function FaultPage() {
   const dispatch = useDispatch();
   const openModel = () => {
+    dispatch(viewActions.finishEdicion());
     dispatch(actionsModal.modalOpen());
   };
+
   return (
     <>
       <Breadcrumb

@@ -20,6 +20,18 @@ const addName = (value) => ({
   name: value.nameFault,
 })
 
+const statusFault = [
+  {
+    value:'inactive',
+    label:'Inactivo'
+  },
+  {
+    value:'active',
+    label:'Activo'
+  },
+]
+
+
 const schema = yup.object().shape({
   nameFault: yupFormSchemas.string('Nombre', {
     required: true,
@@ -38,22 +50,21 @@ const schema = yup.object().shape({
 
 function FaultNew() {
   const valuesInitial = useSelector(faultViewSelectors.selectEdition)
-
+   
   const [initialValues] = useState({
-    status: valuesInitial?.status || null,
+    status: valuesInitial?.status || "",
     id: valuesInitial?.id || null,
     nameFault: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
     categoryId: valuesInitial?.category?.id || null,
     typeFallaId: valuesInitial?.typeFalla?.id || null,
   });
-
+ 
   const form = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: initialValues
   });
-
 
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
   const optionsTypeFalla = useSelector(selectorsList.selectOptionTypeFalla);
@@ -62,8 +73,9 @@ function FaultNew() {
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
+  
   const onSubmit = (values) => {
-    if (!valuesInitial.id) {
+    if (!valuesInitial) {
       dispatch(actionsFault.doCreate({
         ...initialValues,
         ...addName(values),
@@ -76,13 +88,12 @@ function FaultNew() {
       }));
     }
   }
-
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1> {valuesInitial.id ?
-          'Edicion de Falla'
-          : 'Configuracion de Falla'}
+        <h1> {valuesInitial ?
+          'Edición de Falla'
+          : 'Configuración de Falla'}
         </h1>
       </Grid>
       <Grid item xs={12}>
@@ -90,7 +101,7 @@ function FaultNew() {
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <Grid container direction='column' alignItems='center'>
-                <Grid item container justify='center' xs={12} spacing={2}>
+                <Grid onClick={undefined} item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
                       name='nameFault'
@@ -102,7 +113,6 @@ function FaultNew() {
                       name='categoryId'
                       options={optionCategory}
                       label={i18n('faults.fields.category')}
-                      mode='unico'
                     />
                   </Grid>
                   <Grid item lg={12} xs={12}>
@@ -126,6 +136,7 @@ function FaultNew() {
                   style={{ marginBottom: '5px' }}
                   container
                   item
+                  justify='center'
                   spacing={2}
                   xs={8}>
                   <Grid item xs={6}>
@@ -151,7 +162,6 @@ function FaultNew() {
                       {i18n('common.save')}
                     </Button>
                   </Grid>
-
                 </Grid>
               </Grid>
             </form>

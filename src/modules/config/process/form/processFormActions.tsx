@@ -2,7 +2,8 @@ import processService from 'src/modules/config/process/processService';
 import modalActions from 'src/modules/modal/modalActions';
 import processListActions from 'src/modules/config/process/list/processListActions';
 import swal from 'sweetalert';
-import { getHistory  } from 'src/modules/store';
+import { getHistory } from 'src/modules/store';
+import { i18n } from 'src/i18n';
 
 const prefix = 'PROCESS_FORM';
 
@@ -18,23 +19,21 @@ const processFormActions = {
   DISABLED_ERROR: `${prefix}_DISABLED_ERROR`,
 
   doAdd: (values) => async (dispatch) => {
-    if(values?.checkpoints?.length === 0){
-      swal("Tadavia no asignaste puestos", "", "error");
+    if (values?.checkpoints?.length === 0) {
+      swal("Debes asignar puestos de control para poder crear la línea", "", "error");
       return;
     }
     try {
       dispatch({
         type: processFormActions.ADD_STARTED,
       });
-      const response =  await processService.create(values);
-      if(!response){
-        return swal("Nombre o Sku repetido", "", "error");
-      }
-      dispatch({
-        type: processFormActions.ADD_SUCCESS,
-      }); 
-      getHistory().push('/process');
-      swal("Linea de control creado correctamente", "", "success");
+      const { status, message } = await processService.create(values);
+      swal(i18n(`controlLineCreate.${message}.${status}`), "", i18n(status.toLowerCase()));
+
+      if (status === "error") { return; }
+
+      getHistory().push('/control_line');
+      dispatch({ type: processFormActions.ADD_SUCCESS });
     } catch (error) {
       dispatch({
         type: processFormActions.ADD_ERROR,
