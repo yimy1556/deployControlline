@@ -21,12 +21,6 @@ function ProcessViewPage(props) {
   const textWelcome = textTheWelcome(match?.params?.id);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(actionsView.startEdicion(match?.params?.id));
-    // eslint-disable-next-line
-  }, [dispatch]);
-
-
   return (
     <>
       <Breadcrumb

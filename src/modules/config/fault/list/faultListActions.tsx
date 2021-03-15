@@ -35,9 +35,7 @@ const faultListActions = {
 
   doEdit: (value) => async (dispatch) => {
     try {
-      console.log(value)
       const response = await faultService.edit(value);
-      console.log(response)
       if (response) {
         dispatch(modalActions.closeModal());
         swal("Se Pudo modificar correctamente Falla", "", "success");
@@ -57,7 +55,6 @@ const faultListActions = {
     try {
       const response = await faultService.create(value);
       
-      console.log(response)
       if (response) {
         dispatch(modalActions.closeModal());
         swal("Nueva falla creada!", "", "success");
@@ -68,7 +65,6 @@ const faultListActions = {
         swal("Nombre de falla repetido", "", "error");
       }
     } catch (error) {
-      console.log(error)
       swal("Error al crear falla", "", "error");
 
     }
@@ -148,7 +144,6 @@ const faultListActions = {
       )
     }
     catch (error) {
-      console.log(error);
     }
 
   },

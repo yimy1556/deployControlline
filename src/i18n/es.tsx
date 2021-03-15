@@ -98,9 +98,9 @@ const es = {
     },
   },
   checkpoint: {
-    title: 'Gestión de puesto de control',
-    edit: 'Edición de puesto de control',
-    new: 'Nuevo puesto de control',
+    title: 'Gestión de Puesto de Control',
+    edit: 'Edición de Puesto de Control',
+    new: 'Nuevo Puesto de Control',
     fields: {
       name: 'Nombre',
       controlType: 'Tipo de  control',
@@ -111,8 +111,8 @@ const es = {
     },
   },
   faults: {
-    title: 'Gestión de fallas',
-    newfaults: 'Nueva falla',
+    title: 'Gestión de Falla',
+    newfaults: 'Nueva Falla',
     fields: {
       name: 'Nombre',
       category: 'Categoría',
@@ -120,24 +120,24 @@ const es = {
     }
   },
   controlLine: {
-    title: 'Gestión de línea de control',
-    newControlLine: 'Nueva línea de control',
-    newfaults: 'Nueva falla',
+    title: 'Gestión de Línea de Control',
+    newControlLine: 'Nueva Línea de Control',
+    newfaults: 'Nueva Falla',
     fields: {
       name: 'Nombre',
-      category: 'Categoria',
+      category: 'Categoría',
     }
   },
   process: {
-    title: 'Ejecución de línea de control',
-    newControlLine: 'Nueva ejecución de línea de control',
+    title: 'Ejecución de Línea de Control',
+    newControlLine: 'Nueva Ejecución de Línea de Control',
     addCheckpoint: 'Agregar Puesto',
     saveProcess: 'Guardar Configuración De Proceso',
     fields: {
       id: 'Id',
       plant: 'Planta',
       sku: 'SKU',
-      controlLine: 'Línea de control',
+      controlLine: 'Línea de Control',
       date: 'Fecha de alta',
       user: 'Usuario',
       operary: 'Operario',

@@ -16,9 +16,7 @@ import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
 import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
-import FilterWrapper, {
-  FilterButtons,
-} from 'src/view/shared/styles/FilterWrapper';
+import FilterWrapper, { FilterButtons } from 'src/view/shared/styles/FilterWrapper';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -90,6 +88,8 @@ function UserFilter(props) {
   const optionCategory = useSelector(selectors.selectOptionCategory);
   const optionControlType = useSelector(selectors.selectOptionControlType)
   const onSubmit = (values) => {
+    const rawValues = form.getValues();
+    dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };
 

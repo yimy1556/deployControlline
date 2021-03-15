@@ -89,7 +89,7 @@ const processListActions = {
         );
         getHistory().push('/process');
       } else {
-        swal("Nombre linea de control repetido", "", "error");
+        swal("Nombre o Sku de linea de control repetido", "", "error");
       }
     }catch (error) {
       swal("Error al modificar la linea de control", "", "error");

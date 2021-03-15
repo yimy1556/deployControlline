@@ -92,7 +92,7 @@ function SelectFormItem(props) {
       func(data?.value || data);
     }
     if(notSeve) {
-      const newData = [...data, ...notSeve];
+      const newData = [...notSeve,...data];
       func(newData);
       setValue(name, newData.reduce((acc,el) =>[...acc, el.id],[]), { shouldValidate: true });
       return;

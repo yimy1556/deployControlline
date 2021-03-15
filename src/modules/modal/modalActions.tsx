@@ -19,6 +19,10 @@ const modalActions = {
     dispatch({ type: modalActions.MODAL_CLOSE});
   },
 
+  closeModalCheckpoint: () => (dispatch) => {
+    dispatch({ type: modalActions.MODAL_CLOSE});
+  }
+
 };
 
 export default modalActions;

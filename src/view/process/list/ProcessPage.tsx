@@ -13,6 +13,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import actionsModal from 'src/modules/modal/modalActions';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import viewActions from 'src/modules/config/process/view/processViewActions';
 
 function ProcessPage() {
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ function ProcessPage() {
           <PageTitle>{i18n('controlLine.title')}</PageTitle>
           <Tooltip
             title={i18n('controlLine.newControlLine')}
+
+            onClick={() => dispatch(viewActions.finishEdicion())}
           >
             <Fab
               size="small"
