@@ -20,6 +20,7 @@ import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/fault/view/faultViewActions';
 import UserStatusView from 'src/view/user/view/UserStatusView';
+import Description from 'src/view/shared/view/Description';
 
 function FaultTable() {
   const dispatch = useDispatch();
@@ -27,6 +28,11 @@ function FaultTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
+  
+  const [
+    description,
+    setDescription,
+  ] = useState (null)
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRowsFault);
@@ -79,6 +85,9 @@ function FaultTable() {
               <TableCellCustom align='center'>
                 {i18n('faults.fields.category')}
               </TableCellCustom>
+              <TableCellCustom size='sm' align='center'>
+                {i18n('Descripcion')}
+              </TableCellCustom>
               <TableCellCustom align='center'>
                 {i18n('user.fields.status')}
               </TableCellCustom>
@@ -110,11 +119,24 @@ function FaultTable() {
             {!loading &&
               rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align='center'>{row?.name}
+                  <TableCell align='center'>
+                    {row?.name}
                   </TableCell>
-                  <TableCell align='center'>{row.typeFalla.name}</TableCell>
-                  <TableCell align='center'>{row.category.name}</TableCell>
-                  <TableCell align='center'><UserStatusView value={row.status || 'none'} /></TableCell>
+                  <TableCell align='center'>
+                    {row.typeFalla.name}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {row.category.name}
+                  </TableCell>
+                  <TableCellCustom size='sm' align='center'>
+                    <Description 
+                      description={row.description} 
+                      setDescription={setDescription}
+                    />
+                  </TableCellCustom>
+                  <TableCell align='center'>
+                    <UserStatusView value={row.status} />
+                  </TableCell>
                   <TableCell>
                     <Box
                       display="flex"
@@ -163,6 +185,16 @@ function FaultTable() {
           cancelText={i18n('common.no')}
         />
       )}
+      {description && (
+        <ConfirmModal
+          content={description}
+          title={i18n('Descripcion')}
+          onClose={() => setDescription(null)}
+          onConfirm={() => setDescription(null)}
+          okText={i18n('Cerrar')}
+        />
+      )}
+
     </>
   );
 }

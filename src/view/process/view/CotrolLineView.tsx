@@ -15,6 +15,8 @@ import TableSmall from 'src/view/process/view/TableSmallCheckpoint';
 import { Link } from 'react-router-dom';
 import CheckIcon from '@material-ui/icons/Check';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import Description from 'src/view/shared/view/Description';
+import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 
 const useRowStyles = makeStyles({
   root: {
@@ -30,9 +32,19 @@ const useRowStyles = makeStyles({
 
 export default function Row(props) {
 
-  const { row, doEdition,doCopy, doDisabled } = props;
+  const { 
+    row,
+    doEdition,
+    doCopy, 
+    doDisabled,
+    setDescription,
+  } = props;
   const [open, setOpen] = useState(false);
   
+  const saveDescription = () => {
+    setDescription(row.description)
+  };
+
   const classes = useRowStyles();
 
   return (
@@ -47,7 +59,13 @@ export default function Row(props) {
         <TableCell align="center">{row.sku}</TableCell>  
         <TableCell align="center">{row.category.name}</TableCell>
         <TableCell align="center">{row.industrialPlant.name}</TableCell>
-        <TableCell align="center"><UserStatusView value={row.status || 'none'} /></TableCell>
+        <TableCellCustom align="center">
+          <Description 
+            description = {row.description}
+            setDescription = {saveDescription}
+          />
+        </TableCellCustom>
+        <TableCell align="center"><UserStatusView value={row.status}/></TableCell>
         <TableCell>
           <Box
             display="flex"

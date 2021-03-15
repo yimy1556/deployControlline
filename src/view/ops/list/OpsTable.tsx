@@ -17,11 +17,16 @@ import UserStatusView from 'src/view/user/view/UserStatusView';
 import Spinner from 'src/view/shared/Spinner';
 import IconButton from '@material-ui/core/IconButton';
 import { i18n } from 'src/i18n';
+import Status from 'src/view/ops/view/ButtonState';
+import ModalStatus from 'src/view/shared/modals/ModalStatus';
 
 function OpsTable() {
     const hasRows = useSelector(selectors.selectHasRows);
     const loading = useSelector(selectors.selectLoading);
     const rows = [1, 2, 3, 4]
+    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [status, setStatus] = useState(null);
+
 
     return (
         <>
@@ -88,7 +93,16 @@ function OpsTable() {
                                     <TableCell align='center'>Heladeras</TableCell>
                                     <TableCell align='center'>2021-03-01</TableCell>
                                     <TableCell align='center'>usuario{index}</TableCell>
-                                    <TableCell align='center'> <UserStatusView value={'iniciada'} /></TableCell>
+                                    <TableCell align='center'>
+                                        <Status
+                                            setSelectedIndex={setSelectedIndex}
+                                            selectedIndex={selectedIndex}
+                                            values={{
+                                                status:'Activa',
+                                            }}
+                                            setValues={setStatus}
+                                        />
+                                    </TableCell>
                                     <TableCell>
                                         <Box
                                             display="flex"
@@ -122,6 +136,15 @@ function OpsTable() {
                     </TableBody>
                 </Table>
             </Box>
+            {status && (
+                <ModalStatus
+                    title={i18n('common.areYouSure')}
+                    content = {status}
+                    onClose={() => setStatus(null)}
+                    okText={i18n('common.yes')}
+                    cancelText={i18n('common.no')}
+                />
+            )}
         </>
     );
 }
