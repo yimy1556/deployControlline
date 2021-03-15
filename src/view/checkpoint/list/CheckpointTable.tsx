@@ -22,6 +22,11 @@ function CheckpointTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
+  
+  const [
+    description,
+    setDescription,
+  ] = useState(null);
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRows);
@@ -63,12 +68,13 @@ function CheckpointTable() {
         >
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell align="center">Nombre</TableCell>
-              <TableCell align="center">Tipo de control</TableCell>
-              <TableCell align="center">Categoria</TableCell>
-              <TableCell align="center">Stado</TableCell>
-              <TableCell/>
+              <TableCellCustom />
+              <TableCellCustom  align="center">Nombre</TableCellCustom>
+              <TableCellCustom  align="center">Tipo de control</TableCellCustom>
+              <TableCellCustom  align="center">Categoria</TableCellCustom>
+              <TableCellCustom size='md'  align="center">Descripcion</TableCellCustom>
+              <TableCellCustom align="center">Stado</TableCellCustom>
+              <TableCellCustom/>
             </TableRow>
           </TableHead>
          <TableBody>
@@ -96,6 +102,7 @@ function CheckpointTable() {
             {!loading &&
               rows.map((row, index) => (
                 <Row
+                  setDescription={setDescription}
                   key={index}
                   row={row}
                   doEdition={doEdition}
@@ -111,7 +118,15 @@ function CheckpointTable() {
         disabled={loading}
         pagination={pagination}
       />
-
+      {description && (
+        <ConfirmModal
+          content={description}
+          title={i18n('Descripcion')}
+          onClose={() => setDescription(null)}
+          onConfirm={() => setDescription(null)}
+          okText={i18n('Cerrar')}
+        />
+      )}
       {recordIdToDisabled && (
         <ConfirmModal
           title={i18n('common.areYouSure')}

@@ -30,6 +30,11 @@ function ProcessTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
+  
+  const [
+    description,
+    setDescription,
+  ] =  useState(null);
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRows);
@@ -83,6 +88,12 @@ function ProcessTable() {
                 {i18n('process.fields.plant')}
               </TableCellCustom>
               <TableCellCustom
+                size='sm'
+                align='center'
+              >
+                {i18n('Descripción')}
+              </TableCellCustom>
+              <TableCellCustom
                 align='center'
                 label={i18n('user.fields.status')}
               />
@@ -114,6 +125,7 @@ function ProcessTable() {
             {!loading &&
               rows.map((row, index) => (
                 <Row
+                  setDescription={setDescription}
                   key={index}
                   row={row}
                   doEdition={(id) => dispatch(actionsView.startEdicion(id))}
@@ -130,7 +142,15 @@ function ProcessTable() {
         disabled={loading}
         pagination={pagination}
       />
-
+     {description && (
+        <ConfirmModal
+          content={description}
+          title={i18n('Descripcion')}
+          onClose={() => setDescription(null)}
+          onConfirm={() => setDescription(null)}
+          okText={i18n('Cerrar')}
+        />
+      )}
       {recordIdToDisabled && (
         <ConfirmModal
           title={i18n('common.areYouSure')}
