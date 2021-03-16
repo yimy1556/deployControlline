@@ -17,6 +17,10 @@ const options = [
   "Finalizada",
   "Pausada",
 ];
+const noChangeStatus = [  
+  "Cancelado",
+  "Finalizada",
+];
 
 const colors= {
   Activa: '#0AC11B',
@@ -73,17 +77,19 @@ export default function SplitButton(props) {
         >
           {options[selectedIndex]}
         </Button>
-        <Button
-          style={{ background: colors[options[selectedIndex]] }}
-          size="small"
-          aria-controls={open ? "split-button-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-label="select merge strategy"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-        >
-          <ArrowDropDownIcon />
-        </Button>
+        { !noChangeStatus.includes(values.status) && 
+          <Button
+            style={{ background: colors[options[selectedIndex]] }}
+            size="small"
+            aria-controls={open ? "split-button-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-label="select merge strategy"
+            aria-haspopup="menu"
+            onClick={handleToggle}
+          >
+            <ArrowDropDownIcon />
+          </Button>
+        }
       </ButtonGroup>
       <Popper
         open={open}

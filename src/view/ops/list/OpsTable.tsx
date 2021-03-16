@@ -71,7 +71,7 @@ function OpsTable() {
                                 name={'usuario'}
                                 label={i18n('process.fields.user')}
                             />
-                            <TableCellCustom align='center'>
+                            <TableCellCustom size='sm' align='center'>
                                 {i18n('user.fields.status')}
                             </TableCellCustom>
                             <TableCellCustom size="md"></TableCellCustom>
@@ -98,7 +98,7 @@ function OpsTable() {
                                             setSelectedIndex={setSelectedIndex}
                                             selectedIndex={selectedIndex}
                                             values={{
-                                                status:'Activa',
+                                                status:'Pausada',
                                             }}
                                             setValues={setStatus}
                                         />
