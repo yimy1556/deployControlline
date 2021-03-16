@@ -6,13 +6,14 @@ import {
   DialogActions,
   Button,
   DialogContent,
-  Modal,
 } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
+import actions from 'src/modules/controlLineExecution/list/controlLineExecutionListActions';
 import {i18n} from 'src/i18n';
 
 
@@ -23,7 +24,7 @@ const schema = yup.object().shape({
 });
 
 function ModalStatus(props) {
-  
+  const dispatch = useDispatch(); 
   console.log(props)
   const form = useForm({
     resolver: yupResolver(schema),
@@ -33,6 +34,8 @@ function ModalStatus(props) {
 
   const onSubmit = (values) => {
     console.log(values)
+    dispatch(actions.editStatus(props.content))
+    props.onClose()
   }
 
   return ReactDOM.createPortal(

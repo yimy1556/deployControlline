@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
-import {set} from "date-fns";
+import { set } from "date-fns";
 
 const options = [
   "Cancelado",
@@ -17,8 +17,12 @@ const options = [
   "Finalizada",
   "Pausada",
 ];
+const noChangeStatus = [  
+  "Cancelado",
+  "Finalizada",
+];
 
-const colors= {
+const colors = {
   Activa: '#0AC11B',
   Cancelado: '#D4224A',
   Finalizada: '#8A2432',
@@ -26,8 +30,8 @@ const colors= {
 }
 
 export default function SplitButton(props) {
-  const { 
-    setValues, 
+  const {
+    setValues,
     values,
   } = props;
   const [open, setOpen] = useState(false);
@@ -38,7 +42,6 @@ export default function SplitButton(props) {
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) => {
-    setSelectedIndex(index);
     setValues({
       ...values,
       newStatus: options[index],
@@ -68,22 +71,24 @@ export default function SplitButton(props) {
         ref={anchorRef}
         aria-label="split button"
       >
-        <Button 
-          style={{ background: colors[options[selectedIndex]]}}
+        <Button
+          style={{ background: colors[options[selectedIndex]] }}
         >
           {options[selectedIndex]}
         </Button>
-        <Button
-          style={{ background: colors[options[selectedIndex]] }}
-          size="small"
-          aria-controls={open ? "split-button-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-label="select merge strategy"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-        >
-          <ArrowDropDownIcon />
-        </Button>
+        { !noChangeStatus.includes(values.status) && 
+          <Button
+            style={{ background: colors[options[selectedIndex]] }}
+            size="small"
+            aria-controls={open ? "split-button-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-label="select merge strategy"
+            aria-haspopup="menu"
+            onClick={handleToggle}
+          >
+            <ArrowDropDownIcon />
+          </Button>
+        }
       </ButtonGroup>
       <Popper
         open={open}
@@ -96,7 +101,7 @@ export default function SplitButton(props) {
             {...TransitionProps}
             style={{
               transformOrigin:
-              placement === "bottom" ? "center top" : "center bottom"
+                placement === "bottom" ? "center top" : "center bottom"
             }}
           >
             <Paper>
@@ -110,7 +115,7 @@ export default function SplitButton(props) {
                       >
                         {option}
                       </MenuItem>
-                  ))}
+                    ))}
                 </MenuList>
               </ClickAwayListener>
             </Paper>

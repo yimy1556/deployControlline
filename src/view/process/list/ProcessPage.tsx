@@ -31,7 +31,7 @@ function ProcessPage() {
           <PageTitle>{i18n('controlLine.title')}</PageTitle>
           <Tooltip
             title={i18n('process.newControlLine')}
-            onClick= {() => dispatch(viewActions.finishEdicion())}
+            onClick={() => dispatch(viewActions.finishEdicion())}
           >
             <Fab
               size="small"

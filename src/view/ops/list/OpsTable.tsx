@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import selectors from 'src/modules/config/checkpoint/list/checkpointListSelectors';
+import selectors from 'src/modules/controlLineExecution/list/controlLineExecutionListSelectors';
 import ContentWrapper from '../../../view/layout/styles/ContentWrapper';
 import { Box } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -9,23 +9,33 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import Tooltip from '@material-ui/core/Tooltip';
-import EditIcon from '@material-ui/icons/Edit';
-import NotInterested from '@material-ui/icons/NotInterested';
-import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
-import UserStatusView from 'src/view/user/view/UserStatusView';
 import Spinner from 'src/view/shared/Spinner';
-import IconButton from '@material-ui/core/IconButton';
 import { i18n } from 'src/i18n';
-import Status from 'src/view/ops/view/ButtonState';
 import ModalStatus from 'src/view/shared/modals/ModalStatus';
+import Row from '../view/OpsView'
 
 function OpsTable() {
-    const hasRows = useSelector(selectors.selectHasRows);
-    const loading = useSelector(selectors.selectLoading);
+    const hasRows =  true///useSelector(selectors.selectHasRows);
+    const loading = false//useSelector(selectors.selectLoading);
     const rows = [1, 2, 3, 4]
-    const [selectedIndex, setSelectedIndex] = useState(null);
+    
+    const rws = useSelector(selectors.selectRows);
+
+    console.log(rws)
+
+    const [
+        description,
+        setDescription,
+    ] = useState(null);
+
+
     const [status, setStatus] = useState(null);
+
+ 
+  useEffect(() => {
+      console.log('12')
+  }, [status]);
+
 
 
     return (
@@ -47,6 +57,7 @@ function OpsTable() {
                 >
                     <TableHead>
                         <TableRow>
+                            <TableCellCustom />
                             <TableCellCustom
                                 hasRows={hasRows}
                                 name={'id'}
@@ -68,13 +79,13 @@ function OpsTable() {
                             <TableCellCustom
                                 hasRows={hasRows}
                                 align='center'
-                                name={'usuario'}
-                                label={i18n('process.fields.user')}
+                                name={'dateModification'}
+                                label={i18n('process.fields.dateModification')}
                             />
-                            <TableCellCustom align='center'>
+                            <TableCellCustom size='sm' align='center'>
                                 {i18n('user.fields.status')}
                             </TableCellCustom>
-                            <TableCellCustom size="md"></TableCellCustom>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -85,66 +96,41 @@ function OpsTable() {
                                 </TableCell>
                             </TableRow>
                         )}
-
+                        {!loading && !hasRows && (
+                            <TableRow>
+                                <TableCell colSpan={100}>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {i18n('table.noData')}
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        )}
                         {!loading &&
-                            rows.map((row, index) => (
-                                <TableRow key={index}>
-                                    <TableCell align='center'>{index}</TableCell>
-                                    <TableCell align='center'>Heladeras</TableCell>
-                                    <TableCell align='center'>2021-03-01</TableCell>
-                                    <TableCell align='center'>usuario{index}</TableCell>
-                                    <TableCell align='center'>
-                                        <Status
-                                            setSelectedIndex={setSelectedIndex}
-                                            selectedIndex={selectedIndex}
-                                            values={{
-                                                status:'Activa',
-                                            }}
-                                            setValues={setStatus}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Box
-                                            display="flex"
-                                            justifyContent="flex-end"
-                                        >
-
-                                            <Tooltip
-                                                title={i18n('common.edit')}
-                                            >
-                                                <IconButton
-                                                    color="primary"
-
-                                                >
-                                                    <EditIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip
-                                                title={i18n('common.disable')}
-                                            >
-                                                <IconButton
-                                                    color="primary"
-                                                >
-                                                    <NotInterested />
-                                                </IconButton>
-                                            </Tooltip>
-
-                                        </Box>
-                                    </TableCell>
-                                </TableRow>
+                            rws.map((row, index) => (
+                                <Row
+                                    setDescription={setDescription}
+                                    setStatus={setStatus}
+                                    key={index}
+                                    row={row}
+                                />
                             ))}
                     </TableBody>
                 </Table>
             </Box>
-            {status && (
-                <ModalStatus
-                    title={i18n('common.areYouSure')}
-                    content = {status}
-                    onClose={() => setStatus(null)}
-                    okText={i18n('common.yes')}
-                    cancelText={i18n('common.no')}
-                />
-            )}
+                {status && (
+                    <ModalStatus
+                        title={i18n('common.areYouSure')}
+                        content={status}
+                        onClose={() => setStatus(null)}
+                        okText={i18n('common.yes')}
+                        cancelText={i18n('common.no')}
+                    />
+                )}
         </>
     );
 }

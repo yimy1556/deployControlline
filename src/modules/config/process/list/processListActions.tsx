@@ -2,11 +2,11 @@ import processService from 'src/modules/config/process/processService';
 import selectors from 'src/modules/config/process/list/processListSelectors';
 import modalActions from 'src/modules/modal/modalActions';
 import swal from 'sweetalert';
-import { getHistory  } from 'src/modules/store';
+import { getHistory } from 'src/modules/store';
 import IndustrialPlantService from '../../service/IndustrialPlantService';
 import checkpointListActions from '../../checkpoint/list/checkpointListActions';
 import CheckponitService from '../../checkpoint/checkpointService';
-import {i18n} from 'src/i18n';
+import { i18n } from 'src/i18n';
 
 const prefix = 'PROCESS_LIST';
 
@@ -16,7 +16,7 @@ const processListActions = {
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
 
   RESETED: `${prefix}_RESETED`,
-  
+
   LOAD_OPTION: `${prefix}_LOAD_OPTION`,
 
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
@@ -48,20 +48,21 @@ const processListActions = {
   },
 
   doLoadOption: () => async (dispatch) => {
-    
+
     dispatch(checkpointListActions.doLoadOption());
 
     const optionIndustrialPlant = await IndustrialPlantService.fetchIndustrialPlant();
     const optionCheckpoint = await CheckponitService.fetchCheckpointActive();
-  
+
 
     const opIn = optionIndustrialPlant.rows.reduce((acc, el) => ([...acc, { value: el.id, label: el.name }]), []);
     const op = optionCheckpoint.rows.reduce((acc, el) => (
-      [...acc, 
-        { value: el.id, 
-          label: el.name,
-          categoryId: el.category.id,
-        }])
+      [...acc,
+      {
+        value: el.id,
+        label: el.name,
+        categoryId: el.category.id,
+      }])
       , []);
 
 
@@ -76,20 +77,20 @@ const processListActions = {
 
 
   doEdit: (value) => async (dispatch) => {
-    if(value?.checkpoints?.length === 0){
+    if (value?.checkpoints?.length === 0) {
       swal("Tadavia no asignaste puestos", "", "error");
       return;
     }
     try {
-      const {status, message} = await processService.edit(value);
-      swal(i18n(`controlLineUpdate.${message}.${status}`),"",status);
+      const { status, message } = await processService.edit(value);
+      swal(i18n(`controlLineUpdate.${message}.${status}`), "", status);
 
-      if(status === "error"){return;}
+      if (status === "error") { return; }
 
       dispatch(modalActions.closeModal());
-        dispatch(processListActions.doFetchCurrentFilter());
-        getHistory().push('/control_line');
-    }catch (error) {
+      dispatch(processListActions.doFetchCurrentFilter());
+      getHistory().push('/control_line');
+    } catch (error) {
       swal("Error al modificar la linea de control", "", "error");
     }
   },
@@ -113,7 +114,7 @@ const processListActions = {
 
     dispatch(processListActions.doFetchCurrentFilter());
   },
- 
+
   doFetchCurrentFilter: () => async (
     dispatch,
     getState,
@@ -122,7 +123,7 @@ const processListActions = {
     const rawFilter = selectors.selectRawFilter(getState());
     dispatch(processListActions.doFetch(filter, rawFilter, true));
   },
-  
+
   doFetch: (filter?, rawFilter?, keepPagination = false) => async (
     dispatch,
     getState,
@@ -146,7 +147,7 @@ const processListActions = {
         },
       });
     } catch (error) {
-      
+
       dispatch({
         type: processListActions.FETCH_ERROR,
       });

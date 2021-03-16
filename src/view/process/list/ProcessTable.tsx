@@ -12,16 +12,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
-import EditIcon from '@material-ui/icons/Edit';
-import NotInterested from '@material-ui/icons/NotInterested';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/process/view/processViewActions';
-import UserStatusView from 'src/view/user/view/UserStatusView';
-import { Link } from 'react-router-dom';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import CheckIcon from '@material-ui/icons/Check';
 import Row from 'src/view/process/view/CotrolLineView';
 
 function ProcessTable() {
@@ -30,11 +23,11 @@ function ProcessTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
-  
+
   const [
     description,
     setDescription,
-  ] =  useState(null);
+  ] = useState(null);
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRows);
@@ -71,7 +64,7 @@ function ProcessTable() {
         >
           <TableHead>
             <TableRow>
-              <TableCellCustom/>
+              <TableCellCustom />
               <TableCellCustom
                 align='center'
                 label={i18n('user.fields.firstName')}
@@ -97,7 +90,7 @@ function ProcessTable() {
                 align='center'
                 label={i18n('user.fields.status')}
               />
-              <TableCellCustom size="md"/>
+              <TableCellCustom size="md" />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -132,7 +125,7 @@ function ProcessTable() {
                   doDisabled={setRecordIdToDisabled}
                   doCopy={(id) => dispatch(actionsView.startCopy(id))}
                 />
-            ))}
+              ))}
           </TableBody>
         </Table>
       </Box>
@@ -142,7 +135,7 @@ function ProcessTable() {
         disabled={loading}
         pagination={pagination}
       />
-     {description && (
+      {description && (
         <ConfirmModal
           content={description}
           title={i18n('Descripcion')}
