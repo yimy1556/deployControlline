@@ -27,7 +27,8 @@ import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import yupFilterSchemas from 'src/modules/shared/yup/yupFilterSchemas';
 import actionsModal from 'src/modules/modal/modalActions';
 import Tooltip from '@material-ui/core/Tooltip';
-import actions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
+import actions from 'src/modules/controlLineExecution/list/controlLineExecutionListActions';
 
 const schema = yup.object().shape({
     nameControlLine: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -53,7 +54,7 @@ function OpsFilter(props) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
+        dispatch(actionsCheckpoint.doLoadOption());
         dispatch(actions.doLoadOption());
     }, [dispatch]);
     

@@ -16,18 +16,6 @@ import selectorFaults from 'src/modules/config/fault/list/faultListSelectors';
 import actionsFaults from 'src/modules/config/fault/list/faultListActions';
 import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
-const statusCheckpoint = [
-  {
-    value:'inactive',
-    label:'Inactivo'
-  },
-  {
-    value:'active',
-    label:'Activo'
-  },
-]
-
-
 const schema = yup.object().shape({
   nameCheckpoint: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,

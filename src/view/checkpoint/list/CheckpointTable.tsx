@@ -22,7 +22,7 @@ function CheckpointTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
-  
+
   const [
     description,
     setDescription,
@@ -69,15 +69,15 @@ function CheckpointTable() {
           <TableHead>
             <TableRow>
               <TableCellCustom />
-              <TableCellCustom  align="center">Nombre</TableCellCustom>
-              <TableCellCustom  align="center">Tipo de control</TableCellCustom>
-              <TableCellCustom  align="center">Categoria</TableCellCustom>
-              <TableCellCustom size='md'  align="center">Descripcion</TableCellCustom>
-              <TableCellCustom align="center">Stado</TableCellCustom>
-              <TableCellCustom/>
+              <TableCellCustom align="center">Nombre</TableCellCustom>
+              <TableCellCustom align="center">Tipo de control</TableCellCustom>
+              <TableCellCustom align="center">Categoria</TableCellCustom>
+              <TableCellCustom size='md' align="center">Descripcion</TableCellCustom>
+              <TableCellCustom align="center">Estado</TableCellCustom>
+              <TableCellCustom />
             </TableRow>
           </TableHead>
-         <TableBody>
+          <TableBody>
             {loading && (
               <TableRow>
                 <TableCell colSpan={100}>

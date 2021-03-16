@@ -7,24 +7,16 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.put(
-      `/controlline/`,
+      `/checkpoint/`,
       body,
     );
-    return response.data;
-  }
-  
-  static async doControlLineActive(){
-    const response = await authAxios.get(
-      '/controlline/active/',
-    );
-
     return response.data;
   }
 
   static async doDisabled(id) {
 
     const response = await authAxios.delete(
-      `/controlline/${id}`,
+      `/checkpoint/${id}`,
     );
 
     return response.data;
@@ -36,7 +28,7 @@ export default class CheckponitService {
     };
 
     const response = await authAxios.post(
-      `/controlline/`,
+      `/checkpoint/`,
       body,
     );
 
@@ -45,20 +37,20 @@ export default class CheckponitService {
 
   static async find(id) {
     const response = await authAxios.get(
-      `/controlline/${id}`,
+      `/checkpoint/${id}`,
     );
     return response.data;
   }
 
-  static async fetchProcess(filter, size, page) {
+  static async fetchCheckpoint(filter, size, page) {
     const params = {
       filter,
       size,
       page,
     };
-
+  
     const response = await authAxios.get(
-      `/controlline/`,
+      `/checkpoint/`,
       {
         params,
       },
@@ -66,10 +58,10 @@ export default class CheckponitService {
 
     return response.data;
   }
-
-  static async fetchProcessActive(){
+  
+  static async fetchCheckpointActive(){
       const response = await authAxios.get(
-        '/controlline/active/',
+        '/checkpoint/active/',
         {
           params: {}
         }
@@ -78,4 +70,20 @@ export default class CheckponitService {
       return response.data;
   }
 
+
+  /*
+    static async fetchUserAutocomplete(query, limit) {
+      const params = {
+        query,
+        limit,
+      };
+  
+      const response = await authAxios.get(
+        `/user/autocomplete`,
+        {
+          params,
+        },
+      );
+      return response.data;
+      }*/
 }

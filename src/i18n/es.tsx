@@ -127,50 +127,51 @@ const es = {
     newfaults: 'Nueva falla',
     fields: {
       name: 'Nombre',
-      category: 'Categoria',
+      category: 'Categoría',
     }
   },
   controlLineCreate: {
     name: {
       error: 'Ya existe una línea de control con ese nombre',
     },
-    sku:{
+    sku: {
       error: 'Ya existe una línea de control para el SKU ingresado',
     },
     namesku: {
-      error : 'Ya existe una línea de control con el nombre y SKU ingresados',
+      error: 'Ya existe una línea de control con el nombre y SKU ingresados',
     },
-    validations:{
+    validations: {
       error: 'Error al crear una linea de control',
       success: 'Se ha creado la línea de control correctamente',
     }
   },
-  controlLineUpdate:{
+  controlLineUpdate: {
     name: {
       error: 'Ya existe una línea de control con ese nombre',
     },
-    sku:{
+    sku: {
       error: 'Ya existe una línea de control para el SKU ingresado',
     },
     namesku: {
-      error : 'Ya existe una línea de control con el nombre y SKU ingresados',
+      error: 'Ya existe una línea de control con el nombre y SKU ingresados',
     },
-    validations:{
+    validations: {
       error: 'Error al Editar una linea de control',
       success: 'Se ha modificado la línea de control correctamente',
     }
   },
   process: {
-    title: 'Ejecución de línea de control',
-    newControlLine: 'Nueva ejecución de línea de control',
+    title: 'Ejecución de Línea de Control',
+    newControlLine: 'Nueva Ejecución de Línea de Control',
     addCheckpoint: 'Agregar Puesto',
     saveProcess: 'Guardar Configuración De Proceso',
     fields: {
       id: 'Id',
       plant: 'Planta',
       sku: 'SKU',
-      controlLine: 'Línea de control',
+      controlLine: 'Línea de Control',
       date: 'Fecha de alta',
+      dateModification: 'Fecha de modificación',
       user: 'Usuario',
       operary: 'Operario',
       description: 'Descripción',

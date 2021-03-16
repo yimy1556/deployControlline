@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
+import selectors from 'src/modules/controlLineExecution/list/controlLineExecutionListSelectors';
 import selectorsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import actionsCheckpoint from 'src/modules/config/checkpoint/list/checkpointListActions';
 
@@ -18,9 +19,12 @@ const schema = yup.object().shape({
 
 });
 function Ops(props) {
-    const optionOperary = useSelector(selectorsCheckpoint.selectOptionOperary);
+    const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
+    const optionContolLine = useSelector(selectors.selectOptionControlLine);
     const dispatch = useDispatch();
     const [initialValues] = useState();
+    
+    const [category,setCategory] = useState(null);
     const form = useForm({
         resolver: yupResolver(schema),
         mode: 'all',
@@ -32,6 +36,8 @@ function Ops(props) {
     const onSubmit = (values) => {
         alert('hola')
     }
+    const optionContolLineCategory = () => optionContolLine
+        .filter(controlLine => controlLine.category === category);
 
     return (
         <FormProvider {...form}>
@@ -43,7 +49,8 @@ function Ops(props) {
                     <Grid item xs={12}>
                         <SelectFormItem
                             name='categoryId'
-                            options={[]}
+                            options={optionCategory}
+                            func={setCategory} 
                             label={i18n('Categoria')}
                             mode='unico'
                         />
@@ -51,7 +58,7 @@ function Ops(props) {
                     <Grid item xs={12}>
                         <SelectFormItem
                             name='process'
-                            options={[]}
+                            options={optionContolLineCategory()}
                             label={i18n('process.fields.controlLine')}
                             mode='unico'
                         />
