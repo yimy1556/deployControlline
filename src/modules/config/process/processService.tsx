@@ -12,6 +12,14 @@ export default class CheckponitService {
     );
     return response.data;
   }
+  
+  static async doControlLineActive(){
+    const response = await authAxios.get(
+      '/controlline/active/',
+    );
+
+    return response.data;
+  }
 
   static async doDisabled(id) {
 

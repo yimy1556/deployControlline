@@ -15,10 +15,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import EditIcon from '@material-ui/icons/Edit';
 import NotInterested from '@material-ui/icons/NotInterested';
+import CheckIcon from '@material-ui/icons/Check';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import actionsView from 'src/modules/config/fault/view/faultViewActions';
 import UserStatusView from 'src/view/user/view/UserStatusView';
+import Description from 'src/view/shared/view/Description';
 
 function FaultTable() {
   const dispatch = useDispatch();
@@ -26,6 +28,11 @@ function FaultTable() {
     recordIdToDisabled,
     setRecordIdToDisabled,
   ] = useState(null);
+  
+  const [
+    description,
+    setDescription,
+  ] = useState (null)
 
   const loading = useSelector(selectors.selectLoading);
   const rows = useSelector(selectors.selectRowsFault);
@@ -33,7 +40,7 @@ function FaultTable() {
     selectors.selectPagination,
   );
   const hasRows = useSelector(selectors.selectHasRows);
-
+  
   const doDisabled = (id) => {
     setRecordIdToDisabled(null);
     dispatch(actions.disabled(id));
@@ -70,17 +77,20 @@ function FaultTable() {
               <TableCellCustom
                 align='center'
                 name={'fullName'}
-                label={'Nombre'}
+                label={i18n('faults.fields.name')}
               />
               <TableCellCustom align='center'>
-                Tipo de falla
+                {i18n('faults.fields.type')}
               </TableCellCustom>
               <TableCellCustom align='center'>
-                Categoria
+                {i18n('faults.fields.category')}
+              </TableCellCustom>
+              <TableCellCustom size='sm' align='center'>
+                {i18n('Descripcion')}
               </TableCellCustom>
               <TableCellCustom align='center'>
-                Estado
-                </TableCellCustom>
+                {i18n('user.fields.status')}
+              </TableCellCustom>
               <TableCellCustom size="md"></TableCellCustom>
             </TableRow>
           </TableHead>
@@ -109,39 +119,49 @@ function FaultTable() {
             {!loading &&
               rows.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell align='center'>{row?.name || 'none'}</TableCell>
-                  <TableCell align='center'>{row.typeFalla.name}</TableCell>
-                  <TableCell align='center'>{row.category.name}</TableCell>
-                  <TableCell align='center'><UserStatusView value={row.status || 'none'} /></TableCell>
+                  <TableCell align='center'>
+                    {row?.name}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {row.typeFalla.name}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {row.category.name}
+                  </TableCell>
+                  <TableCellCustom size='sm' align='center'>
+                    <Description 
+                      description={row.description} 
+                      setDescription={setDescription}
+                    />
+                  </TableCellCustom>
+                  <TableCell align='center'>
+                    <UserStatusView value={row.status} />
+                  </TableCell>
                   <TableCell>
                     <Box
                       display="flex"
                       justifyContent="flex-end"
                     >
-                      {true && (
-                        <Tooltip
-                          title={i18n('common.edit')}
+                      <Tooltip
+                        title={i18n('common.edit')}
+                      >
+                        <IconButton
+                          color="primary"
+                          onClick={() => doEdition(row?.id)}
                         >
-                          <IconButton
-                            color="primary"
-                            onClick={() => doEdition(row?.id)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                      {true && (
-                        <Tooltip
-                          title={i18n('common.disable')}
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip
+                        title={ row.status === "active"? i18n('common.disable'): "habilitar" }
+                        onClick={() => setRecordIdToDisabled(row.id)}
+                      >
+                        <IconButton
+                          color="primary"
                         >
-                          <IconButton
-                            color="primary"
-                            onClick={() => setRecordIdToDisabled(row.id)}
-                          >
-                            <NotInterested />
-                          </IconButton>
-                        </Tooltip>
-                      )}
+                          {row.status === "active"? <NotInterested />: <CheckIcon/>}
+                        </IconButton>
+                      </Tooltip>
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -165,6 +185,16 @@ function FaultTable() {
           cancelText={i18n('common.no')}
         />
       )}
+      {description && (
+        <ConfirmModal
+          content={description}
+          title={i18n('Descripcion')}
+          onClose={() => setDescription(null)}
+          onConfirm={() => setDescription(null)}
+          okText={i18n('Cerrar')}
+        />
+      )}
+
     </>
   );
 }

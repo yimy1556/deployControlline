@@ -30,6 +30,7 @@ import AddIcon from '@material-ui/icons/Add';
 import actionsModal from 'src/modules/modal/modalActions';
 import selectorsListCheckponint from 'src/modules/config/checkpoint/list/checkpointListSelectors';
 import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
+import viewActions from 'src/modules/config/fault/view/faultViewActions';
 
 const schema = yup.object().shape({
   name: yupFilterSchemas.string(i18n('user.fields.firstName')),
@@ -38,7 +39,7 @@ const schema = yup.object().shape({
 });
 
 const previewRenders = {
-  name: {
+  nameFault: {
     label: 'Nombre',
     render: filterRenders.generic(),
   },
@@ -53,7 +54,7 @@ const previewRenders = {
 }
 
 const emptyValues = {
-  name: null,
+  nameFault: null,
   category: null,
   typeFalla: null,
 };
@@ -71,7 +72,7 @@ function UserFilter(props) {
   });
 
   const openModel = () => {
-    dispatch(actionsModal.modalOpen());      
+    dispatch(actionsModal.modalOpen());
   };
 
   const form = useForm({
@@ -84,9 +85,9 @@ function UserFilter(props) {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
     dispatch(actions.doLoadOption());
-    dispatch(checkpointListActions.doLoadOption())
+    dispatch(checkpointListActions.doLoadOption());
   }, [dispatch]);
-  
+
   const onSubmit = (values) => {
     const rawValues = form.getValues();
     dispatch(actions.doFetch(values, rawValues));
@@ -103,9 +104,9 @@ function UserFilter(props) {
 
 
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
-  const optionsTypeFalla =  useSelector(selectors.selectOptionTypeFalla);
+  const optionsTypeFalla = useSelector(selectors.selectOptionTypeFalla);
   const { loading } = props;
-  
+
 
   return (
     <FilterWrapper>
@@ -128,37 +129,27 @@ function UserFilter(props) {
               <Grid container spacing={2}>
                 <Grid item lg={6} xs={12}>
                   <InputFormItem
-                    name={'name'}
+                    name={'nameFault'}
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>
-                 <Grid item lg={6} xs={12}>
+                <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'category'}
                     label={i18n('faults.fields.category')}
-                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label   }]),[])}
+                    options={optionCategory.reduce((acc, el) => ([...acc, { value: el.label, label: el.label }]), [])}
                   />
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
                     name={'typeFalla'}
                     label={'Tipo de Falla'}
-                    options={optionsTypeFalla.reduce((acc, el) => ([...acc, { value: el.label, label: el.label  }]),[])}
+                    options={optionsTypeFalla.reduce((acc, el) => ([...acc, { value: el.label, label: el.label }]), [])}
                   />
                 </Grid>
               </Grid>
               <FilterButtons>
-                <Tooltip
-                  title={i18n('process.newControlLine')}
-                >
-                  <Fab 
-                    size="small" 
-                    color="primary"
-                    onClick={openModel}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
+
 
                 <Button
                   variant="contained"
@@ -178,7 +169,7 @@ function UserFilter(props) {
                   startIcon={<UndoIcon />}
                   size="small"
                 >
-                  Limpiar Filtros
+                  {i18n('common.cleanFilters')}
                 </Button>
               </FilterButtons>
             </form>

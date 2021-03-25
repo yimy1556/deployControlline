@@ -10,29 +10,23 @@ import ProcessDischarge from 'src/view/process/view/ProcessDischarge';
 import Breadcrumb from 'src/view/shared/Breadcrumb';
 import actionsView from 'src/modules/config/process/view/processViewActions';
 
-const  textTheWelcome = (typeWindows) => {
-  return typeWindows? 
-    'Edicion de linea de control':
-    'Configuaracion de linea de control';
+const textTheWelcome = (typeWindows) => {
+  return typeWindows ?
+    'Edición de línea de control' :
+    'Configuración de línea de control';
 }
 
 function ProcessViewPage(props) {
   const { match } = props;
   const textWelcome = textTheWelcome(match?.params?.id);
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(actionsView.startEdicion(match?.params?.id));
-    // eslint-disable-next-line
-  }, [dispatch]);
 
-  
   return (
     <>
       <Breadcrumb
         items={[
           [i18n('dashboard.menu'), '/'],
-          ['Gestión De Línea De Control','/process'],
+          [i18n('controlLine.title'), '/process'],
           [`${textWelcome}`],
         ]}
       />

@@ -2,6 +2,7 @@ const es = {
   common: {
     or: 'o',
     cancel: 'Cancelar',
+    configs: 'Configuraciones',
     reset: 'Reiniciar',
     save: 'Guardar',
     search: 'Buscar',
@@ -24,6 +25,7 @@ const es = {
     select: 'Seleccione',
     continue: 'Continúa',
     filters: 'Filtros',
+    cleanFilters: 'Limpiar Filtros',
     disable: 'Inhabilitar',
   },
   app: {
@@ -53,6 +55,8 @@ const es = {
       success: 'Contraseña cambiada correctamente',
       mustMatch: 'Las contraseñas deben coincidir',
     },
+    active: "Estas seguro de inhabilitar",
+    inactive: "Estas seguro de habilitar",
     emailUnverified: {
       message:
         'Confirme su correo electrónico en <strong>{0}</strong> para continuar.',
@@ -96,31 +100,81 @@ const es = {
     },
   },
   checkpoint: {
-    title: 'Configuración De Puesto de Control',
+    title: 'Gestión de Puestos de Control',
+    edit: 'Edición de puesto de control',
+    new: 'Nuevo puesto de control',
     fields: {
-      nameCheckpoint: 'Nombre de puesto de control',
+      name: 'Nombre',
       controlType: 'Tipo de  control',
       typeOfVerification: 'Tipo de verificación',
       failure: 'Fallas',
+      category: 'Categoría',
+      operary: 'Operario'
     },
   },
   faults: {
-    title: 'Gestion de fallas',
+    title: 'Gestión de Fallas',
     newfaults: 'Nueva falla',
     fields: {
       name: 'Nombre',
-      category: 'Categoria',
+      category: 'Categoría',
+      type: 'Tipo de falla'
+    }
+  },
+  controlLine: {
+    title: 'Gestión de Líneas de Control',
+    newControlLine: 'Nueva línea de control',
+    newfaults: 'Nueva falla',
+    fields: {
+      name: 'Nombre',
+      category: 'Categoría',
+    }
+  },
+  controlLineCreate: {
+    name: {
+      error: 'Ya existe una línea de control con ese nombre',
+    },
+    sku: {
+      error: 'Ya existe una línea de control para el SKU ingresado',
+    },
+    namesku: {
+      error: 'Ya existe una línea de control con el nombre y SKU ingresados',
+    },
+    validations: {
+      error: 'Error al crear una linea de control',
+      success: 'Se ha creado la línea de control correctamente',
+    }
+  },
+  controlLineUpdate: {
+    name: {
+      error: 'Ya existe una línea de control con ese nombre',
+    },
+    sku: {
+      error: 'Ya existe una línea de control para el SKU ingresado',
+    },
+    namesku: {
+      error: 'Ya existe una línea de control con el nombre y SKU ingresados',
+    },
+    validations: {
+      error: 'Error al Editar una linea de control',
+      success: 'Se ha modificado la línea de control correctamente',
     }
   },
   process: {
-    title: 'Configuración De Proceso',
-    newControlLine: 'Nueva Linea de control',
+    title: 'Ejecución de Línea de Control',
+    newControlLine: 'Nueva Ejecución de Línea de Control',
     addCheckpoint: 'Agregar Puesto',
     saveProcess: 'Guardar Configuración De Proceso',
     fields: {
+      id: 'Id',
       plant: 'Planta',
       sku: 'SKU',
-      description: 'Descripcion',
+      controlLine: 'Línea de Control',
+      date: 'Fecha de alta',
+      dateModification: 'Fecha de modificación',
+      user: 'Usuario',
+      operary: 'Operario',
+      description: 'Descripción',
       numberOfCheckpoint: 'N° puestos',
       checkpoint: 'Puestos de control',
     }

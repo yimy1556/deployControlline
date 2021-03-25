@@ -13,11 +13,12 @@ const modalActions = {
   },
 
   closeModal: () => async (dispatch) => {
-    dispatch(checkpointViewActions.finishEdicion());
-    dispatch(processViewActions.finishEdicion());
-    dispatch(faultViewActions.finishEdicion());
     dispatch({ type: modalActions.MODAL_CLOSE});
   },
+
+  closeModalCheckpoint: () => (dispatch) => {
+    dispatch({ type: modalActions.MODAL_CLOSE});
+  }
 
 };
 

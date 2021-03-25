@@ -5,7 +5,6 @@ import {
   Grid,
   Fab,
 } from '@material-ui/core';
-import { Link  } from 'react-router-dom';
 import SearchIcon from '@material-ui/icons/Search';
 import UndoIcon from '@material-ui/icons/Undo';
 import React, { useEffect, useState } from 'react';
@@ -29,20 +28,21 @@ import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import checkpointListActions from 'src/modules/config/checkpoint/list/checkpointListActions';
-
+import processListActions from 'src/modules/config/process/list/processListActions';
+import processSelectList from 'src/modules/config/process/list/processListSelectors';
+import viewActions from 'src/modules/config/process/view/processViewActions';
 const schema = yup.object().shape({
-  name: yupFilterSchemas.string(i18n('user.fields.firstName')),
-  Plant: yupFilterSchemas.string(i18n('process.fields.plant')),
+  nameControlLine: yupFilterSchemas.string(i18n('Nombre')),
+  industrialPlant: yupFilterSchemas.string(i18n('process.fields.plant')),
   sku: yupFilterSchemas.string(i18n('process.fields.sku')),
-  numberOfCheckpoints: yupFilterSchemas.integer('nuesto'),
 });
 
 const previewRenders = {
-  name: {
-    label: i18n('user.fields.fullName'),
+  nameControlLine: {
+    label: i18n('Nombre'),
     render: filterRenders.generic(),
   },
-  plant: {
+  industrialPlant: {
     label: i18n('process.fields.plant'),
     render: filterRenders.generic(),
   },
@@ -53,19 +53,18 @@ const previewRenders = {
 };
 
 const emptyValues = {
-  name: null,
-  plant: null,
+  nameControlLine: null,
+  industrialPlant: null,
   sku: null,
 };
 
 function ProcessFilter(props) {
-  const rawFilter = useSelector(selectors.selectRawFilter);
+  const rawFilter = useSelector(processSelectList.selectRawFilter);
   const dispatch = useDispatch();
   const [expanded, setExpanded] = useState(false);
-  
 
   const { loading } = props;
-    
+
   const [initialValues] = useState(() => {
     return {
       ...emptyValues,
@@ -82,7 +81,9 @@ function ProcessFilter(props) {
   useEffect(() => {
     dispatch(actions.doFetch(schema.cast(initialValues), rawFilter));
     // eslint-disable-next-line
+    dispatch(viewActions.finishEdicion());
     dispatch(checkpointListActions.doLoadOption());
+    dispatch(processListActions.doLoadOption());
   }, [dispatch]);
 
   const onSubmit = (values) => {
@@ -90,6 +91,10 @@ function ProcessFilter(props) {
     dispatch(actions.doFetch(values, rawValues));
     setExpanded(false);
   };
+
+  const industrialPlantOption = useSelector(
+    processSelectList.selectOptionIndustrialPlants
+  );
 
   const onReset = () => {
     Object.keys(emptyValues).forEach((key) => {
@@ -121,7 +126,7 @@ function ProcessFilter(props) {
               <Grid container spacing={2}>
                 <Grid item lg={6} xs={12}>
                   <InputFormItem
-                    name={'name'}
+                    name={'nameControlLine'}
                     label={i18n('user.fields.firstName')}
                   />
                 </Grid>
@@ -133,25 +138,14 @@ function ProcessFilter(props) {
                 </Grid>
                 <Grid item lg={6} xs={12}>
                   <SelectFormItem
-                    name={'plant'}
+                    name={'industrialPlant'}
                     label={i18n('process.fields.plant')}
-                    options={[]}
+                    options={industrialPlantOption.reduce((acc, el) => [...acc, { value: el.label, label: el.label }], [])}
                   />
                 </Grid>
               </Grid>
               <FilterButtons>
-                <Tooltip
-                  title={i18n('process.newControlLine')}
-                >
-                  <Fab
-                    size="small"
-                    color="primary"
-                    component={Link}
-                    to={`/process/new-process`}
-                  >
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
+
                 <Button
                   variant="contained"
                   color="primary"
@@ -169,7 +163,7 @@ function ProcessFilter(props) {
                   startIcon={<UndoIcon />}
                   size="small"
                 >
-                  {i18n('common.reset')}
+                  {i18n('common.cleanFilters')}
                 </Button>
               </FilterButtons>
             </form>

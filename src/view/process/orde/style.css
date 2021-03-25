@@ -12,16 +12,16 @@ body {
   margin: 4px;
   padding: 10px;
   padding-left: 8px;
-  min-height: 200px;
+  min-height: 40vh;
 }
 
 .item {
   font-family: sans-serif;
   border-top: 1px solid #ffffff;
-  background-color: #eeeeee;
-  border-bottom: 1px solid #999999;
+  background-color: #fcfcfc;
+  box-shadow:  1px 1px 1px 1px rgba(0, 0, 0, 0.2) ;
   border-radius: 6px;
-  margin: 4px;
+  margin: 7px;
   padding: 10px;
   padding-left: 8px;
   opacity: 1;
@@ -31,16 +31,21 @@ body {
   font-weight: bold;
   font-size: 125%;
   margin: 0;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .item .body {
   margin: 0;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .item .small {
-  font-size: 66%;
+  font-size: 80%;
   text-align: right;
 }
 
+.top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

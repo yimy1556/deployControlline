@@ -2,7 +2,9 @@ import * as React from "react";
 import { render } from "react-dom";
 import RLDD from "react-list-drag-and-drop/lib/RLDD";
 import './style.css';
-
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import CancelIcon from '@material-ui/icons/Cancel';
 interface Item {
   id: number;
   label: string;
@@ -25,34 +27,37 @@ export default class Example extends React.PureComponent<Props, ExampleState> {
     this.handleRLDDChange = this.handleRLDDChange.bind(this);
   }
 
-  
+
   render() {
-    console.log(this.props)
     const items = this.props.items;
     return (
-        <RLDD
-          cssClasses="example"
-          items={items || []}
-          itemRenderer={this.itemRenderer}
-          onChange={this.handleRLDDChange}
-        />
+      <RLDD
+        cssClasses="example"
+        items={items || []}
+        itemRenderer={this.itemRenderer}
+        onChange={this.handleRLDDChange}
+      />
     );
   }
-  
-  
+
+
   private itemRenderer(item: Item, index: number): JSX.Element {
     return (
       <div className="item">
-      <p className="title">{item.label}</p>
-      <button 
-        onClick={ () => this.props.setItems(this.props.items.filter(ite => ite.id !== item.id)) }  
-      >
-        x
-      </button>
-      <p className="body">{item.label}</p>
-        <div className="small">
-          item.id: {item.id} - index: {index}
+        <div className="top">
+          <p className="title">{item.label}</p>
+          <Tooltip
+            title={'Eliminar'}
+            onClick={() => this.props.setItems(this.props.items.filter(ite => ite.id !== item.id))}
+          >
+            <IconButton
+              color="primary"
+            >
+              <CancelIcon />
+            </IconButton>
+          </Tooltip>
         </div>
+        <p className="body">{`Puesto ${index + 1}`}</p>
       </div>
     );
   }

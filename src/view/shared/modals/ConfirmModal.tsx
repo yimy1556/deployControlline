@@ -5,6 +5,8 @@ import {
   DialogTitle,
   DialogActions,
   Button,
+  DialogContent,
+  DialogContentText,
 } from '@material-ui/core';
 
 function ConfirmModal(props) {
@@ -16,6 +18,13 @@ function ConfirmModal(props) {
       fullWidth={true}
     >
       <DialogTitle>{props.title}</DialogTitle>
+      {props.content &&
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {props.content}
+          </DialogContentText>
+        </DialogContent>
+      }
       <DialogActions>
         <Button
           onClick={props.onClose}

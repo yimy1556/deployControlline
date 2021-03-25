@@ -18,9 +18,11 @@ import Modal from 'src/view/shared/modals/Modal';
 import processListActions from 'src/modules/config/process/list/processListActions';
 import { Link } from 'react-router-dom';
 import selectProcess from 'src/modules/config/process/list/processListSelectors';
+import { getHistory  } from 'src/modules/store';
+import viewActiond from 'src/modules/config/process/view/processViewActions';
 
 const schema = yup.object().shape({ 
-  nameProcess: yupFormSchemas.string(i18n('user.fields.firstName'), {
+  nameControlLine: yupFormSchemas.string(i18n('user.fields.firstName'), {
     required: true,
   }),
   industrialPlantId: yupFormSchemas.integer(i18n('process.fields.plant'), {
@@ -39,22 +41,27 @@ const schema = yup.object().shape({
 
 const addValue = (value, checkpoints) => ({
   ...value,
-  name: value.nameProcess,
+  name: value.nameControlLine,
   checkpoints: checkpoints.reduce((acc, el) => [...acc, el.id],[]),
 })
 
-function ProcessDischarge() { 
+function ProcessDischarge(props) { 
   const dispatch = useDispatch();
-  const valueInitial = useSelector(processViewSelectors.selectEdition);
-  
+  const valueInitial = useSelector(processViewSelectors.selectEdition);  
+  const isEdit = useSelector(processViewSelectors.selectIsEdit);
+  const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
+  const optionCheckpoint = useSelector(selectProcess.selectOptionCheckpoint);
+  const optionIndustrialPlant = useSelector(selectProcess.selectOptionIndustrialPlants);
+
+
   const [initialValues] = useState({
-    id:valueInitial?.id || null,
+    id: isEdit?  valueInitial?.id: null,
+    sku: isEdit? valueInitial?.sku: null,
+    status: isEdit? valueInitial?.status: null,
+    nameControlLine: isEdit? valueInitial?.name: null,
     userId: 2,
-    nameProcess: valueInitial?.name || null,
     industrialPlantId: valueInitial?.industrialPlant.id || null,
-    sku: valueInitial?.sku || null,
     description: valueInitial?.description || null,
-    status: valueInitial?.status || null,
     categoryId: valueInitial?.category?.id || null,
   });
   
@@ -62,7 +69,7 @@ function ProcessDischarge() {
     dispatch(processListActions.doLoadOption());
   }, [dispatch]);
 
-
+  
 
   const editCheckpoints = valueInitial?.checkpoints?.reduce((acc, el) => 
     ([...acc,
@@ -74,6 +81,11 @@ function ProcessDischarge() {
   
   const [category, setCategory] = useState(valueInitial? initialValues.categoryId:null);
   const [checkpoints, setCheckpoints] = useState( editCheckpoints || [] );
+  
+  const resetCategory = (category) => {
+    setCheckpoints([]);
+    setCategory(category);
+  }
 
   const form = useForm({
     resolver: yupResolver(schema),
@@ -85,32 +97,21 @@ function ProcessDischarge() {
     dispatch(actions.modalOpen());
   }
 
-  const optionCategory = useSelector(selectorsCheckpoint.selectOptionCategory);
-  const optionCheckpoint = useSelector(selectProcess.selectOptionCheckpoint);
-  const optionIndustrialPlant = useSelector(selectProcess.selectOptionIndustrialPlants);
-
-
-
-  console.log(valueInitial,'sssssdsd')
   const onSubmit = async(values) => {
     const newValue = await addValue(values, checkpoints);
-   
-    if(!initialValues.id){
-      console.log('crea')
+    if(!isEdit){
       dispatch(processFormActions.doAdd({
         ...initialValues,
         ...newValue,
       }));
     }
     else{
-      console.log('edit')
       dispatch(processListActions.doEdit({
         ...initialValues,
         ...newValue,
       }));
     }
   }
-  
   
 
 
@@ -123,14 +124,12 @@ function ProcessDischarge() {
       }]),[])
     .filter(option => option.categoryId === category); 
     
-    console.log(options)
-
     return  options.filter(option => 
       (!doCheckpoints.find(check => 
         (check.id === option.id)
       )));
   }
-
+  
   return (
     <Grid container alignItems='stretch' justify='center' direction='column'>
       <Grid item xs={12}>
@@ -140,7 +139,7 @@ function ProcessDischarge() {
                 <Grid item container justify='center' xs={10} spacing={3}>
                   <Grid item xs={6}>
                     <InputFormItem
-                      name='nameProcess'
+                      name='nameControlLine'
                       label={i18n('user.fields.firstName')}
                     />
                   </Grid>
@@ -164,11 +163,12 @@ function ProcessDischarge() {
                       options={optionCategory}
                       label='Categoria'
                       mode='unico'
-                      func={setCategory}
+                      func={resetCategory}
+                      disabled={initialValues.industrialPlantId}
                       />
                   </Grid>
                   <Modal full sm={'sm'}>
-                    <h2 style={{textAlign:'center'}}>Asignacion de puesto de control</h2>
+                    <h2 style={{textAlign:'center'}}>Asignación de Puestos de Control</h2>
                     <Grid item xs={12}>
                       <SelectFormItem 
                         name='checkpoints'
@@ -188,14 +188,13 @@ function ProcessDischarge() {
                         }}
                         variant="contained"
                         color="primary"
-                        onClick= {() => dispatch(actions.closeModal())}
+                        onClick= {() => dispatch(actions.closeModalCheckpoint())}
                         fullWidth
                       >
                         {i18n('Cerrar')}
                       </Button>
                     </Grid>
                   </Modal>
-                  {console.log(checkpoints)}
                   <Grid item xs={12}>
                     <InputFormItem
                       name='description'
@@ -216,8 +215,9 @@ function ProcessDischarge() {
                       variant="contained"
                       color="primary"
                       fullWidth
+                      onClick={() => dispatch(viewActiond.finishEdicion())}
                       component={Link}
-                      to='/process'
+                      to='/control_line'
                     >
                       {i18n('common.cancel')}
                     </Button>

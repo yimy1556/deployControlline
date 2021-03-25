@@ -20,12 +20,24 @@ const addName = (value) => ({
   name: value.nameFault,
 })
 
+const statusFault = [
+  {
+    value:'inactive',
+    label:'Inactivo'
+  },
+  {
+    value:'active',
+    label:'Activo'
+  },
+]
+
+
 const schema = yup.object().shape({
   nameFault: yupFormSchemas.string('Nombre', {
-    required: true, 
+    required: true,
   }),
   description: yupFormSchemas.string(i18n('process.fields.description'), {
-    required: true, 
+    required: true,
   }),
   categoryId: yupFormSchemas.integer('Categoria', {
     required: true,
@@ -38,79 +50,77 @@ const schema = yup.object().shape({
 
 function FaultNew() {
   const valuesInitial = useSelector(faultViewSelectors.selectEdition)
-
+   
   const [initialValues] = useState({
-    status: valuesInitial?.status || null,
-    id : valuesInitial?.id || null,
+    status: valuesInitial?.status || "",
+    id: valuesInitial?.id || null,
     nameFault: valuesInitial?.name || '',
     description: valuesInitial?.description || '',
     categoryId: valuesInitial?.category?.id || null,
-    typeFallaId:  valuesInitial?.typeFalla?.id || null,
+    typeFallaId: valuesInitial?.typeFalla?.id || null,
   });
-
+ 
   const form = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
     defaultValues: initialValues
   });
 
-
   const optionCategory = useSelector(selectorsListCheckponint.selectOptionCategory);
-  const optionsTypeFalla =  useSelector(selectorsList.selectOptionTypeFalla);
+  const optionsTypeFalla = useSelector(selectorsList.selectOptionTypeFalla);
 
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch(actions.closeModal());
   }
+  
   const onSubmit = (values) => {
-    if(!valuesInitial.id){
+    if (!valuesInitial) {
       dispatch(actionsFault.doCreate({
         ...initialValues,
         ...addName(values),
       }));
     }
-    else{
+    else {
       dispatch(actionsFault.doEdit({
         ...initialValues,
         ...addName(values),
       }));
     }
   }
- 
   return (
     <Grid container alignItems='center' direction='column'>
       <Grid item xs={12}>
-        <h1> {valuesInitial.id? 
-          'Edicion de Falla'
-          :'Configuracion de Falla'}
+        <h1> {valuesInitial ?
+          'Edición de Falla'
+          : 'Configuración de Falla'}
         </h1>
       </Grid>
       <Grid item xs={12}>
         <FormProvider {...form}>
           <Grid item xs={12}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <Grid container  direction='column'  alignItems='center'>
-                <Grid item container justify='center' xs={12} spacing={2}>
+              <Grid container direction='column' alignItems='center'>
+                <Grid onClick={undefined} item container justify='center' xs={12} spacing={2}>
                   <Grid item xs={6}>
                     <InputFormItem
                       name='nameFault'
                       label={i18n('user.fields.firstName')}
-                   />
-                  </Grid>                 
+                    />
+                  </Grid>
                   <Grid item xs={6}>
-                    <SelectFormItem 
+                    <SelectFormItem
                       name='categoryId'
                       options={optionCategory}
-                      label='Categoria'
-                      mode='unico'
+                      label={i18n('faults.fields.category')}
                     />
                   </Grid>
                   <Grid item lg={12} xs={12}>
                     <SelectFormItem
                       name={'typeFallaId'}
-                      label={'Tipo de Falla'}
+                      label={i18n('faults.fields.type')}
                       options={optionsTypeFalla}
-                      mode = 'unico'
+                      mode='unico'
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -124,16 +134,17 @@ function FaultNew() {
                 </Grid>
                 <Grid
                   style={{ marginBottom: '5px' }}
-                  container 
-                  item 
-                  spacing={2} 
+                  container
+                  item
+                  justify='center'
+                  spacing={2}
                   xs={8}>
                   <Grid item xs={6}>
                     <Button
                       style={{ marginTop: '8px' }}
                       variant="contained"
                       color="primary"
-                      onClick= {() => closeModal()}
+                      onClick={() => closeModal()}
                       fullWidth
                     >
                       {i18n('common.cancel')}

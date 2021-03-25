@@ -37,6 +37,7 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...initialData,
       checkpoint: state.checkpoint,
+      industrialPlants: state.industrialPlants,
     };
   }
 
